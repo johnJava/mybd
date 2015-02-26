@@ -9,6 +9,7 @@ import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class WebAnalyser implements Runnable, WebStatistics {
 
@@ -24,7 +25,6 @@ public class WebAnalyser implements Runnable, WebStatistics {
 	public static ExecutorService es;
 	public static boolean printFlag = true;
 	public static boolean timerFlag = true;
-	public static int MAX_THREAD_NUM_COPY = MAX_THREAD_NUM;
 	public static Timer t = null;
 
 	/**
@@ -36,6 +36,7 @@ public class WebAnalyser implements Runnable, WebStatistics {
 		while (num++ < WebAnalyser.MAX_THREAD_NUM) {
 			es.execute(new WebAnalyser());
 		}
+		es.shutdown();
 	}
 
 	/* (non-Javadoc)
@@ -91,10 +92,10 @@ public class WebAnalyser implements Runnable, WebStatistics {
 	 */
 	@Override
 	public void printStatistics() throws KeywordNotProvidedException, IllegalURLException {
-		System.out.println("thread complete[" + MAX_THREAD_NUM_COPY + "]");
-		if (MAX_THREAD_NUM_COPY > 1) {
-			MAX_THREAD_NUM_COPY--;
-			return;
+		try {
+			boolean compelte = es.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		int sum = 0;
 		System.out.println("Word: '" + keyword + "'");
@@ -112,13 +113,6 @@ public class WebAnalyser implements Runnable, WebStatistics {
 	public void run() {
 		System.out.println("Thread Name--->" + Thread.currentThread().getName());
 		deQueue();
-		try {
-			printStatistics();
-		} catch (KeywordNotProvidedException e) {
-			e.printStackTrace();
-		} catch (IllegalURLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
