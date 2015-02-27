@@ -1,4 +1,4 @@
-package study.pool;
+package study.pool.practice;
 
 
 public class ExecutorServiceStudy {

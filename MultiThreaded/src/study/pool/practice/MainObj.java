@@ -1,4 +1,4 @@
-package study.pool;
+package study.pool.practice;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

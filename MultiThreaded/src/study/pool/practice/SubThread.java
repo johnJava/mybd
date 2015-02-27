@@ -1,7 +1,6 @@
-package study.pool;
+package study.pool.practice;
 
-public class TestThread extends Thread {
-
+public class SubThread extends Thread {
 	@Override
 	public void run() {
 		int count=100;
@@ -9,5 +8,4 @@ public class TestThread extends Thread {
 			System.out.println(Thread.currentThread().getName()+"["+count+"]");
 		}
 	}
-
 }
