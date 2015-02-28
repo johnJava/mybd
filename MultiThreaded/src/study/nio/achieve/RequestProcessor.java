@@ -43,7 +43,7 @@ public class RequestProcessor implements Runnable {
 		while (true) {
 			Socket conn;
 			synchronized (pool) {
-				if (pool.isEmpty()) {
+				if (pool.size()==0) {
 					try {
 						pool.wait();
 					} catch (InterruptedException e) {
@@ -51,6 +51,7 @@ public class RequestProcessor implements Runnable {
 						e.printStackTrace();
 					}
 				}
+				if(pool.size()==0) continue;
 				conn = (Socket) pool.remove(0);
 				System.out.println("client:" + conn.getPort());
 				try {
@@ -74,18 +75,18 @@ public class RequestProcessor implements Runnable {
 					String version ="";
 					if(method.equalsIgnoreCase("get")){
 						filename = st.nextToken();
-						if(filename.startsWith("/")) filename+=indexFileName;
-						contentType = guessContentTypeFromName(filename);
+						if(filename.equals("/")) filename=indexFileName;
+						contentType = guessContentTypeFromName(filename.substring(1,filename.length()));
 						if(st.hasMoreTokens()){
 							version= st.nextToken();
 						}
-						File theFile = new File(documentRootDirectory,filename.substring(1,filename.length()));
+						File theFile = new File(documentRootDirectory,filename);//.substring(1,filename.length())
 						if(theFile.canRead()&&theFile.getCanonicalPath().startsWith(root)){
 							DataInputStream fis = new DataInputStream(new BufferedInputStream(new FileInputStream(theFile)));
 							byte[] theData = new byte[(int)theFile.length()];
 							fis.readFully(theData);
 							fis.close();
-							if(version.startsWith("HTTP ")){
+							if(version.startsWith("HTTP")){
 								StringBuffer header = new  StringBuffer();
 								header.append("HTTP/1.0 200 OK\r\n");
 								header.append("Date: "+new Date().toString()+"\r\n");
@@ -120,19 +121,35 @@ public class RequestProcessor implements Runnable {
 							out.write(header.toString().getBytes());
 							out.flush();
 						}
-						String re="<html><head><title><title></head></html>";
+						//String re="<html><head><title><title></head></html>";
 						out.write("File Not Found".getBytes());
 						out.flush();
 					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}finally{
+					try {
+						conn.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
 	}
 	public static String guessContentTypeFromName(String filename){
-		return "";
+		String type="";
+		if(filename.endsWith(".html")||filename.endsWith(".htm")){
+			type= "text/html";
+		}else if(filename.endsWith(".txt")||filename.endsWith(".java")){
+			type= "text/plain";
+		}else if(filename.endsWith(".gif")){
+			type= "image/gif";
+		}else if(filename.endsWith(".jpg")||filename.endsWith(".jpeg")){
+			type=  "image/jpeg";
+		}
+		return type;
 	}
 
 }
