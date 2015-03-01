@@ -1,0 +1,159 @@
+/* Build by 200123@5173.com 
+ Date:2014-12-23 17:46:53 
+ Version:1.00 */
+@charset "utf-8";
+
+.fed-toolstip {
+	background: #9ec5de;
+	border: 3px solid #e0edf4;
+}
+
+.fed-toolstip .fed-tipcon {
+	padding: 15px;
+	margin: 1px;
+	position: relative;
+	background: #fff;
+	overflow: hidden;
+}
+
+.fed-toolstip .fed-tipcon s {
+	position: absolute;
+	left: 15px;
+	top: 17px;
+}
+
+.fed-toolstip .fed-tipcon h4 {
+	border-bottom: 1px solid #d7d7d7;
+	margin-bottom: 10px;
+	color: #666;
+	padding-bottom: 9px;
+}
+
+.fed-toolstip .fed-tipcon p {
+	color: #666;
+	line-height: 18px;
+}
+
+.fed-toolstip .fed-tipcon p.ico-text {
+	margin-left: 22px;
+}
+
+.fed-toolstip .fed-tipcon .fed-tipsmore {
+	display: block;
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+	line-height: normal;
+}
+
+.fed-toolstip .fed-tipcon .fed-tipsclose {
+	position: absolute;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: Simsun;
+	color: #787878;
+	right: 2px;
+	top: 2px;
+}
+
+.fed-toolstip .fed-tipcon .fed-tipsclose:hover {
+	text-decoration: none!important;
+}
+
+.fed-toolstip .fed-tipsarr {
+	position: relative;
+	display: block;
+}
+
+.fed-tipsarr span.arr-1,.fed-tipsarr span.arr-2,.fed-tipsarr span.arr-3 {
+	position: absolute;
+	font-size: 12px;
+	font-family: simsun;
+	overflow: hidden;
+}
+
+.fed-tipsarr span.arr-1 {
+	z-index: 199;
+	color: #9ec5de;
+}
+
+.fed-tipsarr span.arr-2 {
+	z-index: 299;
+	color: #fff;
+}
+
+.fed-tipsarr span.arr-3 {
+	z-index: 99;
+	color: #e0edf4;
+}
+
+.fed-arrtop {
+	top: -9px;
+	top: -8px\9;
+	left: 25px;
+}
+
+.fed-arrtop span.arr-1 {
+	top: 3px;
+}
+
+.fed-arrtop span.arr-2 {
+	top: 4px;
+}
+
+.fed-arrtop span.arr-3 {
+	top: 0;
+}
+
+.fed-arrbottom {
+	top: -12px;
+	top: -11px\9;
+	left: 25px;
+}
+
+.fed-arrbottom span.arr-1 {
+	top: 5px;
+}
+
+.fed-arrbottom span.arr-2 {
+	top: 4px;
+}
+
+.fed-arrbottom span.arr-3 {
+	top: 8px;
+}
+
+.fed-arrleft {
+	left: -5px;
+	top: 25px;
+}
+
+.fed-arrleft span.arr-1 {
+	left: 0;
+}
+
+.fed-arrleft span.arr-2 {
+	left: 1px;
+}
+
+.fed-arrleft span.arr-3 {
+	left: -3px;
+}
+
+.fed-arrright {
+	right: -6px;
+	top: 25px;
+}
+
+.fed-arrright span.arr-1 {
+	right: 0;
+}
+
+.fed-arrright span.arr-2 {
+	right: 1px;
+}
+
+.fed-arrright span.arr-3 {
+	right: -3px;
+}
+
