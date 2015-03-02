@@ -268,7 +268,6 @@
         function logingame(){
         	var message ={}; 
         	var params={};
-        	//params.price=document.getElementById('price').value;
 			params.txtGameRole=document.getElementById('txtGameRole').value;
 			params.rolelevel=document.getElementById('rolelevel').value;
 			params.txtBuyerTel=document.getElementById('txtBuyerTel').value;
@@ -278,8 +277,6 @@
 			params.password=document.getElementById('password').value;
 			message.action="login";
 			message.msg=params;
-			//alert(JSON.stringify(jsObj));
-			//alert(JSON.stringify(message));
 			if (!message) return;  
             if (!demo.send(JSON.stringify(message))) return; 
         }

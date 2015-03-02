@@ -1,3 +1,6 @@
 /com/
 /org/
 /test/
+/cacerts
+/expression.js
+/md5.js

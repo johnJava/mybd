@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -178,7 +177,7 @@ public class LoginSys {
 	private String hex_md5(String pwdsrc) throws Exception {
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName("javascript");
-		String jsFileName = "D:\\workspace\\work1\\grabber\\md5.js"; // 读取js文件
+		String jsFileName =this.getClass().getResource("/").getPath()+"\\md5.js"; // 读取js文件
 		FileReader reader = new FileReader(jsFileName); // 执行指定脚本
 		engine.eval(reader);
 		String PasswordKey = pwdsrc;

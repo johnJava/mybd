@@ -14,6 +14,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import org.junit.Test;
+
 public class MyX509TrustManager implements X509TrustManager {
 	/*
 	 * The default X509TrustManager returned by SunX509. We'll delegate
@@ -21,11 +23,13 @@ public class MyX509TrustManager implements X509TrustManager {
 	 * X509TrustManager doesn't trust it.
 	 */
 	X509TrustManager sunJSSEX509TrustManager;
+	
 
 	public MyX509TrustManager() throws Exception {
 		// create a "default" JSSE X509TrustManager.
 		KeyStore ks = KeyStore.getInstance("JKS");
-		ks.load(new FileInputStream("D:\\workspace\\work1\\grabber\\cacerts"), "changeit".toCharArray());
+		ks.load(new FileInputStream(this.getClass().getResource("/").getPath()+"\\cacerts"), "changeit".toCharArray());
+		//ks.load(new FileInputStream(this.getClass().getResource("/").getPath()), "changeit".toCharArray());
 		TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509", "SunJSSE");
 		tmf.init(ks);
 		TrustManager tms[] = tmf.getTrustManagers();
