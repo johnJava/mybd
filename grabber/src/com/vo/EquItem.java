@@ -10,14 +10,25 @@ import com.common.UrlType;
 
 public class EquItem {
 	private int creditlevel;
+	private double minprice;
+	private boolean radio;
 	private String baseurl="http://s.5173.com/dnf-0-0-0-0-2zkpio-0-0-0-a-a-a-a-a-0-addnewdate_desc-0-0.shtml";
 	private Set<String> creditSet=null;
 	private int pageIndex=0;
 	
 	public EquItem(int creditlevel) {
+		this(creditlevel, Double.MAX_VALUE);
+	}
+	public EquItem(int creditlevel,double minprice) {
+		this(creditlevel, minprice, true);
+	}
+	public EquItem(int creditlevel,double minprice,boolean radio) {
 		this.creditlevel=creditlevel;
+		this.minprice=minprice;
+		this.radio=radio;
 		initCreditSet();
 	}
+	
 	private void initCreditSet(){
 		creditSet = new HashSet<String>();
 		for (int i = 0; i<creditlevel&&i < GenericUtil.creditlist.size(); i++) {
@@ -27,7 +38,14 @@ public class EquItem {
 	public boolean hasCredit(String credit){
 		return this.creditSet.contains(credit);
 	}
-	
+	public boolean matchPrice(double price){
+		boolean flag=false;
+		if(price>this.minprice)flag=true;
+		return flag;
+	}
+	public boolean isPlayed(){
+		return this.radio;
+	}
 	public String getUrl(UrlType type){
 		String strurl="";
 		strurl=this.baseurl.replaceAll("a-a-a-a-a", "a-a-a-10-"+Math.round(Math.random()*100000+100000));
@@ -53,6 +71,9 @@ public class EquItem {
 	}
 	public void setPageIndex(int pageIndex) {
 		this.pageIndex = pageIndex;
+	}
+	public void setRadio(boolean radio) {
+		this.radio = radio;
 	}
 	
 }

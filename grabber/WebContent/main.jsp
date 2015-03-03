@@ -115,10 +115,10 @@
          <td>信誉小于等于：</td> 
         </tr> 
         <tr> 
-         <td> <input type="checkbox" id="radio" />开启新单声音提醒 </td> 
+         <td> <input type="checkbox" id="radio" checked="checked" />开启新单声音提醒 </td> 
          <td> <select name="gameservice" style="width:160px;"> <option value="alldis">全部服</option> </select> </td> 
          <td><input type="text" id="txtBuyerTel" style="width:160px;" /></td> 
-         <td><select name="creditlevel" style="width:160px;"> <option value="3">三星</option> </select></td> 
+         <td><select id="creditlevel" style="width:160px;">  <option value="1">一星</option> <option value="2">二星</option><option value="3" selected="selected">三星</option> </select></td> 
         </tr> 
         <tr> 
          <td> <input type="checkbox" id="toshop" />下单后自动打开付款界面 </td> 
@@ -195,10 +195,10 @@
         var outputPanel = document.getElementById('outputPanel'); // 输出结果面板  
         var query = document.getElementById('query'); 
         var avrtime = document.getElementById('avrtime'); 
-        var sendButton = document.getElementById('startscan');// 建立连接按钮  
-        //var connButton = document.getElementById('loginsoft');// 建立连接按钮  
-        var stopButton = document.getElementById('stopscan');// 建立连接按钮  
-        var loginButton = document.getElementById('logingame');// 建立连接按钮  
+        var sendButton = document.getElementById('startscan');// 
+        var stopButton = document.getElementById('stopscan');// 
+        var loginButton = document.getElementById('logingame');//
+        var radioButton = document.getElementById('radio');// 
            // 控制台输出对象  
         var console = {log : function(text) {
         	    if(text.indexOf("grabber_query") != -1){
@@ -223,14 +223,14 @@
                 }  
                 this.socket = new WebSocket(this.host); // 创建连接并注册响应函数  
                 this.socket.onopen = function(){
-                	console.log("登录成功");
+                	console.log("开始成功。。。");
                 	logingame();
                 };  
                 this.socket.onmessage = function(message) {
                 	console.log(message.data);
                 	};  
                 this.socket.onclose = function(){  
-                    console.log("server is closed .");  
+                    console.log("服务器已关闭");  
                     demo.socket = null; // 清理  
                 };  
             },  
@@ -239,7 +239,7 @@
                     this.socket.send(message);  
                     return true;  
                 }  
-                console.log('please connect to the server first !!!');  
+                console.log('请先连接服务器!!!');  
                 return false;  
             }  
         };  
@@ -253,9 +253,27 @@
         };*/ 
      // 初始化按钮点击事件函数  
         sendButton.onclick = function() {
-            var message ="{action:start,msg:{creditlevel:3}}";  
-            if (!message) return;  
-            if (!demo.send(message)) return;  
+           // var message ="{action:start,msg:{creditlevel:3}}";  
+           if (!demo.socket)   demo.connect();
+            var message ={}; 
+        	var params={};
+			params.creditlevel=document.getElementById('creditlevel').value;
+			params.minprice=document.getElementById('minprice').value;
+			params.radio=document.getElementById('radio').checked;
+			message.action="start";
+			message.msg=params;
+			if (!message) return;  
+            if (!demo.send(JSON.stringify(message))) return; 
+        }; 
+        
+        radioButton.onclick = function() {
+        	var message ={}; 
+        	var params={};
+			params.radio=document.getElementById('radio').checked;  
+        	message.action="play";
+			message.msg=params;
+			if (!message) return;  
+            if (!demo.send(JSON.stringify(message))) return;  
         }; 
         stopButton.onclick = function() {
             var message ="{action:stop,msg:{creditlevel:3}}";  
@@ -264,7 +282,8 @@
         };  
         loginButton.onclick = function() {
         	autoConn();
-        };  
+        };   
+        
         function logingame(){
         	var message ={}; 
         	var params={};
@@ -275,6 +294,7 @@
 			params.customer=document.getElementById('customer').value;
 			params.username=document.getElementById('gameusername').value;
 			params.password=document.getElementById('password').value;
+			//if (!check(message)) return;
 			message.action="login";
 			message.msg=params;
 			if (!message) return;  

@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import org.htmlparser.Node;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.TagNameFilter;
@@ -13,6 +16,8 @@ import org.htmlparser.tags.LinkTag;
 import org.htmlparser.tags.Span;
 import org.htmlparser.util.NodeList;
 
+import com.common.GenericUtil;
+import com.common.LogUtil;
 import com.vo.EquItem;
 import com.vo.VNode;
 import com.web.EquMessageService;
@@ -47,8 +52,17 @@ public class EquBiz {
 			Node node = this.nodequeue.poll();
 			try {
 				String nodehtml = toVoNode(node);
-				if(!nodehtml.equalsIgnoreCase(""))
-				EquMessageService.inbound.send("grabber_node" + nodehtml);
+				if(!nodehtml.equalsIgnoreCase("")){
+					EquMessageService.inbound.send("grabber_node" + nodehtml);
+					if(this.item.isPlayed())
+					try {
+						GenericUtil.playAlarm();
+					} catch (LineUnavailableException e) {
+						e.printStackTrace();
+					} catch (UnsupportedAudioFileException e) {
+						e.printStackTrace();
+					}
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -94,17 +108,24 @@ public class EquBiz {
 						NodeList alist = tn.getChildren().extractAllNodesThatMatch(new HasAttributeFilter("href"), true);
 						String distinct = "";
 						for (int k = 1; k < alist.size(); k++) {
-							LinkTag tag = (LinkTag) alist.elementAt(j);
+							LinkTag tag = (LinkTag) alist.elementAt(k);
 							distinct += tag.getStringText() + "/";
 						}
-						distinct = distinct.substring(0, distinct.length() - 2);
+						distinct = distinct.substring(0, distinct.length() - 1);
 						vn.setDistinct(distinct);
 						//LogUtil.debugPrintf("distinct:" + distinct);
 					}
 				}
 
 			} else if ("pdlist_price".equalsIgnoreCase(classstr)) {
-				String price = ul.getChildren().elementAt(1).toHtml();
+				String price =  ul.getChildren().elementAt(1).toHtml();
+				double pricenumber;
+				try{
+					pricenumber=Double.parseDouble(price.substring(price.indexOf("<strong>")+"<strong>".length(), price.lastIndexOf("</strong>")));
+				}catch(Exception e){
+					pricenumber=Double.MAX_VALUE;
+				}
+				if(!this.item.matchPrice(pricenumber))return "";
 				vn.setPrice(price);
 				//LogUtil.debugPrintf("price:" + price);
 			}
@@ -112,6 +133,7 @@ public class EquBiz {
 		return vn.toString();
 	}
 
+	
 	
 	public boolean addOrderNumVec(String orderNum) {
 		if(this.orderNumVec.contains(orderNum))return false;

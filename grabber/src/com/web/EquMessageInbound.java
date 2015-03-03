@@ -21,8 +21,9 @@ import com.vo.EquItem;
 
 @SuppressWarnings({ "unused", "deprecation" })
 public class EquMessageInbound extends StreamInbound {
-	private LoginSys login=null;
-	private JSONObject common_params=null;
+	private LoginSys login = null;
+	private JSONObject common_params = null;
+	private EquItem equitem = null;
 	// private String sessionId;
 	// private String PREFIX = "ws_";
 	private EquSnatcher snatcher = null;
@@ -30,10 +31,10 @@ public class EquMessageInbound extends StreamInbound {
 	private String sessionId = "";
 
 	public EquMessageInbound(int id, String _sessionId) {
-		//this.sessionId = _sessionId;
+		// this.sessionId = _sessionId;
 		// System.out.println(sessionId);
 		// setPREFIX("ws_" + id);
-		if(!sessionId.equals("")&&!_sessionId.equals(sessionId)){
+		if (!sessionId.equals("") && !_sessionId.equals(sessionId)) {
 			this.doStop();
 		}
 		this.setSessionId(_sessionId);
@@ -86,14 +87,22 @@ public class EquMessageInbound extends StreamInbound {
 			doShop((JSONObject) jsonobj.get("msg"));
 		} else if (action.equalsIgnoreCase("stop")) {
 			doStop();
+		} else if (action.equalsIgnoreCase("play")) {
+			doPlay((JSONObject) jsonobj.get("msg"));
 		}
+	}
+
+	private void doPlay(JSONObject item) {
+		equitem.setRadio(item.getBoolean("radio"));
 	}
 
 	private void doStart(JSONObject item) {
 		if (snatcher != null && snatcher.getState().equalsIgnoreCase("running"))
 			return;
-		int creditlevel = (Integer) item.get("creditlevel");
-		EquItem equitem = new EquItem(creditlevel);
+		int creditlevel = Integer.parseInt((String) item.get("creditlevel"));
+		String priceStr = (String) item.get("minprice");
+		double minprice = (priceStr.equals("")) ? 0 : Double.parseDouble(priceStr);
+		equitem = new EquItem(creditlevel, minprice,item.getBoolean("radio"));
 		snatcher = new EquSnatcher(equitem);
 		snatcher.start();
 	}
@@ -103,34 +112,37 @@ public class EquMessageInbound extends StreamInbound {
 	}
 
 	private void doShop(JSONObject params) throws IOException {
-		if(this.login==null) {
+		if (this.login == null) {
 			this.send("请先登陆！");
 			return;
 		}
-		String price=(String) params.get("price");
-		String orderNum=(String) params.get("orderNum");
+		String price = (String) params.get("price");
+		String orderNum = (String) params.get("orderNum");
 		int type;
-		if(orderNum.contains("DB")){
-			type=ShopThread.PTTYPE;
-			price+="00";
-		}else{
-			type=ShopThread.JSTYPE;
+		if (orderNum.contains("DB")) {
+			type = ShopThread.PTTYPE;
+			price += "00";
+		} else {
+			type = ShopThread.JSTYPE;
 		}
 		common_params.put("orderNum", orderNum);
 		common_params.put("price", price);
-		ShopThread st =new ShopThread(this.login,common_params,orderNum,type);
+		ShopThread st = new ShopThread(this.login, common_params, orderNum,
+				type);
 		new Thread(st).start();
 	}
 
 	private void doLogin(JSONObject params) throws Exception {
-		common_params=params;
-		String username=(String) common_params.remove("username");
-		String password=(String) common_params.remove("password");
-		//JSONObject loginInfo = new JSONObject("{username:'wlg7766',password:'54054110'}");
-		JSONObject loginInfo = new JSONObject("{username:'"+username+"',password:'"+password+"'}");
+		common_params = params;
+		String username = (String) common_params.remove("username");
+		String password = (String) common_params.remove("password");
+		// JSONObject loginInfo = new
+		// JSONObject("{username:'wlg7766',password:'54054110'}");
+		JSONObject loginInfo = new JSONObject("{username:'" + username
+				+ "',password:'" + password + "'}");
 		LoginSys loginInstance = new LoginSys(loginInfo);
 		loginInstance.doLogin();
-		this.login=loginInstance;
+		this.login = loginInstance;
 	}
 
 	public void setSessionId(String sessionId) {

@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import com.common.GenericUtil;
 import com.common.LogUtil;
 import com.common.MyX509TrustManager;
+import com.web.EquMessageService;
 
 public class LoginSys {
 	private JSONObject loginInfo;
@@ -67,15 +68,19 @@ public class LoginSys {
 		Map<String, List<String>> header = loginConn.getHeaderFields();
 		LogUtil.debugPrintf("conn.getHeaderFields():" + header);
 		List<String> cookie = header.get("Set-Cookie");
+		String loginInfo;
 		if (cookie == null || cookie.size() == 0) {
 			result = false;
 			LogUtil.infoPrintf("登录失败----------->");
+			loginInfo="登录失败";
 		} else {
 			LogUtil.infoPrintf("登录成功----------->");
 			LogUtil.debugPrintf("cookie====" + cookie);
 			setCookies(cookie);
 			putCookies("NTKF_PAGE_MANAGE", "%7B%22m%22%3A%5B%7B%2234233%22%3A874270%7D%2C%7B%2270512%22%3A874264%7D%5D%2C%22t%22%3A%2220%3A03%3A47%22%7D");
+			loginInfo="登录成功";
 		}
+		EquMessageService.inbound.send(loginInfo);
 		this.state = result;
 		return result;
 	}
