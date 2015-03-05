@@ -115,7 +115,7 @@
          <td>信誉小于等于：</td> 
         </tr> 
         <tr> 
-         <td> <input type="checkbox" id="radio" checked="checked" />开启新单声音提醒 </td> 
+         <td> <input type="checkbox" id="radio"  />开启新单声音提醒 </td> 
          <td> <select name="gameservice" style="width:160px;"> <option value="alldis">全部服</option> </select> </td> 
          <td><input type="text" id="txtBuyerTel" style="width:160px;" /></td> 
          <td><select id="creditlevel" style="width:160px;">  <option value="1">一星</option> <option value="2">二星</option><option value="3" selected="selected">三星</option> </select></td> 

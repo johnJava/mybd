@@ -51,7 +51,7 @@ public class EquSnatcher {
 	}
 
 	public boolean concel() {
-		timer.cancel();
+		//timer.cancel();
 		state = "dead";
 		return true;
 	}
@@ -96,6 +96,7 @@ public class EquSnatcher {
 
 		public void run() {
 			while (state.equalsIgnoreCase("running")) {
+				LogUtil.debugPrintf("调度状态-->" + state);
 				LogUtil.debugPrintf("调度-->" + urltype);
 				try {
 					switch (urltype) {
@@ -125,7 +126,7 @@ public class EquSnatcher {
 				return;
 			}
 			Parser parser = getParser(url);
-			long startTime = System.currentTimeMillis();
+			 long startTime = System.currentTimeMillis();
 			LogUtil.debugPrintf("抽取[" + url + "]开始[" + GenericUtil.dateformat.format(startTime) + "]");
 			int update = 0;
 			try {
@@ -143,7 +144,7 @@ public class EquSnatcher {
 					if (hrefindex == -1) {
 						update++;
 						updateVec(this.wpHrefVec, href);
-						equbiz.addNode(node);
+						equbiz.addNode(node);//if(wpstr.equals(""))
 					}
 				}
 
