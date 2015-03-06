@@ -115,7 +115,7 @@
          <td>信誉小于等于：</td> 
         </tr> 
         <tr> 
-         <td> <input type="checkbox" id="radio"  />开启新单声音提醒 </td> 
+         <td> <input type="checkbox" id="radio"/>开启新单声音提醒 </td> 
          <td> <select name="gameservice" style="width:160px;"> <option value="alldis">全部服</option> </select> </td> 
          <td><input type="text" id="txtBuyerTel" style="width:160px;" /></td> 
          <td><select id="creditlevel" style="width:160px;">  <option value="1">一星</option> <option value="2">二星</option><option value="3" selected="selected">三星</option> </select></td> 
@@ -223,7 +223,7 @@
                 }  
                 this.socket = new WebSocket(this.host); // 创建连接并注册响应函数  
                 this.socket.onopen = function(){
-                	console.log("开始成功。。。");
+                	console.log("开始登录。。。");
                 	logingame();
                 };  
                 this.socket.onmessage = function(message) {
@@ -253,6 +253,7 @@
         };*/ 
      // 初始化按钮点击事件函数  
         sendButton.onclick = function() {
+            console.log("开始扫描");
            // var message ="{action:start,msg:{creditlevel:3}}";  
            if (!demo.socket)   demo.connect();
             var message ={}; 
@@ -272,10 +273,13 @@
 			params.radio=document.getElementById('radio').checked;  
         	message.action="play";
 			message.msg=params;
+			var msgStr =(params.radio)?"开启新单声音提醒":"关闭新单声音提醒";
+            console.log(msgStr);
 			if (!message) return;  
             if (!demo.send(JSON.stringify(message))) return;  
         }; 
         stopButton.onclick = function() {
+            console.log("停止扫描");  
             var message ="{action:stop,msg:{creditlevel:3}}";  
             if (!message) return;  
             if (!demo.send(message)) return;  
