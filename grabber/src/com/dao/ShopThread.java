@@ -83,7 +83,7 @@ public class ShopThread implements Runnable {
 		LogUtil.infoPrintf("Post parameters : " + postParams);
 		LogUtil.infoPrintf("Response Code : " + responseCode);
 		Map<String, List<String>> header = loginConn.getHeaderFields();
-		LogUtil.infoPrintf("下单回复HEADER===" + header);
+		LogUtil.singleDebugPrintf("下单回复HEADER===" + header);
 		List<String> cookie = header.get("Set-Cookie");
 		if (cookie == null || cookie.size() == 0) {
 			result = false;
@@ -91,6 +91,7 @@ public class ShopThread implements Runnable {
 		} else {
 			LogUtil.infoPrintf("下单成功----------->");
 			LogUtil.infoPrintf("cookie====" + cookie);
+			LogUtil.singleDebugPrintf("Location :"+header.get("Location"));
 			setCookies(cookie);
 		}
 		LogUtil.infoPrintf("下单完成----------->");
@@ -114,7 +115,7 @@ public class ShopThread implements Runnable {
 		LogUtil.infoPrintf("Post parameters : " + postParams);
 		LogUtil.infoPrintf("Response Code : " + responseCode);
 		Map<String, List<String>> header = loginConn.getHeaderFields();
-		LogUtil.infoPrintf("下单回复HEADER===" + header);
+		LogUtil.singleDebugPrintf("下单回复HEADER===" + header);
 		List<String> cookie = header.get("Set-Cookie");
 		if (cookie == null || cookie.size() == 0) {
 			result = false;
@@ -122,6 +123,7 @@ public class ShopThread implements Runnable {
 		} else {
 			LogUtil.infoPrintf("下单成功----------->");
 			LogUtil.infoPrintf("cookie====" + cookie);
+			LogUtil.singleDebugPrintf("Location :"+header.get("Location"));
 			setCookies(cookie);
 		}
 		LogUtil.infoPrintf("下单完成----------->");
@@ -136,7 +138,7 @@ public class ShopThread implements Runnable {
 		parser.setEncoding("UTF-8");
 		NodeList list = parser.parse(null);
 		Map<String, List<String>> header = conn.getHeaderFields();
-		LogUtil.infoPrintf("conn.getHeaderFields():" + header);
+		LogUtil.debugPrintf("conn.getHeaderFields():" + header);
 		List<String> cookie = header.get("Set-Cookie");
 		if (cookie == null || cookie.size() == 0) {
 			LogUtil.infoPrintf("获取失败----------->");

@@ -55,7 +55,6 @@ public class GenericUtil {
 
 	public static void playAlarm() throws LineUnavailableException,
 			UnsupportedAudioFileException, IOException {
-
 		// 获取音频输入流a
 		AudioInputStream audioInputStream = AudioSystem
 				.getAudioInputStream(new File(MUSIC_FILE));

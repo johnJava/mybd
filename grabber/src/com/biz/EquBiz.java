@@ -21,6 +21,7 @@ import com.common.LogUtil;
 import com.vo.EquItem;
 import com.vo.VNode;
 import com.web.EquMessageService;
+
 @SuppressWarnings({ "unused" })
 public class EquBiz {
 	private EquItem item;
@@ -31,6 +32,7 @@ public class EquBiz {
 	public EquBiz(EquItem item) {
 		this.item = item;
 	}
+
 	public void addNode(Node node) {
 		this.nodequeue.add(node);
 		if (!convert.isAlive()) {
@@ -52,16 +54,24 @@ public class EquBiz {
 			Node node = this.nodequeue.poll();
 			try {
 				String nodehtml = toVoNode(node);
-				if(!nodehtml.equalsIgnoreCase("")){
+				if (!nodehtml.equalsIgnoreCase("")) {
 					EquMessageService.inbound.send("grabber_node" + nodehtml);
-					if(this.item.isPlayed())
-					try {
-						GenericUtil.playAlarm();
-					} catch (LineUnavailableException e) {
-						e.printStackTrace();
-					} catch (UnsupportedAudioFileException e) {
-						e.printStackTrace();
-					}
+					new Thread(new Runnable() {
+
+						public void run() {
+							if (item.isPlayed())
+								try {
+									GenericUtil.playAlarm();
+								} catch (LineUnavailableException e) {
+									e.printStackTrace();
+								} catch (UnsupportedAudioFileException e) {
+									e.printStackTrace();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+						}
+					}).start();
+
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -70,7 +80,7 @@ public class EquBiz {
 	}
 
 	public String toVoNode(Node node) {
-		boolean flag=true;
+		boolean flag = true;
 		VNode vn = new VNode();
 		NodeList all = node.getChildren();
 		for (int j = 0; j < all.size(); j++) {
@@ -85,25 +95,26 @@ public class EquBiz {
 					Node tn = ls.elementAt(i);
 					if (i == 1) {
 						vn.setTitle(tn.toHtml());
-						//LogUtil.debugPrintf("title:" + tn.toHtml());
+						// LogUtil.debugPrintf("title:" + tn.toHtml());
 						LinkTag tag = (LinkTag) tn.getChildren().extractAllNodesThatMatch(new HasAttributeFilter("href"), true).elementAt(0);
 						String href = tag.getAttribute("href");
 						String orderNum = href.substring(href.lastIndexOf("/") + 1, href.lastIndexOf("."));
 						vn.setOrderNum(orderNum);
-						if(!addOrderNumVec(orderNum))return"";
-						//LogUtil.debugPrintf("orderNum:" + orderNum);
+						if (!addOrderNumVec(orderNum))
+							return "";
+						// LogUtil.debugPrintf("orderNum:" + orderNum);
 					} else if (i == 3) {
-						//LogUtil.debugPrintf("credit--->"+tn.toHtml());
-						Span span=(Span) tn.getChildren().extractAllNodesThatMatch(new TagNameFilter("span"), true).elementAt(0);
-						if(span!=null){
-							if(!this.item.hasCredit(span.getAttribute("class"))){
-								flag=false;
+						// LogUtil.debugPrintf("credit--->"+tn.toHtml());
+						Span span = (Span) tn.getChildren().extractAllNodesThatMatch(new TagNameFilter("span"), true).elementAt(0);
+						if (span != null) {
+							if (!this.item.hasCredit(span.getAttribute("class"))) {
+								flag = false;
 								return "";
 							}
 						}
 						String credit = tn.toHtml().replaceAll("卖家信用：", "");
 						vn.setCredit(credit);
-						//LogUtil.debugPrintf("credit:" + credit);
+						// LogUtil.debugPrintf("credit:" + credit);
 					} else if (i == 7) {
 						NodeList alist = tn.getChildren().extractAllNodesThatMatch(new HasAttributeFilter("href"), true);
 						String distinct = "";
@@ -113,35 +124,36 @@ public class EquBiz {
 						}
 						distinct = distinct.substring(0, distinct.length() - 1);
 						vn.setDistinct(distinct);
-						//LogUtil.debugPrintf("distinct:" + distinct);
+						// LogUtil.debugPrintf("distinct:" + distinct);
 					}
 				}
 
 			} else if ("pdlist_price".equalsIgnoreCase(classstr)) {
-				String price =  ul.getChildren().elementAt(1).toHtml();
+				String price = ul.getChildren().elementAt(1).toHtml();
 				double pricenumber;
-				try{
-					pricenumber=Double.parseDouble(price.substring(price.indexOf("<strong>")+"<strong>".length(), price.lastIndexOf("</strong>")));
-				}catch(Exception e){
-					pricenumber=Double.MAX_VALUE;
+				try {
+					pricenumber = Double
+							.parseDouble(price.substring(price.indexOf("<strong>") + "<strong>".length(), price.lastIndexOf("</strong>")));
+				} catch (Exception e) {
+					pricenumber = Double.MAX_VALUE;
 				}
-				if(!this.item.matchPrice(pricenumber))return "";
+				if (!this.item.matchPrice(pricenumber))
+					return "";
 				vn.setPrice(price);
-				//LogUtil.debugPrintf("price:" + price);
+				// LogUtil.debugPrintf("price:" + price);
 			}
 		}
 		return vn.toString();
 	}
 
-	
-	
 	public boolean addOrderNumVec(String orderNum) {
-		if(this.orderNumVec.contains(orderNum))return false;
+		if (this.orderNumVec.contains(orderNum))
+			return false;
 		this.orderNumVec.add(orderNum);
 		if (orderNumVec.size() > 80) {
 			orderNumVec.remove(0);
 		}
 		return true;
 	}
-	
+
 }
