@@ -1,0 +1,1114 @@
+HTTP/1.1 302 Found
+Cache-Control: private
+Content-Length: 65334
+Content-Type: text/html; charset=gb2312
+Location: http://danbao.5173.com/auction/pay/PayBack.aspx?tranOrderId=DB20150312614206330&orderSumByLimitingMoney=5.0000&orderSumByEarnMoney=0&orderSumByPrePaid=0.0&orderSumByAccount=5.0000&orderSumByCoupon=0.0&orderCouponNumbersUsed=&tranSignKey=461bb72290c7476a5256e27e8233b50f
+Server: Microsoft-IIS/7.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Thu, 12 Mar 2015 09:05:18 GMT
+
+<html><head><title>Object moved</title></head><body>
+<h2>Object moved to <a href="http://danbao.5173.com/auction/pay/PayBack.aspx?tranOrderId=DB20150312614206330&amp;orderSumByLimitingMoney=5.0000&amp;orderSumByEarnMoney=0&amp;orderSumByPrePaid=0.0&amp;orderSumByAccount=5.0000&amp;orderSumByCoupon=0.0&amp;orderCouponNumbersUsed=&amp;tranSignKey=461bb72290c7476a5256e27e8233b50f">here</a>.</h2>
+</body></html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+	
+        5173.com-网络游戏|装备|游戏币|游戏帐号|寄售担保交易|游戏点卡|代练-安全快速贴心游戏交易服务平台
+</title><link rel="stylesheet" type="text/css" href="https://images002.5173cdn.com/css/fed-std/v1/reset.css" /><link rel="stylesheet" type="text/css" href="https://images002.5173cdn.com/css/fed-std/v1/fed-std.css" /><link rel="stylesheet" type="text/css" href="https://images002.5173cdn.com/css/fed-std/v1/header_v31.css" /><link rel="stylesheet" type="text/css" href="https://images002.5173cdn.com/css/fed-std/v1/button_v1.css" /><link rel="stylesheet" type="text/css" href="https://images002.5173cdn.com/css/fed-std/v1/layer_v4.css" /><link rel="stylesheet" type="text/css" href="https://images002.5173cdn.com/css/fed-std/v1/jq.layer.css" /><link rel="stylesheet" type="text/css" href="https://images002.5173cdn.com/css/pay/v1/1m/pay_v1.css" /><link rel="stylesheet" type="text/css" href="https://images002.5173cdn.com/css/pay/v1/1m/pay_v2.css" /><link rel="stylesheet" type="text/css" href="https://images002.5173cdn.com/css/pay/v1/1m/pay_quick.css" /></head>
+<body>
+    <script type="text/javascript" src="https://images002.5173cdn.com/js/fed-std/v1/jquery.1.3.2.js"></script>
+    <script language="javascript" type="text/javascript" src="https://images002.5173cdn.com/js/fed-std/v1/jq.layer.js"></script>
+    <!--风控指纹JS-->
+    <script language="javascript" type="text/javascript" src="https://images002.5173cdn.com/js/fed-std/plugin/jquery.fp.js"></script>
+    <form method="post" action="paydirectly.aspx?orderId=DB20150312614206330&amp;key=95D88D59AB5A595D922C1F098EC1EE48" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="0915324f09d34f42a6b45b9d4235a1ab" id="0915324f09d34f42a6b45b9d4235a1ab" value="OBUu8{line}wTWq8{plus}l6Is3khDXWMazP5XTx{line}Cvix3tMjYZIP9gdQOBVnyow{equel}{equel}" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTEzMDY0MzExNzEPZBYCAgMPZBYKZg9kFgICAQ8WAh4JaW5uZXJodG1sBQd3bGc3NzY2ZAIBD2QWDGYPFgIfAAUENS4wMGQCAQ8WAh8ABWQrN+aal+WknOS5i+eMjueesyDnpZ7mnqrmiYsgIOaegeWTgeWxnuaApyDkvr/lrpwg6LipMTLlpJzkuYvkuqHlhqXogIXmmpfpu5HooYDkuYvmr4HkvKTph4rprYLpqqjmiJIgZAICDw8WAh4EVGV4dAUTREIyMDE1MDMxMjYxNDIwNjMzMGRkAgQPDxYCHwEFGjIwMTXlubQwM+aciDEy5pelIDE3OjAzOjQwFgIeBXN0eWxlBQt3aWR0aDphdXRvO2QCBQ8WAh4HVmlzaWJsZWhkAggPFgIfAAUs5Zyw5LiL5Z+O5LiO5YuH5aOrIC8g5bm/5Lic5Yy6IC8g5bm/5LicMTHljLpkAgIPZBYGZg8PFgIfAQUFNTAuMDBkZAIBDxYCHwNnFgICAQ8QZBAVAgzmmoLkuI3kvb/nlKgS5omL5Yqo6L6T5YWl57qi5YyFFQICLTECLTIUKwMCZ2dkZAIHD2QWBgIBDxAPFgIfA2hkZGRkAgMPDxYCHwEFBDUuMDBkZAIFDxYCHwNoZAIDDxYCHwIFDmRpc3BsYXk6YmxvY2s7FgQCAQ9kFgRmDxYCHwNnFgICAQ8QDxYCHgtfIURhdGFCb3VuZGdkEBUEIeivt+mAieaLqeaCqOeahOWvhueggeaPkOekuumXrumimBjmgqjniLbkurLnmoTlkI3lrZfmmK/vvJ8Y5oKo5q+N5Lqy55qE5ZCN5a2X5piv77yfEuaCqOeahOiBjOS4muaYr++8nxUEAi0xGOaCqOeItuS6sueahOWQjeWtl+aYr++8nxjmgqjmr43kurLnmoTlkI3lrZfmmK/vvJ8S5oKo55qE6IGM5Lia5piv77yfFCsDBGdnZ2dkZAICD2QWBAIFD2QWBGYPFgIfAGVkAgMPFgIfAAUCMTVkAgcPZBYIZg8WAh4EaHJlZgWFAWh0dHA6Ly91c2VyLjUxNzMuY29tL3NlY3VyaXR5L01vYmlsZUJpbmRNYW5hZ2UuYXNweD9QcmV2VXJsPWh0dHBzOi8vbXlwYXkuNTE3My5jb20vUGF5T3JkZXIvUGF5T3JkZXIuYXNweD9PcmRlcklkPURCMjAxNTAzMTI2MTQyMDYzMzBkAgEPDxYCHwEFCzE1OCoqKiozNjEzZGQCAw9kFgICAQ8PFgIfAQUCMTVkZAIFDw8WAh8BBQI1NWRkAgUPFgIfAgUNZGlzcGxheTpub25lO2QCBQ9kFhACAg8PFgIfAQW6GTxsaSB0aXRsZT0n5Lit5Zu95bel5ZWG6ZO26KGMJyBzdHlsZT0nJyA+PGlucHV0IHR5cGU9J3JhZGlvJyB2YWx1ZT0nNGRjYTBkNTBlN2U0NGUzY2E3M2VkYWM3NmUyMTIwMjInIG5hbWU9J3Jkb0RlYml0Q2FyZCcgY2hlY2tlZD0nY2hlY2tlZCcvPjxsYWJlbCBjbGFzcz0nb24nIG5hbWU9J2dzJz48YSBjbGFzcz0nYmtfaWNiYycgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPjxsaSB0aXRsZT0n5Lit5Zu95Yac5Lia6ZO26KGMJyBzdHlsZT0nJyA+PGlucHV0IHR5cGU9J3JhZGlvJyB2YWx1ZT0nNjI3YjlkNjZiYjllNDMyMjlmM2RhMDY0YTRkMWFhODMnIG5hbWU9J3Jkb0RlYml0Q2FyZCcgLz48bGFiZWwgY2xhc3M9JycgbmFtZT0nbnknPjxhIGNsYXNzPSdia19hYmMnIGhyZWY9J2phdmFzY3JpcHQ6Oyc+PC9hPjwvbGFiZWw+PC9saT48bGkgdGl0bGU9J+S4reWbveW7uuiuvumTtuihjCcgc3R5bGU9JycgPjxpbnB1dCB0eXBlPSdyYWRpbycgdmFsdWU9J2YzMGEzYTFmOTVjNDQyZWJiY2MyZDcyMzEwZThjOTBjJyBuYW1lPSdyZG9EZWJpdENhcmQnIC8+PGxhYmVsIGNsYXNzPScnIG5hbWU9J2pzJz48YSBjbGFzcz0nYmtfY2NiJyBocmVmPSdqYXZhc2NyaXB0OjsnPjwvYT48L2xhYmVsPjwvbGk+PGxpIHRpdGxlPSfkuK3lm73mi5vllYbpk7booYwnIHN0eWxlPScnID48aW5wdXQgdHlwZT0ncmFkaW8nIHZhbHVlPSczNzQwMWM2YWM2ZTM0YzE0YTZkYzhiN2I4YjNiODE0YycgbmFtZT0ncmRvRGViaXRDYXJkJyAvPjxsYWJlbCBjbGFzcz0nJyBuYW1lPSd6cyc+PGEgY2xhc3M9J2JrX2NtYicgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPjxsaSB0aXRsZT0n5Lit5Zu95rCR55Sf6ZO26KGMJyBzdHlsZT0nJyA+PGlucHV0IHR5cGU9J3JhZGlvJyB2YWx1ZT0nYzk2MTdmY2FiNzZiNDYzZWJlNDBkMDExODRkNDYyMDAnIG5hbWU9J3Jkb0RlYml0Q2FyZCcgLz48bGFiZWwgY2xhc3M9JycgbmFtZT0nbXMnPjxhIGNsYXNzPSdia19jbWJjJyBocmVmPSdqYXZhc2NyaXB0OjsnPjwvYT48L2xhYmVsPjwvbGk+PGxpIHRpdGxlPSfmtabkuJzlj5HlsZXpk7booYwnIHN0eWxlPScnID48aW5wdXQgdHlwZT0ncmFkaW8nIHZhbHVlPScwMjg5NDkwNWE3NzQ0YzI0OWFmZjQ1OTNkNzg5ODFlNCcgbmFtZT0ncmRvRGViaXRDYXJkJyAvPjxsYWJlbCBjbGFzcz0nJyBuYW1lPSdwZic+PGEgY2xhc3M9J2JrX3NwZGInIGhyZWY9J2phdmFzY3JpcHQ6Oyc+PC9hPjwvbGFiZWw+PC9saT48bGkgdGl0bGU9J+WFtOS4mumTtuihjCcgc3R5bGU9JycgPjxpbnB1dCB0eXBlPSdyYWRpbycgdmFsdWU9JzU4NDNkMGYzYWY0NDQ5YmFiNGJlYmE1MDU2MmQ1ZDBhJyBuYW1lPSdyZG9EZWJpdENhcmQnIC8+PGxhYmVsIGNsYXNzPScnIG5hbWU9J3h5Jz48YSBjbGFzcz0nYmtfY2liJyBocmVmPSdqYXZhc2NyaXB0OjsnPjwvYT48L2xhYmVsPjwvbGk+PGxpIHRpdGxlPSfljJfkuqzpk7booYwnIHN0eWxlPScnID48aW5wdXQgdHlwZT0ncmFkaW8nIHZhbHVlPSdmMjI4ZjJjYTE0YTE0YTBjOWU3M2UzY2VhMDVmODk5NCcgbmFtZT0ncmRvRGViaXRDYXJkJyAvPjxsYWJlbCBjbGFzcz0nJyBuYW1lPSdiaic+PGEgY2xhc3M9J2JrX2JvYicgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPjxsaSB0aXRsZT0n5YWJ5aSn6ZO26KGMJyBzdHlsZT0nJyA+PGlucHV0IHR5cGU9J3JhZGlvJyB2YWx1ZT0nZGNiYWVlZGU3NzMwNDI0Mzg5NGJhNmZmYmE2MTAzZjMnIG5hbWU9J3Jkb0RlYml0Q2FyZCcgLz48bGFiZWwgY2xhc3M9JycgbmFtZT0nZ2QnPjxhIGNsYXNzPSdia19jZWInIGhyZWY9J2phdmFzY3JpcHQ6Oyc+PC9hPjwvbGFiZWw+PC9saT48bGkgdGl0bGU9J+S4reWbveS6pOmAmumTtuihjCcgc3R5bGU9JycgPjxpbnB1dCB0eXBlPSdyYWRpbycgdmFsdWU9J2I4ZDJjYTllZmJkZTQ3OGFhNjgyNzM3ZDI3YjQyYTNjJyBuYW1lPSdyZG9EZWJpdENhcmQnIC8+PGxhYmVsIGNsYXNzPScnIG5hbWU9J2p0Jz48YSBjbGFzcz0nYmtfY29tbScgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPjxsaSB0aXRsZT0n5bm/5Y+R6ZO26KGMJyBzdHlsZT0nJyA+PGlucHV0IHR5cGU9J3JhZGlvJyB2YWx1ZT0nM2ZhZTJjNzQwMjVmNDJkOTk0NmM1ZjkxMjRiODM4YzQnIG5hbWU9J3Jkb0RlYml0Q2FyZCcgLz48bGFiZWwgY2xhc3M9JycgbmFtZT0nZ2YnPjxhIGNsYXNzPSdia19nZGInIGhyZWY9J2phdmFzY3JpcHQ6Oyc+PC9hPjwvbGFiZWw+PC9saT48bGkgdGl0bGU9J+S4reWbvemTtuihjCcgc3R5bGU9JycgPjxpbnB1dCB0eXBlPSdyYWRpbycgdmFsdWU9JzUzMGMzODg5ZmYzYTRlODQ4Nzk4YmRkMWZjMGUxMGQ1JyBuYW1lPSdyZG9EZWJpdENhcmQnIC8+PGxhYmVsIGNsYXNzPScnIG5hbWU9J3pnJz48YSBjbGFzcz0nYmtfYm9jc2gnIGhyZWY9J2phdmFzY3JpcHQ6Oyc+PC9hPjwvbGFiZWw+PC9saT48bGkgdGl0bGU9J+S4reWbvemCruaUvycgc3R5bGU9JycgPjxpbnB1dCB0eXBlPSdyYWRpbycgdmFsdWU9JzQyNTdjMjdmYzk3ZTQxYThiNTFjN2QyODQ4NzRkZTVjJyBuYW1lPSdyZG9EZWJpdENhcmQnIC8+PGxhYmVsIGNsYXNzPScnIG5hbWU9J3l6Jz48YSBjbGFzcz0nYmtfcG9zdGdjJyBocmVmPSdqYXZhc2NyaXB0OjsnPjwvYT48L2xhYmVsPjwvbGk+PGxpIHRpdGxlPSfkuK3kv6Hpk7booYwnIHN0eWxlPScnID48aW5wdXQgdHlwZT0ncmFkaW8nIHZhbHVlPSc5Y2RiNzlkOWIzOWY0NmU5YWY4YzhmZmI2NDZiNzM5YycgbmFtZT0ncmRvRGViaXRDYXJkJyAvPjxsYWJlbCBjbGFzcz0nJyBuYW1lPSd6eCc+PGEgY2xhc3M9J2JrX2NuY2InIGhyZWY9J2phdmFzY3JpcHQ6Oyc+PC9hPjwvbGFiZWw+PC9saT48bGkgdGl0bGU9J+S4iua1t+mTtuihjCcgc3R5bGU9JycgPjxpbnB1dCB0eXBlPSdyYWRpbycgdmFsdWU9JzI1NDgwYmI4NDhhNjRmYjZiNTYxMTAzMTA3MjUyNDMyJyBuYW1lPSdyZG9EZWJpdENhcmQnIC8+PGxhYmVsIGNsYXNzPScnIG5hbWU9J3NoJz48YSBjbGFzcz0nYmtfYm9zJyBocmVmPSdqYXZhc2NyaXB0OjsnPjwvYT48L2xhYmVsPjwvbGk+PGxpIHRpdGxlPSflubPlronpk7booYwnIHN0eWxlPScnID48aW5wdXQgdHlwZT0ncmFkaW8nIHZhbHVlPSc5Y2ZlY2Y4NzZiYzU0ZWRjYjlmYWIyZmJlZDRlOGE1MicgbmFtZT0ncmRvRGViaXRDYXJkJyAvPjxsYWJlbCBjbGFzcz0nJyBuYW1lPSdwYSc+PGEgY2xhc3M9J2JrX3BpbmdhbicgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPmRkAgQPDxYCHwEFlwg8bGkgdGl0bGU9J+S4reWbveW3peWVhumTtuihjCcgc3R5bGU9JycgPjxpbnB1dCB0eXBlPSdyYWRpbycgdmFsdWU9JzRkY2EwZDUwZTdlNDRlM2NhNzNlZGFjNzZlMjEyMDIyJyBuYW1lPSdyZG9DcmVkaXRDYXJkJyBjaGVja2VkPSdjaGVja2VkJy8+PGxhYmVsIGNsYXNzPSdvbicgbmFtZT0nZ3MnPjxhIGNsYXNzPSdia19pY2JjJyBocmVmPSdqYXZhc2NyaXB0OjsnPjwvYT48L2xhYmVsPjwvbGk+PGxpIHRpdGxlPSfkuK3lm73lhpzkuJrpk7booYwnIHN0eWxlPScnID48aW5wdXQgdHlwZT0ncmFkaW8nIHZhbHVlPSc2MjdiOWQ2NmJiOWU0MzIyOWYzZGEwNjRhNGQxYWE4MycgbmFtZT0ncmRvQ3JlZGl0Q2FyZCcgLz48bGFiZWwgY2xhc3M9JycgbmFtZT0nbnknPjxhIGNsYXNzPSdia19hYmMnIGhyZWY9J2phdmFzY3JpcHQ6Oyc+PC9hPjwvbGFiZWw+PC9saT48bGkgdGl0bGU9J+S4reWbveW7uuiuvumTtuihjCcgc3R5bGU9JycgPjxpbnB1dCB0eXBlPSdyYWRpbycgdmFsdWU9J2YzMGEzYTFmOTVjNDQyZWJiY2MyZDcyMzEwZThjOTBjJyBuYW1lPSdyZG9DcmVkaXRDYXJkJyAvPjxsYWJlbCBjbGFzcz0nJyBuYW1lPSdqcyc+PGEgY2xhc3M9J2JrX2NjYicgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPjxsaSB0aXRsZT0n5Lit5Zu95Lqk6YCa6ZO26KGMJyBzdHlsZT0nJyA+PGlucHV0IHR5cGU9J3JhZGlvJyB2YWx1ZT0nYjhkMmNhOWVmYmRlNDc4YWE2ODI3MzdkMjdiNDJhM2MnIG5hbWU9J3Jkb0NyZWRpdENhcmQnIC8+PGxhYmVsIGNsYXNzPScnIG5hbWU9J2p0Jz48YSBjbGFzcz0nYmtfY29tbScgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPjxsaSB0aXRsZT0n5Lit5Zu96ZO26KGMJyBzdHlsZT0nJyA+PGlucHV0IHR5cGU9J3JhZGlvJyB2YWx1ZT0nNTMwYzM4ODlmZjNhNGU4NDg3OThiZGQxZmMwZTEwZDUnIG5hbWU9J3Jkb0NyZWRpdENhcmQnIC8+PGxhYmVsIGNsYXNzPScnIG5hbWU9J3pnJz48YSBjbGFzcz0nYmtfYm9jc2gnIGhyZWY9J2phdmFzY3JpcHQ6Oyc+PC9hPjwvbGFiZWw+PC9saT5kZAIGDw8WAh8BBb4EPGxpIHRpdGxlPSflv6vpkrEnIHN0eWxlPScnID48aW5wdXQgdHlwZT0ncmFkaW8nIHZhbHVlPSc4N2IwYzUxZjNiMWM0OWM3ODYwYTYzZTk1MzZiOGRjMicgbmFtZT0ncmRvVGhpcmRQYXknIGNoZWNrZWQ9J2NoZWNrZWQnIC8+PGxhYmVsIGNsYXNzPSdvbic+PGEgY2xhc3M9J2JpbGw5OScgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPjxsaSB0aXRsZT0n5pSv5LuY5a6dJyBzdHlsZT0nJyA+PGlucHV0IHR5cGU9J3JhZGlvJyB2YWx1ZT0nZmQwNmI1MjllMWM5NDk1M2I1M2VkNzA3OGQxNmU5MTgnIG5hbWU9J3Jkb1RoaXJkUGF5JyAgLz48bGFiZWwgY2xhc3M9Jyc+PGEgY2xhc3M9J2FsaXBheScgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPjxsaSB0aXRsZT0n6LSi5LuY6YCaJyBzdHlsZT0nJyA+PGlucHV0IHR5cGU9J3JhZGlvJyB2YWx1ZT0nNGY3MTUxNjc1NjNhNGE2ZjkxN2I0N2FmYjQzNGEyY2YnIG5hbWU9J3Jkb1RoaXJkUGF5JyAgLz48bGFiZWwgY2xhc3M9Jyc+PGEgY2xhc3M9J3RlbnBheScgaHJlZj0namF2YXNjcmlwdDo7Jz48L2E+PC9sYWJlbD48L2xpPmRkAgcPFgIfA2hkAgoPDxYCHwEFxAE8bGkgdGl0bGU9IlBheVBhbCI+PGlucHV0IHR5cGU9InJhZGlvIiB2YWx1ZT0iM2JlYzFjMTVmMThlNGZiMGFhNzM5ZDEwNGI1NGJmMjIiIG5hbWU9Ik92ZXJTZWEiIGNoZWNrZWQ9ImNoZWNrZWQiIC8+PGxhYmVsIGNsYXNzPSJvbiI+PGEgY2xhc3M9IndiX3BheXBhbCIgaHJlZj0iamF2YXNjcmlwdDp2b2lkIDAiPjwvYT48L2xhYmVsPjwvbGk+ZGQCCw8QDxYGHg1EYXRhVGV4dEZpZWxkBQROYW1lHg5EYXRhVmFsdWVGaWVsZAUCSWQfBGdkEBUGBue+juWFgwbmrKflhYMG6Iux6ZWRBua4r+W4gQzliqDmi7/lpKflhYMG5r6z5biBFQYgNWFkYWY4NWM5ZmVjNGNmM2IwNTc2NjM1OGMzNmM3MWEgM2M0NjNjMDI4OWZhNGNlZmEyODFmODQ0MWYyYjNlNDcgYmU3ZWI1ODc4NGY2NGM5Y2IxOWQ4ODE5ZjhiMDhhZGQgZTgxYzg1MTAyNmEzNDNmM2JiYjZjNzA3MzM0ZDVmY2EgZThlZDIyZDVmOWFkNDU3MGFhMmU1NzE3ZDY1ODc1ZmMgMDdmZjk3NzEzYzFhNDIyZjlmNDc3ZTUyYjlkMzBhZGQUKwMGZ2dnZ2dnZGQCDw8PFgIfAQX4AjxsaSB0aXRsZT0i5YWU5YWU6ZKx5YyFIj48aW5wdXQgdHlwZT0icmFkaW8iIHZhbHVlPSJlODBlMzc4NmVkY2Q0MDg0OGEyZDYwNmQ0YzZmNmNkYyIgbmFtZT0iU2NhbkNvZGUiIGNoZWNrZWQ9ImNoZWNrZWQiIC8+PGxhYmVsIGNsYXNzPSJvbiI+PGEgY2xhc3M9InR0X3BheSIgaHJlZj0iamF2YXNjcmlwdDp2b2lkIDAiPjwvYT48L2xhYmVsPjwvbGk+PGxpIHRpdGxlPSLlvq7kv6HmlK/ku5giPjxpbnB1dCB0eXBlPSJyYWRpbyIgdmFsdWU9ImE3OTRkYWY2MGQ5MDQ1NjhhMDQyZjdkZTQ5MmJhNzNiIiAgbmFtZT0iU2NhbkNvZGUiIC8+PGxhYmVsPjxhIGNsYXNzPSJ3ZWl4aW5fcGF5IiBocmVmPSJqYXZhc2NyaXB0OnZvaWQgMCI+PC9hPjwvbGFiZWw+PC9saT5kZAIQDxYCHwNnZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAgUYUGF5RGlyZWN0bHlCYW5rMSRyZFI1MTczBR1QYXlEaXJlY3RseUJhbmsxJHJkUmV0dXJuQmFja3x8nXwy0Gslmx7jL+PKxi8Jhp+H" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script>document.domain= "5173.com";</script>
+<script src="https://urchin.5173.com/urchin_s.js" type="text/javascript"></script><script type="text/javascript">
+try {
+  _userv=2;
+  _udn=".5173.com";
+  _uacct="UA-16260521-1";
+  urchinTracker();
+} catch(err) {}</script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWGwLT39bjAwLnhY65DALnhYq5DAK7xPPpCALxlpPgDgK6oNvADQK03eyBBwL8naGhDwLLlL/yBwLOlJPiBgKArJC9DwKbvNelCALfv5RIApHylqMCAtTcjLgCAuSoks0DAq210cYOAsjthtIHAsLpz/oBApeC/0oCjPL9vgwCpdGDtQ0C2OvFlw4Cx+vFlw4C9sj53wEC9/XU6AUCvKCjjg09bGo4dUSQcndKmNu8KbjKruua6g==" />
+</div>
+    
+<div class="header4" style="left: 0px">
+  <h1><a href="http://www.5173.com/" target="_blank" title="中国网络游戏服务网">5173</a></h1>
+  <div class="topNav">
+    <ul>
+      <li><span class="home"><a href="http://user.5173.com/">我的5173</a></span></li>
+      <li><a href="http://trading.5173.com/">我要买</a></li>
+      <li><a href="http://trading.5173.com/auction/newpublish.aspx">我要卖</a></li>
+      <li><a href="http://help.5173.com/service/help_102.htm">客服中心</a></li>
+      <li><span class="help"><a href="http://aid.5173.com/">帮助中心</a></span></li>
+    </ul>
+    <div class="userLogin">您好，<span id="PayOrderTop1_spanUserName" style="color:Red;">wlg7766</span> 欢迎来到 5173！ <span>[<a href="https://passport.5173.com/Sso/Logout?returnUrl=http://www.5173.com" id="PayOrderTop1_btnLoginOut">退出</a>]</span></div>
+  </div>
+ </div>
+    <div class="paycontent">
+        
+ <h2>订单支付</h2><span class="titlemsg">请确认订单信息并付款</span>
+ <div class="order-info">
+  <span class="pro-money"><strong id="PayDirectlyTitle1_lblSumPrice">5.00</strong> 元</span><span id="spanIcon" class="icon_dk"></span> <h3 id="PayDirectlyTitle1_h3BizOfferTitle" class="pro-title">+7暗夜之猎瞳 神枪手  极品属性 便宜 踩12夜之亡冥者暗黑血之毁伤释魂骨戒 </h3> <span class="position-r pro-detail-box"><a href="#" class="pro-detail-link" id="pro-detail-open">详情</a> <a href="#" class="pro-detail-link hide"  id="pro-detail-close">隐藏</a>
+    <div class="tips-orderinfo hide" id="tips-info">
+    <ul>
+        <li><span>订单号：</span><span id="PayDirectlyTitle1_lblOrderId">DB20150312614206330</span></li>
+        <li><span id="PayDirectlyTitle1_spanCreateDate">购买时间：</span><span id="PayDirectlyTitle1_lblCreatedDate" style="width:auto;">2015年03月12日 17:03:40</span></li>       
+         
+                              	     
+        
+    </ul>
+    <ins class="layer_f"></ins>
+    <a href="javascript:;" class="close" id="tip-close">X</a>
+    </div>        
+    </span><span id="PayDirectlyTitle1_spanGameInfo">地下城与勇士 / 广东区 / 广东11区</span>
+ </div>
+ <script language="javascript" type="text/javascript">
+     $(function () {
+         var className = "icon_db";
+         if (className != "") {
+             $('#spanIcon').attr("class", className);
+         }
+
+         $("#pro-detail-open").click(function () {
+             $("#tips-info").show();
+             $("#pro-detail-close").show();
+             $("#pro-detail-open").hide();
+         });
+
+         $("#pro-detail-close,#tip-close").click(function () {
+             $("#tips-info").hide();
+             $("#pro-detail-open").show();
+             $("#pro-detail-close").hide();
+         });
+
+     })
+</script>
+
+        <div class="hongbao">
+            
+<ul class="hongbao-form">
+    <li><span class="form-l">可支付余额：</span><span class="pay-money"><strong><span id="PayDirectlyBalance1_lblUserSumMoney">50.00</span></strong>元</span></li>
+    <li id="PayDirectlyBalance1_liCouponMonery"><span class="form-l">可使用红包：</span>
+        <select name="PayDirectlyBalance1$ddlCoupon" id="PayDirectlyBalance1_ddlCoupon">
+	<option selected="selected" value="-1">暂不使用</option>
+	<option value="-2">手动输入红包</option>
+
+</select>
+        <a href="#" class="helpimg" id="helpimg"></a></li>
+    <li>
+        <div class="clearfix hongbao-tipbox">
+            <div id="divInputCoupon" class="submit-hb" style="display: none;">
+                <ins></ins>
+                <label>
+                    红包号码：</label><input name="PayDirectlyBalance1$txtCouponNum" type="text" id="PayDirectlyBalance1_txtCouponNum" maxlength="32" />
+                <label>
+                    红包密码：</label><input name="PayDirectlyBalance1$txtCouponPwd" type="password" id="PayDirectlyBalance1_txtCouponPwd" maxlength="32" />
+                <a class="btnlink_w_small" id="lbtnConfirmCoupon" onclick="document.getElementById('PayDirectlyBalance1_btnConfirmCoupon').click();">
+                    <span>确定</span></a>
+                <input name="PayDirectlyBalance1$btnConfirmCoupon" type="submit" id="PayDirectlyBalance1_btnConfirmCoupon" style="display: none" onclick="return CheckCouponInput();" />
+                
+            </div>
+            <span id="spanCouponErr" class="err_mbox  err_sp f_l" style="display: none;"><span>请输入红包卡号</span>
+            </span>
+            <div id="divShowCoupon" class="submit-hb submit-hb-1" style="display: none;">
+                <ins></ins>
+                <label>
+                    红包号码：</label><span class="hongbao-code"><span id="PayDirectlyBalance1_lblCouponNum"></span></span><label>抵扣金额：</label><span
+                        class="hongbao-jine"><strong><span id="PayDirectlyBalance1_lblCouponMoney">0.00</span></strong>元</span><a
+                            id="aChangeCoupon" href="#" class="changecode">换一张</a>
+            </div>
+        </div>
+    </li>
+</ul>
+<div id="PayDirectlyBalance1_divCalcMoney" class="pay-xiaoji">
+    使用账户余额付款<strong><span id="PayDirectlyBalance1_lblUserSumMoneyPay">5.00</span></strong>元。</div>
+<span id="securityContainer"></span>
+<input name="PayDirectlyBalance1$hdnSumPrice" type="hidden" id="PayDirectlyBalance1_hdnSumPrice" value="5.00" />
+<script language="javascript" type="text/javascript">
+    $(function () {
+        //红包劵操作
+        $("#PayDirectlyBalance1_ddlCoupon").change(function () {
+            var couponText = $(this).find("option:selected").text();
+            if (couponText == "手动输入红包") {
+                var couponNum = $('#PayDirectlyBalance1_lblCouponNum').text();
+                if (couponNum != "") {
+                    $("#divInputCoupon").hide();
+                    $("#divShowCoupon").show();
+                }
+                else {
+                    $("#divInputCoupon").show();
+                    $("#divShowCoupon").hide();
+                }
+            }
+            else {
+                $("#divInputCoupon").hide();
+                $("#divShowCoupon").hide();
+                $("#spanCouponErr").hide();
+            }
+            accountCouponValue();
+        });
+        $("#PayDirectlyBalance1_ddlCoupon").click(function () {
+            var couponText = $(this).find("option:selected").text();
+            if (couponText == "手动输入红包") {
+                var couponNum = $('#PayDirectlyBalance1_lblCouponNum').text();
+                if (couponNum != "") {
+                    $("#divInputCoupon").hide();
+                    $("#divShowCoupon").show();
+                }
+                else {
+                    $("#divInputCoupon").show();
+                    $("#divShowCoupon").hide();
+                }
+            }
+            else {
+                $("#divInputCoupon").hide();
+                $("#divShowCoupon").hide();
+                $("#spanCouponErr").hide();
+            }
+            accountCouponValue();
+        });
+        $("#aChangeCoupon").click(function () {
+            $("#divInputCoupon").show();
+            $("#divShowCoupon").hide();
+            accountCouponValue();
+        });
+
+        //$.fed.tabs("#tabs3", { event: "click", currindex: 0, interval: 0 });
+
+        $("#helpimg").mouseover(function () {
+            $("#helptip").removeClass("helptip-no");
+            $("#helptip").fedFollow("#helpimg", { left: -24, top: -105 });
+        });
+
+        $("#helpimg").mouseout(function () {
+            $("#helptip").addClass("helptip-no");
+        });
+    });
+
+    function CheckCouponInput() {
+        if ($.trim($("#PayDirectlyBalance1_txtCouponNum").val()) == "") {
+            setCouponErr("请输入红包卡号");
+            return false;
+        }
+        if ($.trim($("#PayDirectlyBalance1_txtCouponPwd").val()) == "") {
+            setCouponErr("请输入红包密码");
+            return false;
+        }
+    }
+
+    //刷新后显示红包信息
+    function showCouponInfo() {
+        try {
+            var ddlCoupon = $("#PayDirectlyBalance1_ddlCoupon");
+            if (ddlCoupon == null || ddlCoupon == undefined) {
+                return;
+            }
+            var couponText = ddlCoupon.find("option:selected").text();
+            if (couponText == "手动输入红包") {
+                var couponNum = $('#PayDirectlyBalance1_lblCouponNum').text();
+                if (couponNum != "") {
+                    $("#divInputCoupon").hide();
+                    $("#divShowCoupon").show();
+                }
+                else {
+                    $("#divInputCoupon").show();
+                    $("#divShowCoupon").hide();
+                }
+            }
+
+            //重新计算一次
+            accountCouponValue();
+        }
+        catch (e) { }
+    }
+
+    //计算红包
+    function accountCouponValue() {
+        if ($("#PayDirectlyBalance1_divCalcMoney").is(':visible') == false) {
+            return;
+        }
+
+        var checkValue = $("#PayDirectlyBalance1_ddlCoupon").find("option:selected").text().split('元')[0];
+        if ($.trim(checkValue) == "" || checkValue == "暂不使用")
+            checkValue = "0.00";
+
+        var lblCouponMoney = $('#PayDirectlyBalance1_lblCouponMoney').text();
+        if (checkValue == "手动输入红包") {
+            checkValue = lblCouponMoney == "" ? "0.00" : lblCouponMoney;
+        }
+
+        var orderPrice = parseFloat($("#PayDirectlyBalance1_hdnSumPrice").val());  //订单金额
+        if (orderPrice == 0)
+            return;
+        var lblUserSumMoney = parseFloat($("#PayDirectlyBalance1_lblUserSumMoney").text());  //余额
+        var lblUserSumMoneyPay = $("#PayDirectlyBalance1_lblUserSumMoneyPay"); //支付金额
+        try {
+            checkValue = getPoint(checkValue); //红包金额
+            var account = orderPrice - checkValue;
+            if (account <= 0) {
+                alert('红包金额应小于订单金额。');
+                return;
+            }
+            var payMoney = 0;
+            if (lblUserSumMoney >= orderPrice) {
+                payMoney = orderPrice - checkValue;
+                lblUserSumMoneyPay.text(getPoint(payMoney.toString()));
+            }
+            else {
+                var lblSurplusMoney = $("#PayDirectlyBalance1_lblSurplusMoney");
+                var requestMoney = 0;
+                payMoney = lblUserSumMoney + checkValue - orderPrice
+                if (payMoney >= 0) {
+                    var sumMoneyPay = lblUserSumMoney - payMoney;
+                    lblUserSumMoneyPay.text(getPoint(sumMoneyPay.toString()));
+                    lblSurplusMoney.text("0.00");
+                    $("#divAuthType").show();
+                }
+                else {
+                    lblUserSumMoneyPay.text(lblUserSumMoney.toString());
+                    lblSurplusMoney.text(getPoint(Math.abs(payMoney).toString()));
+                    $("#divAuthType").hide();
+                }
+            }
+        }
+        catch (e) {
+        }
+    }
+
+    //取两位小数点
+    function getPoint(str) {
+        str = Math.round(str * 100) / 100;
+        if (str.toString() == 'NaN' || str == undefined)
+            return 0.00;
+        var idx = str.toString().indexOf(".");
+        if (idx == -1) {
+            str = str.toString() + ".00";
+        }
+        else if (idx > -1 && str.toString().length - idx == 2) {
+            str = str.toString() + "0";
+        }
+        return parseFloat(str);
+    }
+
+    function setCouponErr(errInfo) {
+        $("#spanCouponErr").show();
+        $("#spanCouponErr").html("<span>" + errInfo + "</span>");
+    }
+</script>
+<script type="text/javascript" src="https://security.5173.com/Security/ClientBroker/5173MyPayDeduction"></script>
+<!--风控部分：编写自有的验证脚本，比如判断金额等等，调用安全服务脚本-->
+<script type="text/javascript">
+    $(function () {
+        $.fost.security.showBroker({
+            installRequired: false,
+            installDemand: false,
+            passwordRequired: false,
+            onsubmit: function () {
+                //onsubmit表示表单即将回发前发生的事件，函数返回true表示可以回发
+                //这里填写验证脚本
+            }
+        });
+    });
+</script>
+
+            <div id="divAuthType" class="pay-mobile" style="display:block;">
+                <div id="PayDirectlyAuthType1_divSecurityAnswer">
+    <div class="pay-tip clearfix">
+        <span class="warn_mbox"><span class="span_m">为了提高您的账户安全，建议您<a href="http://safe.5173.com/SMSPasspod/Home/Bind">绑定手机</a>用发送验证码方式完成资金操作。</span>
+            <b class="layer_f"></b></span>
+    </div>
+    <ul class="hongbao-form">
+        <li class="clearfix"><span class="form-l f_l">密码提示问题：</span><select name="PayDirectlyAuthType1$ddlSecurityAnswer" id="PayDirectlyAuthType1_ddlSecurityAnswer" class="f_l">
+	<option value="-1">请选择您的密码提示问题</option>
+	<option selected="selected" value="您父亲的名字是？">您父亲的名字是？</option>
+	<option value="您母亲的名字是？">您母亲的名字是？</option>
+	<option value="您的职业是？">您的职业是？</option>
+
+</select>
+            <span class="err_mbox  err_sp f_l" id="spanSecurityAnswer" style="display: none;"><span>
+                请选择密码提示问题。</span> </span></li>
+        <li class="clearfix"><span class="form-l f_l">密码提示答案：</span>
+            <input name="PayDirectlyAuthType1$txtSecurityAnswer" type="text" value="王广斌" maxlength="64" id="PayDirectlyAuthType1_txtSecurityAnswer" class="input_daan f_l" />
+            <span name="spanWrongTip" class="err_mbox  err_sp f_l" style="display: none;"><span>
+                密码提示答案错误，请重新输入。</span> </span>
+            <p class="forgotpass">
+                <a href="http://safe.5173.com/SecurityQuestion/Home/FindSQByEmail" target="_blank">忘记密码提示答案</a></p>
+        </li>
+    </ul>
+</div>
+
+
+<script language="javascript" type="text/javascript">
+
+    function checkAuthType() {
+        var inputValue = "";
+        if ($("#PayDirectlyAuthType1_divMobilePay").is(':visible')) {
+            if ($("#PayDirectlyAuthType1_divWeixin").attr('class') == "pay-center visited") {
+                inputValue = $.trim($("#PayDirectlyAuthType1_txtWeixinCode").val());
+
+                if (inputValue == "") {
+                    $('label.wx-hint').css('display', 'none');
+                    $('label.wx-hint.kong').css('display', 'block');
+                    document.getElementById("PayDirectlyAuthType1_txtWeixinCode").className = "input_duanxin input_error f_l";
+                    return false;
+                }
+            }
+            else {
+                inputValue = $.trim($("#PayDirectlyAuthType1_txtSmsCode").val());
+                var spanFreemsg = $("#spanFreemsg");
+                if ($("#lbtnSetSmsCode").is(':visible')) {
+                    if (inputValue == "") {
+                        spanFreemsg.show();
+                        return false;
+                    }
+                }
+                else {
+                    spanFreemsg.hide();
+                    if (inputValue == "") {
+                        setErrorInfo("请输入短信验证码。");
+                        return false;
+                    }
+                }
+            }
+        }
+        else if ($("#PayDirectlyAuthType1_divPaymentPwd").is(':visible')) //支付密码验证
+        {
+            inputValue = $.trim($("#PayDirectlyAuthType1_txtPaymentPwd").val());
+            if (inputValue == "") {
+                setErrorInfo("请输入支付密码。");
+                return false;
+            }
+        }
+        else if ($("#PayDirectlyAuthType1_divSecurityAnswer").is(':visible')) //安全问答验证
+        {
+            var ddlValue = $.trim($("#PayDirectlyAuthType1_ddlSecurityAnswer option:selected").val());
+            if (ddlValue == "" || ddlValue == "-1") {
+                setErrorInfo("请选择密码提示问题。");
+                return false;
+            }
+
+            inputValue = $.trim($("#PayDirectlyAuthType1_txtSecurityAnswer").val());
+            if (inputValue == "") {
+                setErrorInfo("请输入密码提示问题答案。");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //设置验证错误信息
+    function setErrorInfo(error) {
+        var err_mbox = $("span[name='spanWrongTip']");
+        err_mbox.hide();
+        err_mbox.prev().attr("class", "input_daan f_l");
+        if (error == "请选择密码提示问题。") {
+            $("#spanSecurityAnswer").show();
+        }
+        else {
+            $("#spanSecurityAnswer").hide();
+            if ($("#PayDirectlyAuthType1_divMobilePay").is(':visible')) {
+                if ($("#PayDirectlyAuthType1_divWeixin").attr('class') == "pay-center visited") {
+                    $('label.wx-hint').css('display', 'none');
+                    $('label.wx-hint.shuru').css('display', 'block');
+                    $('label.wx-hint.shuru').html("<ins></ins><span>" + error + "</span>");
+                    //                    $("PayDirectlyAuthType1_txtWeixinCode").removeClass("class");
+                    //                    $("PayDirectlyAuthType1_txtWeixinCode").addClass("input_duanxin input_error f_l");
+                    document.getElementById("PayDirectlyAuthType1_txtWeixinCode").className = "input_duanxin input_error f_l";
+                }
+                else if ($("#PayDirectlyAuthType1_divSms").attr('class') == "pay-center visited") {
+                    err_mbox.html("<span>" + error + "</span>");
+                    err_mbox.show();
+                    err_mbox.prev().attr("class", "input_duanxin input_error f_l");
+                }
+            }
+            else {
+                err_mbox.html("<span>" + error + "</span>");
+                err_mbox.show();
+                err_mbox.prev().attr("class", "input_daan input_error f_l");
+            }
+        }
+    }
+    //支付验证错误信息
+    function payValidate(onState, error) {
+        if (onState == "show") {
+            setErrorInfo(error);
+
+            //判断是否短信验证码
+            if ($("#PayDirectlyAuthType1_divMobilePay").is(':visible')) {
+                if ($("#PayDirectlyAuthType1_divSms").attr('class') == "pay-center visited") {
+                    showSmsDiv();
+                }
+            }
+        }
+        else if (onState == "hide") {
+            $("span[class^=err_mbox]").hide();
+            $('label.wx-hint').css('display', 'none');
+        }
+    }
+
+    //    var weixintotaltime = $("#PayDirectlyAuthType1_spanWxResendInterval").text();
+    var total = '60';
+    function ResendWeixinCode() {
+        if ($(this).attr('flog') == 0) { return false; }
+        var countDown = function () {
+            var hintText = '(' + total + ')' + '重新发送验证码';
+            $('a.blue-link-ud.f_l.wx').html(hintText).css('cursor', 'text').attr('flog', '0');
+            $('a.blue-link-ud.f_l.wx').attr("disabled", "disabled");
+            total--;
+            var countRoll = setTimeout(countDown, 1000);
+            if (total <= 0) {
+                $('a.blue-link-ud.f_l.wx').html('发送验证码').css('cursor', 'pointer').attr('flog', '1');
+                clearTimeout(countRoll);
+                $('a.blue-link-ud.f_l.wx').removeAttr("disabled");
+            }
+        }
+        countDown();
+    }
+
+    //显示微信验证码等待
+    function ShowWeixinWait() {
+        $("#spanWeixinValidity").show();
+        $('label.wx-hint').css('display', 'none');
+        $('label.wx-hint.deng').css('display', 'block');
+        if ($('#lbtnSendWxCode').attr('disabled') == 'disabled')
+            return false;
+        else
+            return true;
+    }
+
+    //发送短信及倒计时
+    var resendMessInterval = $("#PayDirectlyAuthType1_lblSmsSecond").text();
+    function resendMessIntervalTime() {
+        resendMessInterval--;
+        var lbtnReSendCode = $("#lbtnReSendCode");
+        if (resendMessInterval > 0) {
+            var str = resendMessInterval;
+            if (str < 10)
+                str = "0" + str;
+            if (lbtnReSendCode.length > 0) {
+                //                lbtnReSendCode.html("<span>(" + str + ")再次发送短信验证码</span>");
+                $("#iSecond").html(str);
+                $("#iSecond1").html(str);
+                lbtnReSendCode.attr("disabled", "disabled");
+                $("#lbtnSendVoice").attr("disabled", "disabled");
+                $("#lbtnWaitVoice").attr("disabled", "disabled");
+            }
+            setTimeout("resendMessIntervalTime()", 1000);
+        }
+        else {
+            if (lbtnReSendCode.length > 0) {
+                //                lbtnReSendCode.html("<span>再次发送短信验证码</span>");
+                $("#lblReSecond").hide();
+                $("#lblSecond").hide();
+                lbtnReSendCode.removeAttr("disabled");
+                $("#lbtnSendVoice").removeAttr("disabled");
+                $("#lbtnWaitVoice").removeAttr("disabled");
+            }
+        }
+    }
+
+    //显示短信发送层
+    function showSmsDiv() {
+        $("#PayDirectlyAuthType1_spanEffectiveMinutes").show();
+        $("#divNomsgbox").show();
+        $("#divWaitVoice").hide();
+        $("#divVoiceBusy").hide();
+        $("#lbtnSetSmsCode").hide();
+        $("#lblReSecond").show();
+        $("#iSecond").text('55');
+        if ($("#lbtnReSendCode").attr('disabled') == 'disabled')
+            return false;
+        else
+            return true;
+    }
+
+    //显示等待语音播报层
+    function ShowWaitVoice() {
+        $("#divWaitVoice").show();
+        $("#lblSecond").show();
+        $("#divNomsgbox").hide();
+        $("#lbtnSetSmsCode").hide();
+        $("#divVoiceBusy").hide();
+    }
+
+    //显示语音播报繁忙
+    function ShowVoiceBusy() {
+        $("#divVoiceBusy").show();
+        $("#divNomsgbox").hide();
+        $("#divWaitVoice").hide();
+        $("#lbtnSetSmsCode").hide();
+    }
+
+    //提示发送验证码
+    function tipSetSmsCode(onmouse) {
+        if ($("#lbtnSetSmsCode.ClientID").is(':visible')) {
+            if (onmouse == "move") {
+                $('#spanFreemsg').show();
+            }
+            else if (onmouse == "out") {
+                $('#spanFreemsg').hide();
+            }
+        }
+    }
+    /*新增微信交互*/
+    $('.pay-title label').each(function (_index) {
+        $(this).click(function () {
+            $('.pay-title label').removeClass('visited');
+            $(this).addClass('visited');
+            $('.pay-center').removeClass('visited');
+            $('.pay-center').eq(_index).addClass('visited');
+        });
+    });
+
+    function SetWeiXinHidValue() {
+        document.getElementById("PayDirectlyAuthType1_hidMobileType").value = "WeiXin";
+        $("#PayDirectlyAuthType1_txtSmsCode").val("");
+    }
+    function SetSmsHidValue() {
+        document.getElementById("PayDirectlyAuthType1_hidMobileType").value = "Sms";
+        $("#PayDirectlyAuthType1_txtWeixinCode").val("");
+    }
+
+    $(function () {
+        if ($("#PayDirectlyAuthType1_divMobilePay").is(':visible')) {
+            if (document.getElementById("PayDirectlyAuthType1_hidMobileType").value == "WeiXin") {
+                $("#PayDirectlyAuthType1_lblWeixin").addClass('visited');
+                $("#PayDirectlyAuthType1_lblSms").removeClass('visited');
+                $("#PayDirectlyAuthType1_divWeixin").addClass('visited');
+                $("#PayDirectlyAuthType1_divSms").removeClass('visited');
+            }
+            else {
+                $("#PayDirectlyAuthType1_lblSms").addClass('visited');
+                $("#PayDirectlyAuthType1_lblWeixin").removeClass('visited');
+                $("#PayDirectlyAuthType1_divSms").addClass('visited');
+                $("#PayDirectlyAuthType1_divWeixin").removeClass('visited');
+            }
+        }
+    });
+</script>
+
+                <div class="pay-btnbox" id="divAffirmPay">
+                    <a id="aAffirmPay" href="#" class="btnlink_b"><span>确认支付</span></a>
+                    <input type="submit" name="btnAffirmPay" value="" id="btnAffirmPay" style="display: none" />
+                </div>
+                <div id="divWeiXinBoot" class="pay-hint" style="display:none;">
+                    <p>
+                        <label>
+                            收不到短信？</label>
+                        <span>推荐开启<a href="http://safe.5173.com/WeixinPasspod/Home/Enable" target="_blank">微信验证授权</a>，可用微信接收验证码。</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div id="divBankMsg" style="display: none;" class="safeguard_tip">
+            <s></s><span id="spBankMsg"></span>
+        </div>
+        
+<div class="pay-body" id="tabs3">
+    <div class="pay-fangshi" name="tabhead">
+        <span class="tt">您可以使用其他方式付款：</span>
+        <ul>
+            <li class="current"><a href="#tabs3-1"><span>储蓄卡</span></a></li>
+            <li><a href="#tabs3-2"><span>信用卡</span></a></li>
+            <li><a href="#tabs3-3"><span>其他支付方式</span></a></li>
+            <li id="PayDirectlyBank1_liCurrencyPay"><a href="#tabs3-4"><span class="wbtab">外币支付</span></a></li>
+            <li id="PayDirectlyBank1_liScanCodePay"><a href="#tabs3-5"><span class="wbtab">扫码支付<ins
+                class="new-ico"></ins></span></a></li>
+        </ul>
+    </div>
+    <div class="pay-fangshi-box" name="tabpanel" id="tabs3-1">
+        <div class="clearfix">
+        </div>
+        <p class="pay-fangshi-tt">
+            网上银行：<span class="link_bl arrowspan hide"><a href="javascript:;" id="bank-open" onclick="openBank('bank-open', 'bank-list', 'bank-close');">展开</a></span><span
+                class="link_bl arrowspan-t-2"><a href="javascript:;" id="bank-close" onclick="closeBank('bank-open', 'bank-list', 'bank-close');">收起</a></span></p>
+        <ul class="bank_l clearfix" id="bank-list">
+            <span id="PayDirectlyBank1_lblBankDebit"><li title='中国工商银行' style='' ><input type='radio' value='4dca0d50e7e44e3ca73edac76e212022' name='rdoDebitCard' checked='checked'/><label class='on' name='gs'><a class='bk_icbc' href='javascript:;'></a></label></li><li title='中国农业银行' style='' ><input type='radio' value='627b9d66bb9e43229f3da064a4d1aa83' name='rdoDebitCard' /><label class='' name='ny'><a class='bk_abc' href='javascript:;'></a></label></li><li title='中国建设银行' style='' ><input type='radio' value='f30a3a1f95c442ebbcc2d72310e8c90c' name='rdoDebitCard' /><label class='' name='js'><a class='bk_ccb' href='javascript:;'></a></label></li><li title='中国招商银行' style='' ><input type='radio' value='37401c6ac6e34c14a6dc8b7b8b3b814c' name='rdoDebitCard' /><label class='' name='zs'><a class='bk_cmb' href='javascript:;'></a></label></li><li title='中国民生银行' style='' ><input type='radio' value='c9617fcab76b463ebe40d01184d46200' name='rdoDebitCard' /><label class='' name='ms'><a class='bk_cmbc' href='javascript:;'></a></label></li><li title='浦东发展银行' style='' ><input type='radio' value='02894905a7744c249aff4593d78981e4' name='rdoDebitCard' /><label class='' name='pf'><a class='bk_spdb' href='javascript:;'></a></label></li><li title='兴业银行' style='' ><input type='radio' value='5843d0f3af4449bab4beba50562d5d0a' name='rdoDebitCard' /><label class='' name='xy'><a class='bk_cib' href='javascript:;'></a></label></li><li title='北京银行' style='' ><input type='radio' value='f228f2ca14a14a0c9e73e3cea05f8994' name='rdoDebitCard' /><label class='' name='bj'><a class='bk_bob' href='javascript:;'></a></label></li><li title='光大银行' style='' ><input type='radio' value='dcbaeede77304243894ba6ffba6103f3' name='rdoDebitCard' /><label class='' name='gd'><a class='bk_ceb' href='javascript:;'></a></label></li><li title='中国交通银行' style='' ><input type='radio' value='b8d2ca9efbde478aa682737d27b42a3c' name='rdoDebitCard' /><label class='' name='jt'><a class='bk_comm' href='javascript:;'></a></label></li><li title='广发银行' style='' ><input type='radio' value='3fae2c74025f42d9946c5f9124b838c4' name='rdoDebitCard' /><label class='' name='gf'><a class='bk_gdb' href='javascript:;'></a></label></li><li title='中国银行' style='' ><input type='radio' value='530c3889ff3a4e848798bdd1fc0e10d5' name='rdoDebitCard' /><label class='' name='zg'><a class='bk_bocsh' href='javascript:;'></a></label></li><li title='中国邮政' style='' ><input type='radio' value='4257c27fc97e41a8b51c7d284874de5c' name='rdoDebitCard' /><label class='' name='yz'><a class='bk_postgc' href='javascript:;'></a></label></li><li title='中信银行' style='' ><input type='radio' value='9cdb79d9b39f46e9af8c8ffb646b739c' name='rdoDebitCard' /><label class='' name='zx'><a class='bk_cncb' href='javascript:;'></a></label></li><li title='上海银行' style='' ><input type='radio' value='25480bb848a64fb6b561103107252432' name='rdoDebitCard' /><label class='' name='sh'><a class='bk_bos' href='javascript:;'></a></label></li><li title='平安银行' style='' ><input type='radio' value='9cfecf876bc54edcb9fab2fbed4e8a52' name='rdoDebitCard' /><label class='' name='pa'><a class='bk_pingan' href='javascript:;'></a></label></li></span>
+        </ul>
+        <div class="clearfix">
+        </div>
+        <span class="bank_submit"><a class="btnlink_b" id="lbtnBankDebit"><span>下一步</span></a><input type="submit" name="PayDirectlyBank1$btnBankDebit" value="" id="PayDirectlyBank1_btnBankDebit" style="display: none" />
+            </span>
+        &nbsp;<div class="pay-limit">
+            <p>
+                请确保您的<span id="spanDebit"></span>卡已经开通了网上支付功能，否则将无法支付成功。<span class="link_gl"><a
+                    href="http://aid.5173.com/zw_and_aq/cz/280.html" target="_blank">如何开通？</a></span><span
+                        class="link_bl arrowspan"><a href="javascript:;" id="limit-open">查看限额</a></span><span
+                            class="link_bl arrowspan-t-4 hide"><a href="javascript:;" id="limit-close">隐藏详情</a></span></p>
+        </div>
+        <div class="normalbank hide" id="banklimit" style="display: none;">
+            <div id="divBankDebitLimit" class="banklimit">
+            </div>
+        </div>
+    </div>
+    <div class="pay-fangshi-box" name="tabpanel" id="tabs3-2" style="display: none;">
+        <div class="clearfix">
+        </div>
+        <p class="pay-fangshi-tt">
+            网上银行：<span class="link_bl arrowspan  hide"><a href="javascript:;" id="bank-open1"
+                onclick="openBank('bank-open1', 'bank-list1', 'bank-close1');">展开</a></span><span
+                    class="link_bl arrowspan-t-2"><a href="javascript:;" id="bank-close1" onclick="closeBank('bank-open1', 'bank-list1', 'bank-close1');">收起</a></span></p>
+        <ul class="bank_l clearfix" id="bank-list1">
+            <span id="PayDirectlyBank1_lblBankCredit"><li title='中国工商银行' style='' ><input type='radio' value='4dca0d50e7e44e3ca73edac76e212022' name='rdoCreditCard' checked='checked'/><label class='on' name='gs'><a class='bk_icbc' href='javascript:;'></a></label></li><li title='中国农业银行' style='' ><input type='radio' value='627b9d66bb9e43229f3da064a4d1aa83' name='rdoCreditCard' /><label class='' name='ny'><a class='bk_abc' href='javascript:;'></a></label></li><li title='中国建设银行' style='' ><input type='radio' value='f30a3a1f95c442ebbcc2d72310e8c90c' name='rdoCreditCard' /><label class='' name='js'><a class='bk_ccb' href='javascript:;'></a></label></li><li title='中国交通银行' style='' ><input type='radio' value='b8d2ca9efbde478aa682737d27b42a3c' name='rdoCreditCard' /><label class='' name='jt'><a class='bk_comm' href='javascript:;'></a></label></li><li title='中国银行' style='' ><input type='radio' value='530c3889ff3a4e848798bdd1fc0e10d5' name='rdoCreditCard' /><label class='' name='zg'><a class='bk_bocsh' href='javascript:;'></a></label></li></span>
+        </ul>
+        <div class="clearfix">
+        </div>
+        <span class="bank_submit"><a class="btnlink_b" id="lbtnBankCredit"><span>下一步</span></a><input type="submit" name="PayDirectlyBank1$btnBankCredit" value="" id="PayDirectlyBank1_btnBankCredit" style="display: none" />
+            </span>
+        <div class="pay-limit">
+            <p>
+                请确保您的<span id="spanCredit"></span>卡已经开通了网上支付功能，否则将无法支付成功。<span class="link_gl"><a
+                    href="http://aid.5173.com/zw_and_aq/cz/280.html" target="_blank">如何开通？</a></span><span
+                        class="link_bl arrowspan-t-4"><a href="javascript:;" id="limit-open-credit">查看限额</a></span><span
+                            class="link_bl arrowspan-t-4 hide"><a href="javascript:;" id="limit-close-credit">隐藏详情</a></span></p>
+        </div>
+        <div class="normalbank hide" id="banklimit-credit" style="display: none;">
+            <div id="divBankCreditLimit" class="banklimit">
+            </div>
+        </div>
+    </div>
+    <div class="pay-fangshi-box" name="tabpanel" id="tabs3-3" style="display: none;">
+        <p class="pay-fangshi-tt">
+            第三方支付平台：<span class="link_bl arrowspan hide"><a href="javascript:;" id="bank-open2"
+                onclick="openBank('bank-open2', 'bank-list2', 'bank-close2');">展开</a></span><span
+                    class="link_bl arrowspan-t-2"><a href="javascript:;" id="bank-close2" onclick="closeBank('bank-open2', 'bank-list2', 'bank-close2');">收起</a></span></p>
+        <ul class="bank_l clearfix" id="bank-list2">
+            <span id="PayDirectlyBank1_lblBankThird"><li title='快钱' style='' ><input type='radio' value='87b0c51f3b1c49c7860a63e9536b8dc2' name='rdoThirdPay' checked='checked' /><label class='on'><a class='bill99' href='javascript:;'></a></label></li><li title='支付宝' style='' ><input type='radio' value='fd06b529e1c94953b53ed7078d16e918' name='rdoThirdPay'  /><label class=''><a class='alipay' href='javascript:;'></a></label></li><li title='财付通' style='' ><input type='radio' value='4f715167563a4a6f917b47afb434a2cf' name='rdoThirdPay'  /><label class=''><a class='tenpay' href='javascript:;'></a></label></li></span>
+        </ul>
+        <div class="clearfix">
+        </div>
+        
+        <span id="PayDirectlyBank1_lblCardPay"></span>
+        <div class="clearfix">
+        </div>
+        <span class="bank_submit"><a class="btnlink_b" id="lbtnCardPay"><span>下一步</span></a><input type="submit" name="PayDirectlyBank1$btnCardPay" value="" id="PayDirectlyBank1_btnCardPay" style="display: none" />
+            </span>
+        <div class="pay-limit">
+        </div>
+    </div>
+    <div class="pay-fangshi-box" name="tabpanel" id="tabs3-4">
+        <p class="pay-fangshi-tt">
+            付款方式：</p>
+        <ul class="bank_l clearfix" id="Ul1">
+            
+            <span id="PayDirectlyBank1_lblOverseaChannel"><li title="PayPal"><input type="radio" value="3bec1c15f18e4fb0aa739d104b54bf22" name="OverSea" checked="checked" /><label class="on"><a class="wb_paypal" href="javascript:void 0"></a></label></li></span>
+        </ul>
+        <p class="pay-fangshi-tt">
+            支付币种：</p>
+        <p class="bz_select_box">
+            
+            <select name="PayDirectlyBank1$ddlCurrency" id="PayDirectlyBank1_ddlCurrency" class="bz_select">
+	<option selected="selected" value="5adaf85c9fec4cf3b05766358c36c71a">美元</option>
+	<option value="3c463c0289fa4cefa281f8441f2b3e47">欧元</option>
+	<option value="be7eb58784f64c9cb19d8819f8b08add">英镑</option>
+	<option value="e81c851026a343f3bbb6c707334d5fca">港币</option>
+	<option value="e8ed22d5f9ad4570aa2e5717d65875fc">加拿大元</option>
+	<option value="07ff97713c1a422f9f477e52b9d30add">澳币</option>
+
+</select>
+        </p>
+        <div id="divReturnBackWay">
+            <p class="pay-fangshi-tt">
+                退款方式：</p>
+            <p class="bz_select_box">
+                <input value="0" name="PayDirectlyBank1$ReturnBack" type="radio" id="PayDirectlyBank1_rdR5173" style="margin-left: 10px;" /><label style="margin-left: 5px;">5173帐户余额</label>
+                <input value="1" name="PayDirectlyBank1$ReturnBack" type="radio" id="PayDirectlyBank1_rdReturnBack" style="margin-left: 10px;" /><label style="margin-left: 5px; margin-right: 10px;">原路退款</label>
+                <label style="color: Red; display: none" id="lblR5173">
+                    即时到帐。方便使用5173余额进行再次购买。收PayPal渠道手续费！</label><label id="lblReturnBack" style="color: Red;
+                        display: none">
+                        原路退款。资金将在7-30个工作日原路返还，不收取手续费！</label>
+            </p>
+        </div>
+        <span class="bank_submit"><a class="btnlink_b" id="lbtnOversea"><span>下一步</span></a><input type="submit" name="PayDirectlyBank1$btnOversea" value="" id="PayDirectlyBank1_btnOversea" style="display: none" /></span>
+        <div class="pay-limit-1">
+            <p>
+                </p>
+        </div>
+    </div>
+    <div class="pay-fangshi-box" name="tabpanel" id="tabs3-5">
+        <p class="pay-fangshi-tt">
+            付款方式：</p>
+        <ul class="bank_l clearfix" id="Ul2">
+            <span id="PayDirectlyBank1_lblScanCodeChannel"><li title="兔兔钱包"><input type="radio" value="e80e3786edcd40848a2d606d4c6f6cdc" name="ScanCode" checked="checked" /><label class="on"><a class="tt_pay" href="javascript:void 0"></a></label></li><li title="微信支付"><input type="radio" value="a794daf60d904568a042f7de492ba73b"  name="ScanCode" /><label><a class="weixin_pay" href="javascript:void 0"></a></label></li></span>
+        </ul>
+        <p id="PayDirectlyBank1_ttSpread" class="pay-fangshi-tt">
+            <label class="err">
+                *</label><strong>首次支付优惠</strong><span class="err_digit">5%</span><a class="err_a"
+                    href="http://22.ebatong.com/" target="_blank">下载兔兔钱包</a></p>
+        <div class="clearfix">
+        </div>
+        <span class="bank_submit"><a class="btnlink_b" id="lbtnScanCode"><span>下一步</span></a><input type="submit" name="PayDirectlyBank1$btnScanCode" value="" id="PayDirectlyBank1_btnScanCode" style="display: none" /></span>
+    </div>
+</div>
+<div class="bank-disable hide" id="bank-disable">
+    <span>正在维护，请选择其他银行支付</span> <ins>◆</ins><del>◆</del>
+</div>
+<input name="PayDirectlyBank1$hdnBankParam" type="hidden" id="PayDirectlyBank1_hdnBankParam" />
+<script language="javascript" type="text/javascript" src="https://images002.5173cdn.com/js/fed-std/v1/fed.tabs.js"></script>
+<script type="text/javascript" src="https://images002.5173cdn.com/js/fed-std/v1/fed.follow.js"></script>
+<script type="text/javascript" language="javascript">
+
+    $(function () {
+        try {
+            // 储蓄卡初始化加载限额信息
+            var debitCard = $("#tabs3-1 :radio[name=rdoDebitCard][checked]");
+            if (debitCard != undefined && debitCard.length > 0) {
+                loadBankLimit($("#divBankDebitLimit"), debitCard.next().attr("name"), "divBankDebitLimit")
+            }
+            // 信用卡初始化加载限额信息
+            var creditCard = $("#tabs3-2 :radio[name=rdoCreditCard][checked]");
+            if (creditCard != undefined && creditCard.length > 0) {
+                loadBankLimit($("#divBankCreditLimit"), creditCard.next().attr("name"), "divBankCreditLimit")
+            }
+            //选中状态
+            $("#tabs3-1 input[type='radio']").click(function () {
+                if ($(this).attr("disabled")) {
+                    return false;
+                }
+                $("#tabs3-1 label").removeClass("on");
+                $(this).next().addClass("on");
+                var tbId = $(this).next().attr("name");
+                var divLoadBank = $("#divBankDebitLimit");
+                $("#spanDebit").html($(this).prev().attr("title"));
+                loadBankLimit(divLoadBank, tbId, "divBankDebitLimit")
+            });
+
+            $("#tabs3-1 a").click(function () {
+                $(this).parent("label").prev().click();
+            });
+            $("#tabs3-2 input[type='radio']").click(function () {
+                if ($(this).attr("disabled")) {
+                    return false;
+                }
+                $("#tabs3-2 label").removeClass("on");
+                $(this).next().addClass("on");
+                var tbId = $(this).next().attr("name");
+                var divLoadBank = $("#divBankCreditLimit");
+                $("#spanCredit").html($(this).prev().attr("title"));
+                loadBankLimit(divLoadBank, tbId, "divBankCreditLimit")
+            });
+            $("#tabs3-2 a").click(function () {
+                $(this).parent("label").prev().click();
+            });
+            $("#tabs3-3 input[type='radio']").click(function () {
+                if ($(this).attr("disabled")) {
+                    return false;
+                }
+                $("#tabs3-3 label").removeClass("on");
+                $(this).next().addClass("on");
+            });
+            $("#tabs3-3 a").click(function () {
+                $(this).parent("label").prev().click();
+            });
+            $.fed.tabs("#tabs3", { event: "click", currindex: 0, interval: 0 });
+
+            //维护状态控制
+            $("li[id^=bk]").mouseover(function () {
+                $("#bank-disable").removeClass("bank-disable-no");
+                $("#bank-disable").fedFollow(this, { left: 23, top: 10 });
+            });
+            $("li[id^=bk]").mouseout(function () {
+                $("#bank-disable").addClass("bank-disable-no");
+            });
+
+            //查看充值限额
+            $("#limit-open").click(function () {
+                $("#banklimit").fadeIn(1000, function () {
+                    $("#limit-open").parent().hide();
+                    $("#limit-close").parent().show();
+                });
+
+            });
+            $("#limit-open-credit").click(function () {
+                $("#banklimit-credit").fadeIn(1000, function () {
+                    $("#limit-open-credit").parent().hide();
+                    $("#limit-close-credit").parent().show();
+                });
+
+            });
+            //隐藏充值限额
+            $("#limit-close").click(function () {
+                $("#banklimit").fadeOut(1000, function () {
+                    $("#limit-close").parent().hide();
+                    $("#limit-open").parent().show();
+                });
+            });
+            $("#limit-close-credit").click(function () {
+                $("#banklimit-credit").fadeOut(1000, function () {
+                    $("#limit-close-credit").parent().hide();
+                    $("#limit-open-credit").parent().show();
+                });
+            });
+
+            //选择bankId
+            $("#lbtnBankDebit").click(function () {
+                var bank = $("#tabs3-1 :radio[name=rdoDebitCard][checked]");
+                getBankId(bank);
+
+                document.getElementById('PayDirectlyBank1_btnBankDebit').click();
+            });
+            $("#lbtnBankCredit").click(function () {
+                var bank = $("#tabs3-2 :radio[name=rdoCreditCard][checked]");
+                getBankId(bank);
+
+                document.getElementById('PayDirectlyBank1_btnBankCredit').click();
+            });
+            $("#lbtnCardPay").click(function () {
+                var bank = $("#tabs3-3 :radio[name=rdoThirdPay][checked]");
+                getBankId(bank);
+
+                document.getElementById('PayDirectlyBank1_btnCardPay').click();
+            });
+            $("#lbtnOversea").click(function () {
+                var bank = $("#tabs3-4 :radio[name=OverSea][checked]");
+                getBankId(bank);
+
+                // 开启退款方式
+                if ('1' == "1") {
+                    if (!$("#PayDirectlyBank1_rdR5173").attr("checked") && !$("#PayDirectlyBank1_rdReturnBack").attr("checked")) {
+                        alert("请选择退款方式！");
+                        return;
+                    }
+                }
+
+                document.getElementById('PayDirectlyBank1_btnOversea').click();
+            });
+            // 扫码支付
+            $("#lbtnScanCode").click(function () {
+                var bank = $("#tabs3-5 :radio[name=ScanCode][checked]");
+                getBankId(bank);
+
+                document.getElementById('PayDirectlyBank1_btnScanCode').click();
+            });
+
+            $("#tabs3-5 input[type='radio']").click(function () {
+                if ($(this).attr("disabled")) {
+                    return false;
+                }
+                $("#tabs3-5 label").removeClass("on");
+                $(this).next().addClass("on");
+            });
+
+            if ('1' == "1") {
+                $("#divReturnBackWay").show();
+
+                $("#PayDirectlyBank1_rdR5173").click(function () {
+                    $("#lblR5173").show();
+                    $("#lblReturnBack").hide();
+                });
+                $("#PayDirectlyBank1_rdReturnBack").click(function () {
+                    $("#lblR5173").hide();
+                    $("#lblReturnBack").show();
+                });
+            }
+            else {
+                $("#divReturnBackWay").hide();
+            }
+        }
+        catch (e)
+        { }
+    });
+
+    //显示更多银行
+    function openBank(opbank, lstbank, cosbank) {
+        $("#" + opbank.toString()).click(function () {
+            $("#" + lstbank.toString() + " li").each(function (i, val) {
+                if (i != 0) {
+                    $(this).show();
+                }
+            });
+            $(this).parent().hide();
+            $("#" + cosbank.toString()).parent().show();
+        });
+    }
+
+    //隐藏更多银行
+    function closeBank(opbank, lstbank, cosbank) {
+        $("#" + cosbank.toString()).click(function () {
+            $("#" + lstbank.toString() + " li").each(function (i, val) {
+                if (i != 0) {
+                    $(this).hide();
+                }
+            });
+            $(this).parent().hide();
+            $("#" + opbank.toString()).parent().show(); ;
+        });
+    }
+
+    function getBankId(bank) {
+        if (bank == undefined || bank.attr("id") == undefined || bank.val() == undefined) {
+            $("#PayDirectlyBank1_hdnBankParam").val("");
+        }
+        else {
+            $("#PayDirectlyBank1_hdnBankParam").val(bank.val());
+        }
+    }
+
+    function loadBankLimit(divLoadBank, tbId, limitColseId) {
+        divLoadBank.load("BankLimit.html #tb" + tbId);
+        if ($("#" + limitColseId.toString()).is(':visible')) {
+            divLoadBank.hide();
+            divLoadBank.fadeIn(1100);
+        }
+    }  
+</script>
+
+    </div>
+    <div id="PayDirectlyBottom1_divHelp" class="pay-faqbox"><h3>付款遇到问题？</h3>
+<dl>
+	<dt>1. 什么是直接支付？</dt>
+    <dd>
+    	<p>直接支付是5173联合各大银行和支付平台推出的便捷支付方式。登录网银或第三方支付平台付款成功后，即可完成支付流程，免去了向5173账户充值，输入短信验证码、密码提示问题答案或支付密码的步骤，更快地完成订单支付环节。</p>
+    </dd>
+    <dt>2. 没有找到我开通的网上银行或支付平台，怎么办？</dt>
+    <dd>请您选择余额支付方式，先对5173账户<a href="https://mypay.ebatong.com/charge" style="color:Red" target="_blank">充值</a>后使用余额支付。今后5173将开通更多银行的直接支付功能，敬请期待。</dd>
+</dl>
+<a class="more-faq" href="http://aid.5173.com/cczx/cczx-1/1309.html">更多帮助</a></div>
+<div id="helptip" class="helptip"><div>您可以使用自己的或者朋友的红包来抵扣
+这次交易需要的费用。通过参加5173举办的活动，可以得到红包</div><ins></ins></div>
+    
+    <div id="paypop" class="UED_hide">
+        <div class="pop_box id-abnormal ">
+            <div class="pop_tittle">
+                <h3 id="UED_layer_h3_v31">
+                    友情提示</h3>
+                <a id="aColse" class="close" onclick="$.LAYER.close();" href="javascript:void 0">
+                </a>
+            </div>
+            <div class="pop_mainbox">
+                <div class="side_icon pop_tips_1">
+                </div>
+                <div class="main_content">
+                    <h4 id="hErrorInfo" class="normal">
+                        &nbsp;</h4>
+                    <div class="btnsubmit">
+                        <a id="aConfirm" class="btnlink_b_small" onclick="$.LAYER.close();" href="#"><span>确定</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script language="javascript" type="text/javascript" src="https://images002.5173cdn.com/js/fed-std/v1/footer.js"></script>
+    
+    
+    <script language="javascript" type="text/javascript">
+        $(function () {
+            $("#aAffirmPay").click(function () {
+                var isSucc = checkAuthType();
+                if (!isSucc) {
+                    return false;
+                }
+                enableButton();
+            });
+        });
+        //支付后禁用当前按钮
+        function enableButton() {
+            $("#aAffirmPay").attr('disabled', true);
+            document.getElementById("btnAffirmPay").click();
+        }
+        $.showOverlay = function (hErrorInfo) {
+            $("#hErrorInfo").html(hErrorInfo);
+            showLayer("paypop")
+        }
+        $.showOverlayUrl = function (hErrorInfo, url) {
+            $("#hErrorInfo").html(hErrorInfo);
+            $("#aColse").unbind("click"); //移除click
+            $("#aConfirm").unbind("click");
+            $("#aColse").attr("href", url);
+            $("#aConfirm").attr("href", url);
+            showLayer("paypop");
+        }
+        function showLayer(divId) {
+            if (divId != null && divId != undefined) {
+                //jQuery.LAYER.show({ id: divId});
+                jQuery.LAYER.show({ id: divId, layerContainer: 'mark', overlay: { color: '#000', opacity: 0.5} });
+            }
+        }     
+    </script>
+    <script language="javascript" type="text/javascript">
+        //获取风控指纹ID
+        //**调用ajax**//
+        var xmlRquest = false;
+        var getResultStr = null;
+        function handleAlipayStateChange() {
+            if (xmlRquest.readyState == 4) {
+                // 判断对象状态
+                if (xmlRquest.status == 200) {
+                    // 信息已经成功返回，开始处理信息		
+                    getResultStr = xmlRquest.responseText;
+                    //alert(getResultStr);
+                }
+            }
+        }
+
+        function LoadFingerPrintAjax() {
+            //开始初始化XMLHttpRequest 对象
+            if (window.XMLHttpRequest) {   //Mozilla 浏览器
+                xmlRquest = new XMLHttpRequest();
+                if (xmlRquest.overrideMimeType) {
+                    //设置MiME 类别
+                    xmlRquest.overrideMimeType("text/xml");
+                }
+            }
+            else if (window.ActiveXObject) {
+                // IE 浏览器
+                try {
+                    xmlRquest = new ActiveXObject("Msxml2.XMLHTTP");
+                }
+                catch (e) {
+                    try {
+                        xmlRquest = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    catch (e) { }
+                }
+            }
+
+            if (!xmlRquest) { // 异常，创建对象实例失败
+                window.alert("不能创建XMLHttpRequest 对象实例.");
+                return false;
+            }
+
+            // 确定发送请求的方式和URL 以及是否同步执行下段代码
+            xmlRquest.onreadystatechange = handleAlipayStateChange;
+            var arrIdVal = getFP();
+            xmlRquest.open("POST", '../Charge/AjaxPage.aspx?type=fostfingerprint' + "&id=" + arrIdVal, false);
+            xmlRquest.send("");
+        }
+        //****ajax结束***//
+
+        //调用Ajax记下风控指纹ID
+        LoadFingerPrintAjax();
+    </script>
+    </form>
+</body>
+</html>
