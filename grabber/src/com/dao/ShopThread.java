@@ -10,6 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+
 import org.htmlparser.Parser;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.tags.InputTag;
@@ -21,6 +26,8 @@ import org.json.JSONObject;
 
 import com.common.GenericUtil;
 import com.common.LogUtil;
+import com.common.MyX509TrustManager;
+import com.web.EquMessageService;
 
 public class ShopThread implements Runnable {
 	private HashMap<String, String> cookies;
@@ -98,10 +105,15 @@ public class ShopThread implements Runnable {
 		} else {
 			LogUtil.infoPrintf("下单成功----------->");
 			LogUtil.infoPrintf("cookie====" + cookie);
-			LogUtil.singleDebugPrintf("Location :"
-					+ loginConn.getURL().toString());
+			LogUtil.singleDebugPrintf("Location :"+ loginConn.getURL().toString());
 			setCookies(cookie);
-			getPayKey(loginConn,"db");
+			String payurl = getPayKey(loginConn,"db");
+			if(payurl!=null&&!payurl.equals("")){
+				LogUtil.debugPrintf("获取支付url:"+payurl);
+				pay(payurl);
+			}else{
+				LogUtil.debugPrintf("获取支付url失败");
+			}
 		}
 		LogUtil.infoPrintf("下单完成----------->");
 		// System.out.println(list.toHtml());
@@ -318,11 +330,61 @@ public class ShopThread implements Runnable {
 		LogUtil.debugPrintf("开始支付----------->");
 		try {
 			String postParams = getPayDynamicParams(payurl);
+			HttpsURLConnection loginConn = getHttpSConn(payurl,"POST");
+			DataOutputStream wr = new DataOutputStream(loginConn.getOutputStream());
+			wr.writeBytes(postParams);
+			wr.flush();
+			wr.close();
+			int responseCode = loginConn.getResponseCode();
+			LogUtil.debugPrintf("\nSending 'POST' request to URL : " +payurl );
+			LogUtil.debugPrintf("Post parameters : " + postParams);
+			LogUtil.debugPrintf("Response Code : " + responseCode);
+			Map<String, List<String>> header = loginConn.getHeaderFields();
+			LogUtil.debugPrintf("conn.getHeaderFields():" + header);
+			List<String> cookie = header.get("Set-Cookie");
+			String loginInfo;
+			if (cookie == null || cookie.size() == 0) {
+				LogUtil.infoPrintf("支付失败----------->");
+				loginInfo="支付失败";
+			} else {
+				LogUtil.infoPrintf("支付成功----------->");
+				LogUtil.debugPrintf("cookie====" + cookie);
+				setCookies(cookie);
+				loginInfo="支付成功";
+			}
+			EquMessageService.inbound.send(loginInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+	private HttpsURLConnection getHttpSConn(String payurl,String method) throws Exception {
+		// 创建SSLContext对象，并使用我们指定的信任管理器初始化
+		TrustManager[] tm = { new MyX509TrustManager() };
+		SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+		sslContext.init(null, tm, new java.security.SecureRandom());
+		// 从上述SSLContext对象中得到SSLSocketFactory对象
+		SSLSocketFactory ssf = sslContext.getSocketFactory();
+		// Acts like a browser
+		URL obj = new URL(payurl);
+		HttpsURLConnection conn;
+		conn = (HttpsURLConnection) obj.openConnection();
+		conn.setSSLSocketFactory(ssf);
+		conn.setRequestMethod(method);
+		conn.setRequestProperty("Host", "mypay.5173.com");
+		conn.setRequestProperty("User-Agent", USER_AGENT);
+		conn.setRequestProperty("Accept", "*/*");
+		conn.setRequestProperty("Accept-Language", "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3");
+		conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
+		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+		conn.setRequestProperty("Referer", payurl);
+		conn.setRequestProperty("Connection", "keep-alive");
+		conn.setRequestProperty("Pragma", "no-cache");
+		conn.setRequestProperty("Cache-Control", "no-cache");
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
+		return conn;
+	}
 	
 	private String getPayDynamicParams(String payurl) throws Exception {
 		LogUtil.infoPrintf("获取支付参数...");
@@ -338,11 +400,33 @@ public class ShopThread implements Runnable {
 		dyparams.append("&__VIEWSTATE="+ URLEncoder.encode(getValueById(list, "__VIEWSTATE"), "utf-8"));
 		dyparams.append("&__EVENTVALIDATION="+ URLEncoder.encode(getValueById(list, "__EVENTVALIDATION"), "utf-8"));
 		dyparams.append("&PayDirectlyBalance1%24ddlCoupon=-1");
-		return null;
+		dyparams.append("&PayDirectlyBalance1%24hdnSumPrice="+getValueById(list, "PayDirectlyBalance1$hdnSumPrice"));
+		dyparams.append("&PayDirectlyAuthType1%24ddlSecurityAnswer=%C4%FA%B8%B8%C7%D7%B5%C4%C3%FB%D7%D6%CA%C7%A3%BF");
+		dyparams.append("&PayDirectlyAuthType1%24txtSecurityAnswer=%CD%F5%B9%E3%B1%F3");
+		dyparams.append("&btnAffirmPay=");
+		dyparams.append("&rdoDebitCard="+getValueById(list, "rdoDebitCard"));
+		dyparams.append("&rdoCreditCard="+getValueById(list, "rdoCreditCard"));
+		dyparams.append("&rdoThirdPay="+getValueById(list, "rdoThirdPay"));
+		dyparams.append("&OverSea="+getValueByName(list, "OverSea"));
+		dyparams.append("&PayDirectlyBank1%24ddlCurrency="+getValueById(list, "PayDirectlyBank1_liCurrencyPay"));
+		dyparams.append("&ScanCode="+getValueById(list, "ScanCode"));
+		dyparams.append("&PayDirectlyBank1%24hdnBankParam=");
+		dyparams.append("&__validationToken__="+getValueById(list, "__validationToken__"));
+		dyparams.append("&__validationValue__=");
+		dyparams.append("&__validationDna__=");
+		LogUtil.debugPrintf("支付参数："+dyparams.toString());
+		return dyparams.toString();
 	}
 
 	private String getValueById(NodeList list,String id){
-		NodeList a1ab = list.extractAllNodesThatMatch(new HasAttributeFilter("id", "0915324f09d34f42a6b45b9d4235a1ab"), true);
+		NodeList a1ab = list.extractAllNodesThatMatch(new HasAttributeFilter("id", id), true);
+		InputTag alabinput = (InputTag) a1ab.elementAt(0);
+		String value = alabinput.getAttribute("value");
+		LogUtil.infoPrintf("value:" + value);
+		return value;
+	}
+	private String getValueByName(NodeList list,String name){
+		NodeList a1ab = list.extractAllNodesThatMatch(new HasAttributeFilter("name",name), true);
 		InputTag alabinput = (InputTag) a1ab.elementAt(0);
 		String value = alabinput.getAttribute("value");
 		LogUtil.infoPrintf("value:" + value);
@@ -362,7 +446,6 @@ public class ShopThread implements Runnable {
 		wr.writeBytes(postParams);
 		wr.flush();
 		wr.close();
-		LogUtil.infoPrintf("获取key完成----------->");
 		BufferedReader in = new BufferedReader(new InputStreamReader(loginConn.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer(2000);
@@ -384,6 +467,7 @@ public class ShopThread implements Runnable {
 			LogUtil.infoPrintf("cookie====" + cookie);
 			setCookies(cookie);
 		}
+		LogUtil.infoPrintf("获取key完成----------->");
 		return payurl;
 	}
 
