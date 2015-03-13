@@ -339,6 +339,7 @@ public class ShopThread implements Runnable {
 				loginConn.addRequestProperty("Cookie",
 						GenericUtil.cookieFormat(this.cookies));
 			}
+			
 			LogUtil.infoPrintf("支付请求HEADER===" + loginConn.getRequestProperties());
 			DataOutputStream wr = new DataOutputStream(loginConn.getOutputStream());
 			wr.writeBytes(postParams);
