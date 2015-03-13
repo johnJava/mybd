@@ -336,11 +336,20 @@ public class ShopThread implements Runnable {
 			wr.flush();
 			wr.close();
 			int responseCode = loginConn.getResponseCode();
-			LogUtil.debugPrintf("\nSending 'POST' request to URL : " +payurl );
-			LogUtil.debugPrintf("Post parameters : " + postParams);
-			LogUtil.debugPrintf("Response Code : " + responseCode);
+			LogUtil.infoPrintf("\nSending 'POST' request to URL : " +payurl );
+			LogUtil.infoPrintf("Post parameters : " + postParams);
+			LogUtil.infoPrintf("Response Code : " + responseCode);
 			Map<String, List<String>> header = loginConn.getHeaderFields();
-			LogUtil.debugPrintf("conn.getHeaderFields():" + header);
+			LogUtil.infoPrintf("conn.getHeaderFields():" + header);
+			BufferedReader in = new BufferedReader(new InputStreamReader(loginConn.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer(2000);
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+			String payresponse = response.toString();
+			LogUtil.infoPrintf("payresponse:"+payresponse);
 			List<String> cookie = header.get("Set-Cookie");
 			String loginInfo;
 			if (cookie == null || cookie.size() == 0) {
@@ -385,11 +394,25 @@ public class ShopThread implements Runnable {
 		conn.setDoInput(true);
 		return conn;
 	}
-	
+	//private String token="e80e3786edcd40848a2d606d4c6f6cdce80e3786edcd40848a2d606d4c6f6cdc";
 	private String getPayDynamicParams(String payurl) throws Exception {
 		LogUtil.infoPrintf("获取支付参数...");
 		StringBuffer dyparams = new StringBuffer(4000);
 		HttpURLConnection conn = getHttpGetConn(payurl);
+		String token;
+//		new Thread(new Runnable() {
+//			public void run() {
+//				try {
+//					synchronized (token) {
+						token=getToken();
+//						token.notifyAll();
+//					}
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//				
+//			}
+//		}).start();
 		conn.setRequestProperty("Referer", payurl);
 		Parser parser = new Parser(conn);
 		parser.setEncoding("UTF-8");
@@ -400,32 +423,50 @@ public class ShopThread implements Runnable {
 		dyparams.append("&__VIEWSTATE="+ URLEncoder.encode(getValueById(list, "__VIEWSTATE"), "utf-8"));
 		dyparams.append("&__EVENTVALIDATION="+ URLEncoder.encode(getValueById(list, "__EVENTVALIDATION"), "utf-8"));
 		dyparams.append("&PayDirectlyBalance1%24ddlCoupon=-1");
-		dyparams.append("&PayDirectlyBalance1%24hdnSumPrice="+getValueById(list, "PayDirectlyBalance1$hdnSumPrice"));
+		dyparams.append("&PayDirectlyBalance1%24hdnSumPrice="+getValueById(list, "PayDirectlyBalance1_hdnSumPrice"));
 		dyparams.append("&PayDirectlyAuthType1%24ddlSecurityAnswer=%C4%FA%B8%B8%C7%D7%B5%C4%C3%FB%D7%D6%CA%C7%A3%BF");
 		dyparams.append("&PayDirectlyAuthType1%24txtSecurityAnswer=%CD%F5%B9%E3%B1%F3");
 		dyparams.append("&btnAffirmPay=");
-		dyparams.append("&rdoDebitCard="+getValueById(list, "rdoDebitCard"));
-		dyparams.append("&rdoCreditCard="+getValueById(list, "rdoCreditCard"));
-		dyparams.append("&rdoThirdPay="+getValueById(list, "rdoThirdPay"));
+		dyparams.append("&rdoDebitCard="+getValueByName(list, "rdoDebitCard"));
+		dyparams.append("&rdoCreditCard="+getValueByName(list, "rdoCreditCard"));
+		dyparams.append("&rdoThirdPay="+getValueByName(list, "rdoThirdPay"));
 		dyparams.append("&OverSea="+getValueByName(list, "OverSea"));
-		dyparams.append("&PayDirectlyBank1%24ddlCurrency="+getValueById(list, "PayDirectlyBank1_liCurrencyPay"));
-		dyparams.append("&ScanCode="+getValueById(list, "ScanCode"));
+		dyparams.append("&PayDirectlyBank1%24ddlCurrency=5adaf85c9fec4cf3b05766358c36c71a");
+		dyparams.append("&ScanCode="+getValueByName(list, "ScanCode"));
 		dyparams.append("&PayDirectlyBank1%24hdnBankParam=");
-		dyparams.append("&__validationToken__="+getValueById(list, "__validationToken__"));
+//		synchronized (token) {
+//			if("e80e3786edcd40848a2d606d4c6f6cdce80e3786edcd40848a2d606d4c6f6cdc".equalsIgnoreCase(token)){
+//				LogUtil.debugPrintf("wait token...");
+//				token.wait();
+//			}
+//		}
+		dyparams.append("&__validationToken__="+token);
 		dyparams.append("&__validationValue__=");
 		dyparams.append("&__validationDna__=");
-		LogUtil.debugPrintf("支付参数："+dyparams.toString());
+		LogUtil.infoPrintf("支付参数："+dyparams.toString());
 		return dyparams.toString();
+	}
+	private String getToken() throws Exception{
+		String payurl="https://security.5173.com/Security/ClientBroker/5173MyPayDeduction";
+		HttpsURLConnection conn = getHttpSConn(payurl);
+		conn.setRequestProperty("Referer", payurl);
+		Parser parser = new Parser(conn);
+		parser.setEncoding("UTF-8");
+		NodeList list = parser.parse(null);
+		String token=getValueById(list, "__validationToken__");
+		return (null==token)?"":token;
 	}
 
 	private String getValueById(NodeList list,String id){
+		LogUtil.infoPrintf("id=="+id);
 		NodeList a1ab = list.extractAllNodesThatMatch(new HasAttributeFilter("id", id), true);
 		InputTag alabinput = (InputTag) a1ab.elementAt(0);
 		String value = alabinput.getAttribute("value");
-		LogUtil.infoPrintf("value:" + value);
+		LogUtil.infoPrintf(id+":" + value);
 		return value;
 	}
 	private String getValueByName(NodeList list,String name){
+		LogUtil.infoPrintf("name=="+name);
 		NodeList a1ab = list.extractAllNodesThatMatch(new HasAttributeFilter("name",name), true);
 		InputTag alabinput = (InputTag) a1ab.elementAt(0);
 		String value = alabinput.getAttribute("value");
@@ -441,7 +482,8 @@ public class ShopThread implements Runnable {
 		loginConn.setRequestProperty("Accept-Encoding", "deflate");// 注意压缩方式
 		loginConn.setRequestProperty("Referer", keyurl);
 		loginConn.setRequestProperty("Content-Length",Integer.toString(postParams.length()));
-		LogUtil.infoPrintf("请求获取key的HEADER===" + loginConn.getRequestProperties());
+		LogUtil.debugPrintf("请求获取key的HEADER===" + loginConn.getRequestProperties());
+		LogUtil.debugPrintf("请求获取key的postParams===" + postParams);
 		DataOutputStream wr = new DataOutputStream(loginConn.getOutputStream());
 		wr.writeBytes(postParams);
 		wr.flush();
@@ -479,21 +521,15 @@ public class ShopThread implements Runnable {
 		Parser parser = new Parser(conn);
 		parser.setEncoding("UTF-8");
 		NodeList list = parser.parse(null);
-		NodeList a1ab = list.extractAllNodesThatMatch(new HasAttributeFilter("id", "0915324f09d34f42a6b45b9d4235a1ab"), true);
-		InputTag alabinput = (InputTag) a1ab.elementAt(0);
-		String value = alabinput.getAttribute("value");
+		String value = getValueById(list, "0915324f09d34f42a6b45b9d4235a1ab");
 		LogUtil.infoPrintf("alabinput:" + value);
 		dyparams.append("0915324f09d34f42a6b45b9d4235a1ab="+ URLEncoder.encode(value, "utf-8"));
-		NodeList __VIEWSTATE = list.extractAllNodesThatMatch(new HasAttributeFilter("id", "__VIEWSTATE"), true);
-		InputTag stateinput = (InputTag) __VIEWSTATE.elementAt(0);
-		value = stateinput.getAttribute("value");
+		value = getValueById(list, "__VIEWSTATE");
 		LogUtil.infoPrintf("stateinput:" + value);
 		dyparams.append("&__VIEWSTATE=" + URLEncoder.encode(value, "utf-8"));
 		dyparams.append("&hdStatus=");
 		if("js".equalsIgnoreCase(type)){
-			NodeList __EVENTVALIDATION = list.extractAllNodesThatMatch(new HasAttributeFilter("id", "__VIEWSTATE"), true);
-			InputTag eventinput = (InputTag) __EVENTVALIDATION.elementAt(0);
-			value = eventinput.getAttribute("value");
+			value = getValueById(list, "__EVENTVALIDATION");
 			LogUtil.infoPrintf("eventinput:" + value);
 			dyparams.append("&__EVENTVALIDATION="+ URLEncoder.encode(value, "utf-8"));
 			dyparams.append("&hiddenBtnGoPayfor=");
@@ -532,6 +568,32 @@ public class ShopThread implements Runnable {
 		return conn;
 	}
 
+	private HttpsURLConnection getHttpSConn(String httpsurl) throws Exception {
+		// 创建SSLContext对象，并使用我们指定的信任管理器初始化
+		TrustManager[] tm = { new MyX509TrustManager() };
+		SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+		sslContext.init(null, tm, new java.security.SecureRandom());
+		// 从上述SSLContext对象中得到SSLSocketFactory对象
+		SSLSocketFactory ssf = sslContext.getSocketFactory();
+		// Acts like a browser
+		URL obj = new URL(httpsurl);
+		HttpsURLConnection conn;
+		conn = (HttpsURLConnection) obj.openConnection();
+		conn.setSSLSocketFactory(ssf);
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Host", "security.5173.com");
+		conn.setRequestProperty("User-Agent", USER_AGENT);
+		conn.setRequestProperty("Accept", "*/*");
+		conn.setRequestProperty("Accept-Language", "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3");
+		conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
+		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		conn.setRequestProperty("Connection", "keep-alive");
+		conn.setRequestProperty("Pragma", "no-cache");
+		conn.setRequestProperty("Cache-Control", "no-cache");
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
+		return conn;
+	}
 	private HttpURLConnection getHttpGetConn(String url) throws Exception {
 		LogUtil.infoPrintf("getHttpGetConn url===" + url);
 		HttpURLConnection conn;
@@ -571,7 +633,11 @@ public class ShopThread implements Runnable {
 				String param = params[i];
 				if (param.contains("=")) {
 					String[] kv = param.split("=");
-					this.cookies.put(kv[0], kv[1]);
+					if(kv.length<2){
+						this.cookies.put(param, "");
+					}else{
+						this.cookies.put(kv[0], kv[1]);
+					}
 				} else {
 					this.cookies.put(param, "");
 				}
