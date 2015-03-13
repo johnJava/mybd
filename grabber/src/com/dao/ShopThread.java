@@ -65,6 +65,7 @@ public class ShopThread implements Runnable {
 	}
 
 	private boolean doShop() throws Exception {
+		long startTime = System.currentTimeMillis();
 		boolean flag;
 		if (ShopThread.JSTYPE == type) {
 			this.jsshopurl = this.jsshopurl.replaceAll("&shopnum&", shopnum);
@@ -73,6 +74,8 @@ public class ShopThread implements Runnable {
 			this.ptshopurl = this.ptshopurl.replaceAll("&shopnum&", shopnum);
 			flag = doPTShop();
 		}
+		long endTime = System.currentTimeMillis();
+		LogUtil.debugPrintf("下单结束耗时[" + (endTime - startTime) + "毫秒]");
 		return flag;
 
 	}
@@ -331,6 +334,7 @@ public class ShopThread implements Runnable {
 		try {
 			String postParams = getPayDynamicParams(payurl);
 			HttpsURLConnection loginConn = getHttpSConn(payurl,"POST");
+			loginConn.setRequestProperty("Content-Length",Integer.toString(postParams.length()));
 			if (null != this.cookies) {
 				loginConn.addRequestProperty("Cookie",
 						GenericUtil.cookieFormat(this.cookies));
