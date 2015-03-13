@@ -37,6 +37,7 @@ public class EquItem {
 	}
 	public boolean hasCredit(String credit){
 //		return this.creditSet.contains(credit);
+		
 		return true;
 	}
 	public boolean matchPrice(double price){
