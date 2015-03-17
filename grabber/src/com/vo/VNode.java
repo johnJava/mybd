@@ -12,16 +12,18 @@ public class VNode {
 	@Override
 	public String toString() {
 		StringBuffer nodeHtml =new StringBuffer(2000);
+		String price=this.price;
+		price=price.substring(price.indexOf("<strong>")+"<strong>".length(),price.indexOf("</strong>"));
 		nodeHtml.append("<div class=\"sin_pdlbox\"> ");
 		nodeHtml.append("<ul class=\"pdlist_info\">");
 		nodeHtml.append(this.title);
 		nodeHtml.append("</ul> ");
 		nodeHtml.append("<ul class=\"pdlist_price\">");
-		nodeHtml.append(this.price);
+		String priceHtml=this.price;
+		priceHtml=priceHtml.replace(price, price.substring(0, price.indexOf('.')));
+		nodeHtml.append(priceHtml);
 		nodeHtml.append("</ul> ");
 		nodeHtml.append("<ul class=\"pdlist_ensure\">");
-		String price=this.price;
-		price=price.substring(price.indexOf("<strong>")+"<strong>".length(),price.indexOf("</strong>"));
 		String params="{price:'"+price+"',orderNum:'"+this.orderNum+"'}";
 		nodeHtml.append("<li> <input type=\"button\" value=\"下单\"  class=\"gs_search_btn\" onclick=\"shop("+params+")\" /> </li> ");
 		nodeHtml.append("</ul>");
@@ -30,6 +32,7 @@ public class VNode {
 		nodeHtml.append("</ul> ");
 		nodeHtml.append("<ul class=\"pdlist_num\">");
 		nodeHtml.append(this.credit);
+		
 		nodeHtml.append("</ul> ");
 		nodeHtml.append("<ul class=\"pdlist_delivery\">");
 		nodeHtml.append(this.orderNum);
