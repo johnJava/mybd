@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.catalina.websocket.StreamInbound;
 import org.apache.catalina.websocket.WebSocketServlet;
 
+import com.common.GenericUtil;
+
 @SuppressWarnings("deprecation")
 public class EquMessageService extends WebSocketServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +21,7 @@ public class EquMessageService extends WebSocketServlet {
 	@Override
 	protected StreamInbound createWebSocketInbound(String arg0, HttpServletRequest request) {
 		String datestr = new SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis());
-		if (!"2015-01-31".equalsIgnoreCase(datestr)) {
+		if (!GenericUtil.isEndDate()) {
 			if (inbound == null||!this.sessionid.equals(request.getSession().getId())){
 				this.sessionid=request.getSession().getId();
 				inbound = new EquMessageInbound(connectionIds.getAndIncrement(), this.sessionid);

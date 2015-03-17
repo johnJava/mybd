@@ -2,8 +2,10 @@ package com.common;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +19,12 @@ import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class GenericUtil {
-	public static SimpleDateFormat dateformat = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
-	private static final String MUSIC_FILE = new GenericUtil().getClass()
-			.getResource("/").getPath()
-			+ "\\alarm.wav";
+	public static SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final String MUSIC_FILE = new GenericUtil().getClass().getResource("/").getPath()+ "\\alarm.wav";
+	private static final String endDate="2015-03-19";
+	public static void main(String[] args) {
+		System.out.println(isEndDate());
+	}
 	@SuppressWarnings("serial")
 	public static List<String> creditlist = new ArrayList<String>() {
 
@@ -84,4 +87,27 @@ public class GenericUtil {
 		sourceDataLine.drain();
 		sourceDataLine.close();
 	}
+	public static boolean isEndDate(){
+		boolean flag=false;
+		int num = compare_date(endDate, new SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis()));
+		if(num==-1)flag=true;
+		return flag;
+	}
+	public static int compare_date(String DATE1, String DATE2) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dt1 = df.parse(DATE1);
+            Date dt2 = df.parse(DATE2);
+            if (dt1.getTime() > dt2.getTime()) {
+                return 1;
+            } else if (dt1.getTime() < dt2.getTime()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return 0;
+   }
 }

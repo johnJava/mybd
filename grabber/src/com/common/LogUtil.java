@@ -1,5 +1,9 @@
 package com.common;
 
+import java.io.IOException;
+
+import com.web.EquMessageService;
+
 public class LogUtil {
 
 //	private static String type="single";
@@ -16,5 +20,13 @@ public class LogUtil {
 	public static void singleDebugPrintf(String msg){
 		if(level>0)
 		System.out.println("debug:"+msg);
+	}
+	public static void webPrintf(String msg){
+		System.out.println(msg);
+		try {
+			EquMessageService.inbound.send(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

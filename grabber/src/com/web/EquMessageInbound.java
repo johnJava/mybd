@@ -3,6 +3,7 @@ package com.web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.URLEncoder;
 import java.nio.CharBuffer;
 import java.text.SimpleDateFormat;
 
@@ -60,13 +61,13 @@ public class EquMessageInbound extends StreamInbound {
 
 	@Override
 	protected void onClose(int status) {
-		System.out.println("closing ......");
+		LogUtil.infoPrintf("连接已关闭");
 		super.onClose(status);
 	}
 
 	@Override
 	protected void onOpen(WsOutbound outbound) {
-		System.out.println("onOpen........");
+		LogUtil.infoPrintf("连接已开启");
 		super.onOpen(outbound);
 	}
 
@@ -131,7 +132,6 @@ public class EquMessageInbound extends StreamInbound {
 				type);
 		new Thread(st).start();
 	}
-
 	private void doLogin(JSONObject params) throws Exception {
 		common_params = params;
 		String username = (String) common_params.remove("username");
