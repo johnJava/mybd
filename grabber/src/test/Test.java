@@ -33,8 +33,10 @@ class Test extends Thread{
 //			System.out.println(s);
 //		}
 //		System.out.println(compare_date("2016-03-14", new SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis())));
-		String price="350.00";
-		System.out.println( price.substring(0, price.indexOf('.')));
+//		String price="350.00";
+//		System.out.println( price.substring(0, price.indexOf('.')));
+		T op=new T();	
+		System.out.println(op.t);
 	}
 	
 	 public static int compare_date(String DATE1, String DATE2) {
