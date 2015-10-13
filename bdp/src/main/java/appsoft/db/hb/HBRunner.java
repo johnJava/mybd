@@ -71,9 +71,9 @@ public class HBRunner {
 		HTableInterface table = pool.getTable(tableName);
 		table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
 		table.setAutoFlush(false);
-		System.out.println("commit1...");
+		System.out.println("table put...");
 		table.put(puts);
-		System.out.println("commit2...");
+		System.out.println("commit...");
 		table.flushCommits();
 		pool.putTable(table);
 		System.out.println("commit successfully");
