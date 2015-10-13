@@ -27,8 +27,8 @@ public class HBRunner {
 		this(DEFAULT_POOL_SIZE);
 	}
 	public HBRunner(int poolsize){
-		/*if(pool==null)
-		pool = new HTablePool(cfg, poolsize);*/
+		if(pool==null)
+		pool = new HTablePool(cfg, poolsize);
 		System.setProperty("HADOOP_USER_NAME","hdfs");
 		System.setProperty("hadoop.home.dir",getClassesPath());
 	}
@@ -68,8 +68,7 @@ public class HBRunner {
 		return batchInsert(tableName,puts);
 	}
 	public boolean batchInsert(String tableName,List<Put> puts) throws IOException{
-		//HTableInterface table = pool.getTable(tableName);
-		if(table==null)table = new HTable(cfg, tableName);
+		HTableInterface table = pool.getTable(tableName);
 		table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
 		table.setAutoFlush(false);
 		System.out.println("commit1...");
