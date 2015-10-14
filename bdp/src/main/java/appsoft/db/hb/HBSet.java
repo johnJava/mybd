@@ -16,7 +16,7 @@ public class HBSet {
 	private String family;
 	private HBRow currRow=null;
 	private List<Put> puts =null;
-	private int DEFAULTROWSIZE=4000*1000;
+	private int DEFAULTROWSIZE=1000*1000+100;
 	
 	private HBSet(String tableName){
 		this(tableName, HBRunner.getDefaultFamilyName());

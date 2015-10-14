@@ -176,9 +176,9 @@ public class HBaseUtil implements Runnable{
 		
 		long begint = System.currentTimeMillis();
 		HBaseUtil.allbegin=begint;
-		new HBaseUtil().creat("testcreat", "info");
+		//new HBaseUtil().creat("testcreat", "info");
 		//new HBaseUtil().testGetByRowKey();
-		//new HBaseUtil(1310001,1400000).testInsert();
+		new HBaseUtil(300001,305000).testInsert();
 		//new HBaseUtil(1001,1001).testWideInsert();
 //		int begin =56000;
 //		int step =1000;
@@ -199,7 +199,7 @@ public class HBaseUtil implements Runnable{
 	}
 	private int beginPointNum=1;
 	private int endPointNum=0;
-	static String tablename = "measurepoint5";
+	static String tablename = "testhbset2";
 	static AtomicInteger count=new AtomicInteger(0);
 	static volatile int costs=0;
 	static volatile long allbegin=0;
