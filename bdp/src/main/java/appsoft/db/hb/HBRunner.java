@@ -15,14 +15,16 @@ import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.HTablePool;
 import org.apache.hadoop.hbase.client.Put;
 
+import appsoft.util.Log;
+
 @SuppressWarnings("deprecation")
 public class HBRunner {
 	private static Configuration cfg = HBaseConfiguration.create();
 	private HTablePool pool = null;
 	private HTable table=null;
 	private final static String DEFAULT_FAMILYNAM="info";
-	private final static int DEFAULT_POOL_SIZE=1;
-	private final int DEFAULT_BUFFERSIZE=5*1024*1024;//500MB
+	private final static int DEFAULT_POOL_SIZE=50;
+	private final int DEFAULT_BUFFERSIZE=500*1024*1024;//5MB
 	public HBRunner(){
 		this(DEFAULT_POOL_SIZE);
 	}
@@ -50,7 +52,7 @@ public class HBRunner {
 		@SuppressWarnings("resource")
 		HBaseAdmin admin = new HBaseAdmin(cfg);
 		if (admin.tableExists(TableName.valueOf(tableName))) {
-			System.out.println("table Exists!");
+			Log.info("{}","table Exists!");
 			flag=false;
 		} else {
 			HTableDescriptor tableDesc = new HTableDescriptor(TableName.valueOf(tableName));
@@ -58,31 +60,34 @@ public class HBRunner {
 				tableDesc.addFamily(new HColumnDescriptor(familyNames.get(i)));
 			}
 			admin.createTable(tableDesc);
-			System.out.println("create table success!");
+			Log.info("{}","create table success!");
 			flag = true;
 		}
 		return flag;
 	}
 	public boolean insert(String tableName,Put put) throws IOException{
-		List<Put> puts= new ArrayList<Put>();
-		puts.add(put);
-		return batchInsert(tableName,puts);
+		HTableInterface table = pool.getTable(tableName);
+		if(!table.isAutoFlush())table.setAutoFlush(true);
+		//Log.info("{}","table put ...");
+		table.put(put);
+		return true;
 	}
 	public boolean batchInsert(String tableName,List<Put> puts) throws IOException{
 		HTableInterface table = pool.getTable(tableName);
-		table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
-		table.setAutoFlush(false);
+		if(table.isAutoFlush()){
+			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
+			table.setAutoFlush(false);
+		}
 		/*if(table==null){
 		    table = new HTable(cfg, tableName);
 			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
 			table.setAutoFlush(false);
 		}*/
-		System.out.println("table put...");
+		Log.info("{}","table put...");
 		table.put(puts);
-		System.out.println("commit...");
+		Log.info("{}","begin commit...");
 		table.flushCommits();
-		//pool.putTable(table);
-		System.out.println("commit successfully");
+		Log.info("{}","commit successfully");
 		return true;
 	}
 	public boolean delByRowkey(String tableName,String rowKey){
