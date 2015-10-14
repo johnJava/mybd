@@ -21,7 +21,7 @@ import appsoft.util.Log;
 public class HBRunner {
 	private static Configuration cfg = HBaseConfiguration.create();
 	private HTablePool pool = null;
-	private final static String DEFAULT_FAMILYNAM="info";
+	private final static String DEFAULT_FAMILYNAM="t";
 	private final static int DEFAULT_POOL_SIZE=5;
 	private final int DEFAULT_BUFFERSIZE=5*1024*1024;//5MB
 	public HBRunner(){

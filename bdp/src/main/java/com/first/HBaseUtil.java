@@ -178,9 +178,9 @@ public class HBaseUtil implements Runnable{
 		HBaseUtil.allbegin=begint;
 		//new HBaseUtil().creat("testcreat", "info");
 		//new HBaseUtil().testGetByRowKey();
-		//new HBaseUtil(300001,305000).testInsert();
+		new HBaseUtil(300001,301000).testInsert();
 		//new HBaseUtil(1001,1001).testWideInsert();
-		new HBaseUtil().scan("monitordatas");
+		//new HBaseUtil().scan("monitordatas");
 		int begin =56000;
 //		int step =1000;
 //		while(begin<55001){
@@ -200,7 +200,7 @@ public class HBaseUtil implements Runnable{
 	}
 	private int beginPointNum=1;
 	private int endPointNum=0;
-	static String tablename = "testhbset2";
+	static String tablename = "testhbset";
 	static AtomicInteger count=new AtomicInteger(0);
 	static volatile int costs=0;
 	static volatile long allbegin=0;
