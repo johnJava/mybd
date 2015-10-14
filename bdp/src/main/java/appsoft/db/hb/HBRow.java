@@ -19,9 +19,9 @@ public class HBRow {
 		this.isAutoSave=hbset.isAutoSave();
 	}
 	public void setValue(String column,String value) throws IOException{
-		if(this.isAutoSave){//异步row直接保存
+		if(this.isAutoSave){//自动保存直接保存
 			HBSet.runner.insert(hbset.getTableName(), HBBuilder.mkPut(this.rowkey, hbset.getFamily(), column,value));
-		}else{//同步row将通过hbset的save方法进行保存
+		}else{//将通过hbset的save方法进行保存
 			if(put==null){
 				put=HBBuilder.mkPut(this.rowkey, hbset.getFamily(), column,value);
 				hbset.addPut(put);

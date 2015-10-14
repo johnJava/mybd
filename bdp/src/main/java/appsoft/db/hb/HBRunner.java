@@ -10,10 +10,10 @@ import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
-import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.HTablePool;
 import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.util.PoolMap;
 
 import appsoft.util.Log;
 
@@ -21,16 +21,15 @@ import appsoft.util.Log;
 public class HBRunner {
 	private static Configuration cfg = HBaseConfiguration.create();
 	private HTablePool pool = null;
-	private HTable table=null;
 	private final static String DEFAULT_FAMILYNAM="info";
-	private final static int DEFAULT_POOL_SIZE=1;
+	private final static int DEFAULT_POOL_SIZE=5;
 	private final int DEFAULT_BUFFERSIZE=5*1024*1024;//5MB
 	public HBRunner(){
 		this(DEFAULT_POOL_SIZE);
 	}
 	public HBRunner(int poolsize){
 		if(pool==null){
-			pool = new HTablePool(cfg, poolsize);
+			pool = new HTablePool(cfg, poolsize,PoolMap.PoolType.ThreadLocal);  
 		}
 		System.setProperty("HADOOP_USER_NAME","hdfs");
 		System.setProperty("hadoop.home.dir",getClassesPath());
@@ -75,8 +74,8 @@ public class HBRunner {
 	public boolean batchInsert(String tableName,List<Put> puts) throws IOException{
 		HTableInterface table = pool.getTable(tableName);
 		if(table.isAutoFlush()){
-			//table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
-			//table.setAutoFlush(false);
+			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
+			table.setAutoFlush(false);
 		}
 		/*if(table==null){
 		    table = new HTable(cfg, tableName);
