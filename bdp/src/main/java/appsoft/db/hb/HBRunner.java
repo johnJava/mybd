@@ -23,8 +23,8 @@ public class HBRunner {
 	private HTablePool pool = null;
 	private HTable table=null;
 	private final static String DEFAULT_FAMILYNAM="info";
-	private final static int DEFAULT_POOL_SIZE=50;
-	private final int DEFAULT_BUFFERSIZE=500*1024*1024;//5MB
+	private final static int DEFAULT_POOL_SIZE=1;
+	private final int DEFAULT_BUFFERSIZE=5*1024*1024;//5MB
 	public HBRunner(){
 		this(DEFAULT_POOL_SIZE);
 	}
@@ -75,8 +75,8 @@ public class HBRunner {
 	public boolean batchInsert(String tableName,List<Put> puts) throws IOException{
 		HTableInterface table = pool.getTable(tableName);
 		if(table.isAutoFlush()){
-			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
-			table.setAutoFlush(false);
+			//table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
+			//table.setAutoFlush(false);
 		}
 		/*if(table==null){
 		    table = new HTable(cfg, tableName);
@@ -88,6 +88,7 @@ public class HBRunner {
 		Log.info("{}","begin commit...");
 		table.flushCommits();
 		Log.info("{}","commit successfully");
+		System.out.println("commit successfully");
 		return true;
 	}
 	public boolean delByRowkey(String tableName,String rowKey){
