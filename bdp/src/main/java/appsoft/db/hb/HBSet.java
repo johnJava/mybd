@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.hadoop.hbase.client.Put;
+import org.mortbay.log.Log;
 
 public class HBSet {
 	public static HBRunner runner =null;
@@ -32,8 +33,21 @@ public class HBSet {
 		puts = new ArrayList<Put>(cacheRows);
 	}
 	public static HBSet creatHBSet(String tableName) throws IOException{
+		return creatHBSet(tableName, new ArrayList<String>());
+	}
+	public static HBSet creatHBSet(String tableName,String family) throws IOException{
+		ArrayList<String> fs = new ArrayList<String>();
+		fs.add(family);
+		return creatHBSet(tableName,fs);
+	}
+	public static HBSet creatHBSet(String tableName,List<String> families) throws IOException{
 		if(runner==null) runner = new HBRunner();
-		runner.createTable(tableName);
+		if(families==null||families.size()==0){
+			Log.warn("未设置列族,系统默认列族为t");
+			runner.createTable(tableName);
+		}else{
+			runner.createTable(tableName,families);
+		}
 		return getHBSet(tableName);
 	}
 	public static HBSet getHBSet(String tableName){

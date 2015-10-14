@@ -114,8 +114,8 @@ public class HBaseUtil implements Runnable{
 		//s.setTimeStamp(1432311692961l);//指定时间
 		//s.setMaxResultSize(2l);
 		//根据测点名和时间查询
-		s.setStartRow(Bytes.toBytes("006CAD9E39DFD288329076A9FE77D536-1432311692960"));
-		s.setStopRow(Bytes.toBytes("006CAD9E39DFD288329076A9FE77D536-1432311692962"));
+		s.setStartRow(Bytes.toBytes("row_100000004"));
+		s.setStopRow(Bytes.toBytes("row_101000008"));
 		ResultScanner rs = table.getScanner(s);
 		for (Result r : rs) {
 			System.out.println("Scan: " + r);
@@ -178,9 +178,10 @@ public class HBaseUtil implements Runnable{
 		HBaseUtil.allbegin=begint;
 		//new HBaseUtil().creat("testcreat", "info");
 		//new HBaseUtil().testGetByRowKey();
-		new HBaseUtil(300001,305000).testInsert();
+		//new HBaseUtil(300001,305000).testInsert();
 		//new HBaseUtil(1001,1001).testWideInsert();
-//		int begin =56000;
+		new HBaseUtil().scan("monitordatas");
+		int begin =56000;
 //		int step =1000;
 //		while(begin<55001){
 //			Thread th = new Thread(new HBaseUtil(begin,begin+step));
