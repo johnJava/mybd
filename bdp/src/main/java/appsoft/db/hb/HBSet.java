@@ -8,7 +8,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.hadoop.hbase.client.Put;
 import org.mortbay.log.Log;
 
-public class HBSet {
+import appsoft.db.hb.service.AggregateService;
+import appsoft.db.hb.service.BasicService;
+
+public class HBSet implements AggregateService,BasicService{
 	public static HBRunner runner =null;
 	private static AtomicInteger CREATHBSETNUMS = new AtomicInteger(0);
 	private static AtomicInteger ACTIVEHBSETNUMS = new AtomicInteger(0);
@@ -27,7 +30,7 @@ public class HBSet {
 		this(tableName, family, DEFAULTROWSIZE);
 	}
 	private HBSet(String tableName,String family,int cacheRows){
-		if(runner==null) runner = new HBRunner();
+		initRunner();
 		this.tableName=tableName;
 		this.family=family;
 		puts = new ArrayList<Put>(cacheRows);
@@ -41,7 +44,7 @@ public class HBSet {
 		return creatHBSet(tableName,fs);
 	}
 	public static HBSet creatHBSet(String tableName,List<String> families) throws IOException{
-		if(runner==null) runner = new HBRunner();
+		initRunner();
 		if(families==null||families.size()==0){
 			Log.warn("未设置列族,系统默认列族为t");
 			runner.createTable(tableName);
@@ -65,9 +68,11 @@ public class HBSet {
 		ACTIVEHBSETNUMS.incrementAndGet();
 		return new HBSet(tableName, family, cacheRows);
 	}
+	@Override
 	public HBRow addRow(){
 		return addRow(null);
 	}
+	@Override
 	public HBRow addRow(String rowkey){
 		HBRow row =null;
 		row=(rowkey==null || rowkey.equals(""))?row = new HBRow(this):new HBRow(this,rowkey);
@@ -101,7 +106,11 @@ public class HBSet {
 		super.finalize();
 	}
 	public static HBRunner getRunner() {
+		initRunner();
 		return runner;
+	}
+	public static void initRunner(){
+		if(runner==null) runner = new HBRunner();
 	}
 	public String getTableName() {
 		return tableName;
@@ -113,5 +122,65 @@ public class HBSet {
 		this.isAutoSave = isAutoSave;
 		if(this.currRow!=null)
 		this.currRow.setAutoSave(isAutoSave);
+	}
+	@Override
+	public List<HBRow> getRows(String startRowKey, String endRowKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<HBRow> getRows(String startRowKey, String endRowKey, int period) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public HBRow getRow(String rowkey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<HBRow> getRows(List<String> rowkeys) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public long[] getAvgs(String startRowKey, String endRowKey, int period) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public long getAvg(String startRowKey, String endRowKey) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public List<HBRow> getMaxRows(String startRowKey, String endRowKey, int period) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public HBRow getMaxRow(String startRowKey, String endRowKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<HBRow> getMinRows(String startRowKey, String endRowKey, int period) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public HBRow getMinRow(String startRowKey, String endRowKey) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public long count() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public long[] countAndSum() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

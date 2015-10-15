@@ -14,6 +14,7 @@ import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.HTablePool;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.PoolMap;
+import org.slf4j.Logger;
 
 import appsoft.util.Log;
 
@@ -24,6 +25,7 @@ public class HBRunner {
 	private final static String DEFAULT_FAMILYNAM="t";
 	private final static int DEFAULT_POOL_SIZE=5;
 	private final int DEFAULT_BUFFERSIZE=5*1024*1024;//5MB
+	private Logger log=null;
 	public HBRunner(){
 		this(DEFAULT_POOL_SIZE);
 	}
@@ -33,6 +35,7 @@ public class HBRunner {
 		}
 		System.setProperty("HADOOP_USER_NAME","hdfs");
 		System.setProperty("hadoop.home.dir",getClassesPath());
+		log=Log.get(HBRunner.class);
 	}
 	public String getClassesPath(){
 		String p = this.getClass().getResource("/").getPath();
@@ -66,9 +69,12 @@ public class HBRunner {
 	}
 	public boolean insert(String tableName,Put put) throws IOException{
 		HTableInterface table = pool.getTable(tableName);
-		if(!table.isAutoFlush())table.setAutoFlush(true);
-		//Log.info("{}","table put ...");
+		if(table.isAutoFlush()){
+			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
+			table.setAutoFlush(false);
+		}
 		table.put(put);
+		table.close();
 		return true;
 	}
 	public boolean batchInsert(String tableName,List<Put> puts) throws IOException{
@@ -77,27 +83,17 @@ public class HBRunner {
 			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
 			table.setAutoFlush(false);
 		}
-		/*if(table==null){
-		    table = new HTable(cfg, tableName);
-			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
-			table.setAutoFlush(false);
-		}*/
-		Log.info("{}","table put...");
+		log.info("{}","table put...");
 		table.put(puts);
-		Log.info("{}","begin commit...");
+		log.info("{}","begin commit...");
 		table.flushCommits();
-		Log.info("{}","commit successfully");
-		System.out.println("commit successfully");
+		table.close();
+		log.info("{}","commit successfully");
 		return true;
 	}
+	
 	public boolean delByRowkey(String tableName,String rowKey){
 		return true;
-	}
-	public void setFlushInterval(int interval){
-		
-	}
-	public void setWriteBufferSize(int bufSize){
-		
 	}
 	public static String getDefaultFamilyName(){
 		return DEFAULT_FAMILYNAM;
