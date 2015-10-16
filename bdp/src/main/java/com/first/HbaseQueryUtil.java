@@ -13,9 +13,6 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
-import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
-import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
-import org.apache.hadoop.hbase.filter.SubstringComparator;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import appsoft.db.hb.HBBuilder;
@@ -42,25 +39,31 @@ public class HbaseQueryUtil  {
 		return p;
 	}
 	public static void main(String[] args) throws Exception {
-		String startRowKey="row_101000002";
-		String endRowKey="row_101000008";
+		String startRowKey="row_201000002";
+		String endRowKey="row_101020018";
 		HbaseQueryUtil hq = new HbaseQueryUtil();
-		hq.scan(startRowKey, endRowKey);
+		//hq.scan(startRowKey, endRowKey);
+		long begin = System.currentTimeMillis();
+		//hq.scan(startRowKey, endRowKey,2);
 		hq.selectByRowKeyColumn(tablename, startRowKey, family, null);
-		List<String> rowKeys = new ArrayList<String>(){
-			{
-				add("row_101000002");
-				add("row_101000004");
-				add("row_101000006");
-				add("row_101000008");
-			}
-		};
-		hq.scan(rowKeys );
+//		List<String> rowKeys = new ArrayList<String>(){
+//			{
+//				add("row_101000002");
+//				add("row_101000004");
+//				add("row_101000006");
+//				add("row_101000008");
+//			}
+//		};
+//		hq.scan(rowKeys );
+		long cost = System.currentTimeMillis()-begin;
+		System.out.println("cost "+cost+"ms");
 	}
 	// 显示所有数据
 	public  void scan(String startRowKey, String endRowKey) throws Exception {
 		Scan s = new Scan();
 		//根据测点名和时间查询
+		s.setRowOffsetPerColumnFamily(1);
+		//s.setReversed(false);
 		s.setStartRow(Bytes.toBytes(startRowKey));
 		s.setStopRow(Bytes.toBytes(endRowKey));
 		ResultScanner rs = table.getScanner(s);
@@ -73,13 +76,24 @@ public class HbaseQueryUtil  {
 	}
 	   // 利用rowkeys获取实现
 		public  void scan(String startRowKey, String endRowKey,int period) throws Exception {
-			Scan s = new Scan();
-			//根据测点名和时间查询
-			ResultScanner rs = table.getScanner(s);
+			String[] keys = startRowKey.split("_");
+			String pointId = keys[0];
+			String beginTimeStr = keys[1];
+			long begin = Long.valueOf(beginTimeStr);
+			String endTimeStr = endRowKey.split("_")[1];
+			long end = Long.valueOf(endTimeStr);
+			System.out.println(pointId+":"+begin+":"+end);
+			List<Get> gets= new ArrayList<Get>();
+			for (long i = 0; (begin+i) <end; i+=period) {
+				String rk = pointId+"_"+(begin+i);
+				System.out.println("rk="+rk);
+				gets.add(HBBuilder.mkGet(rk, family));
+			}
+			Result[] rs = table.get(gets);
 			for (Result r : rs) {
 				NavigableMap<byte[], byte[]> kvs = r.getFamilyMap(Bytes.toBytes(family));
 				for(Entry<byte[], byte[]> kv:kvs.entrySet()){
-					System.out.println( Bytes.toString(r.getRow())+":"+ Bytes.toString(kv.getKey())+":"+ Bytes.toString(kv.getValue()));
+					System.out.println("PERIOD "+Bytes.toString(r.getRow())+":"+ Bytes.toString(kv.getKey())+":"+ Bytes.toString(kv.getValue()));
 				}
 			}
 		}

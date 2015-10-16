@@ -9,20 +9,28 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.HTablePool;
 import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.util.PoolMap;
 import org.slf4j.Logger;
 
+import appsoft.db.hb.core.Nullable;
+import appsoft.db.hb.handler.RsHandler;
+import appsoft.db.hb.service.QueryExtInfo;
 import appsoft.util.Log;
 
 @SuppressWarnings("deprecation")
 public class HBRunner {
 	private static Configuration cfg = HBaseConfiguration.create();
-	private HTablePool pool = null;
-	private final static String DEFAULT_FAMILYNAM="t";
+	private static HTablePool pool = null;
+	public final static String DEFAULT_FAMILYNAM="t";
 	private final static int DEFAULT_POOL_SIZE=5;
 	private final int DEFAULT_BUFFERSIZE=5*1024*1024;//5MB
 	private Logger log=null;
@@ -78,11 +86,7 @@ public class HBRunner {
 		return true;
 	}
 	public boolean batchInsert(String tableName,List<Put> puts) throws IOException{
-		HTableInterface table = pool.getTable(tableName);
-		if(table.isAutoFlush()){
-			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
-			table.setAutoFlush(false);
-		}
+		HTableInterface table = getTable(tableName);
 		log.info("{}","table put...");
 		table.put(puts);
 		log.info("{}","begin commit...");
@@ -91,12 +95,40 @@ public class HBRunner {
 		log.info("{}","commit successfully");
 		return true;
 	}
-	
+	public <T> T query(String tableName,String startRowKey, String endRowKey,@Nullable QueryExtInfo queryextinfo,RsHandler<T> rsh) throws IOException{
+		Scan s = new Scan();
+		if(queryextinfo!=null){
+			s.setMaxResultSize(queryextinfo.getLimit());
+		}
+		//根据测点名和时间查询
+		s.setStartRow(Bytes.toBytes(startRowKey));
+		s.setStopRow(Bytes.toBytes(endRowKey));
+		ResultScanner rs = getTable(tableName).getScanner(s);
+		return rsh.handle(tableName,rs);
+	}
+	public <T> T query(String tableName,String rowkey,RsHandler<T> rsh) throws IOException{
+		Result r = getTable(tableName).get(HBBuilder.mkGet(rowkey, DEFAULT_FAMILYNAM));
+		return rsh.handle(tableName,r);
+	}
+	public <T> T query(String tableName,List<String> rowKeys,RsHandler<T> rsh) throws IOException{
+		List<Get> gets= new ArrayList<Get>();
+		for (int i = 0; i < rowKeys.size(); i++) {
+			gets.add(HBBuilder.mkGet(rowKeys.get(i), DEFAULT_FAMILYNAM));
+		}
+		Result[] rs = getTable(tableName).get(gets);
+		return  rsh.handle(tableName,rs);
+	}
+	 
+	private HTableInterface getTable(String tableName) throws IOException{
+		HTableInterface table = pool.getTable(tableName);
+		if(table.isAutoFlush()){
+			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
+			table.setAutoFlushTo(false);
+		}
+		return table;
+	}
 	public boolean delByRowkey(String tableName,String rowKey){
 		return true;
-	}
-	public static String getDefaultFamilyName(){
-		return DEFAULT_FAMILYNAM;
 	}
 	public void shutDownPool() throws IOException{
 		pool.close();

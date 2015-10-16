@@ -1,6 +1,8 @@
 package appsoft.db.hb;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.hadoop.hbase.client.Put;
@@ -10,6 +12,7 @@ public class HBRow {
 	private String rowkey=null;
 	private Put put=null;
 	private boolean isAutoSave;
+	private Map<String,String> colAndVals;
 	public HBRow(HBSet hbset){
 		this(hbset,"ATUO-"+(Long.MAX_VALUE-System.currentTimeMillis()+"-"+UUID.randomUUID()));
 	}
@@ -17,10 +20,11 @@ public class HBRow {
 		this.hbset=hbset;
 		this.rowkey=rowkey;
 		this.isAutoSave=hbset.isAutoSave();
+		colAndVals = new HashMap<String, String>();
 	}
 	public void setValue(String column,String value) throws IOException{
 		if(this.isAutoSave){//自动保存直接保存
-			HBSet.runner.insert(hbset.getTableName(), HBBuilder.mkPut(this.rowkey, hbset.getFamily(), column,value));
+			hbset.getRunner().insert(hbset.getTableName(), HBBuilder.mkPut(this.rowkey, hbset.getFamily(), column,value));
 		}else{//将通过hbset的save方法进行保存
 			if(put==null){
 				put=HBBuilder.mkPut(this.rowkey, hbset.getFamily(), column,value);
@@ -29,6 +33,7 @@ public class HBRow {
 				HBBuilder.addDataForPut(put,hbset.getFamily(), column,value);
 			}
 		}
+		colAndVals.put(column, value);
 	}
 	public HBSet getHBSet(){
 		return this.hbset;
@@ -44,6 +49,13 @@ public class HBRow {
 	}
 	public void setAutoSave(boolean isAutoSave) {
 		this.isAutoSave = isAutoSave;
+	}
+	
+	public String getValue(String col){
+		return this.colAndVals.get(col);
+	}
+	public Map<String, String> getColAndVals() {
+		return colAndVals;
 	}
 	
 }

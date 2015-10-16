@@ -10,7 +10,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 public class HBBuilder {
 	public static Put mkPut( String row,Map<String,String> columnAndValues){
-		return mkPut(row,HBRunner.getDefaultFamilyName(),columnAndValues);
+		return mkPut(row,HBRunner.DEFAULT_FAMILYNAM,columnAndValues);
 	}
 	public static Put mkPut( String row, String columnFamily,Map<String,String> columnAndValues){
 		Put put = new Put(Bytes.toBytes(row));

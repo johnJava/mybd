@@ -1,4 +1,4 @@
-package appsoft.db.hb;
+package appsoft.db.hb.service;
 
 /**
  * AggregateExtInfo.
@@ -11,7 +11,7 @@ package appsoft.db.hb;
  * 
  * @author xinzhi.zhang
  * */
-public class AggregateExtInfo {
+public class QueryExtInfo {
     /**
      * Like limit in the SQL.
      * 

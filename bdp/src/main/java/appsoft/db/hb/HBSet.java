@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.hadoop.hbase.client.Put;
-import org.mortbay.log.Log;
 
-import appsoft.db.hb.service.AggregateService;
-import appsoft.db.hb.service.BasicService;
+import appsoft.db.hb.service.WriterService;
 
-public class HBSet implements AggregateService,BasicService{
-	public static HBRunner runner =null;
+public class HBSet implements WriterService{
+	private HBRunner runner =null;
 	private static AtomicInteger CREATHBSETNUMS = new AtomicInteger(0);
 	private static AtomicInteger ACTIVEHBSETNUMS = new AtomicInteger(0);
 	private static AtomicInteger INSERTNUMS = new AtomicInteger(0);
@@ -20,11 +18,13 @@ public class HBSet implements AggregateService,BasicService{
 	private String tableName="";
 	private String family;
 	private HBRow currRow=null;
+	private List<HBRow> rows=null;
 	private List<Put> puts =null;
+	private HBQueryer hbqueryer=null;
 	private boolean isAutoSave;
 	
 	private HBSet(String tableName){
-		this(tableName, HBRunner.getDefaultFamilyName());
+		this(tableName, HBRunner.DEFAULT_FAMILYNAM);
 	}
 	private HBSet(String tableName,String family){
 		this(tableName, family, DEFAULTROWSIZE);
@@ -34,6 +34,8 @@ public class HBSet implements AggregateService,BasicService{
 		this.tableName=tableName;
 		this.family=family;
 		puts = new ArrayList<Put>(cacheRows);
+		rows = new ArrayList<HBRow>(cacheRows);
+		initRunner();
 	}
 	public static HBSet creatHBSet(String tableName) throws IOException{
 		return creatHBSet(tableName, new ArrayList<String>());
@@ -44,23 +46,22 @@ public class HBSet implements AggregateService,BasicService{
 		return creatHBSet(tableName,fs);
 	}
 	public static HBSet creatHBSet(String tableName,List<String> families) throws IOException{
-		initRunner();
+		HBRunner r = new HBRunner();
 		if(families==null||families.size()==0){
-			Log.warn("未设置列族,系统默认列族为t");
-			runner.createTable(tableName);
+			r.createTable(tableName);
 		}else{
-			runner.createTable(tableName,families);
+			r.createTable(tableName,families);
 		}
 		return getHBSet(tableName);
 	}
 	public static HBSet getHBSet(String tableName){
-		return new HBSet(tableName,HBRunner.getDefaultFamilyName());
+		return new HBSet(tableName,HBRunner.DEFAULT_FAMILYNAM);
 	}
 	public static HBSet getHBSet(String tableName,String family){
 		return getHBSet(tableName, family, DEFAULTROWSIZE);
 	}
 	public static HBSet getHBSet(String tableName,int cacheRows){
-		return getHBSet(tableName, HBRunner.getDefaultFamilyName(), cacheRows);
+		return getHBSet(tableName, HBRunner.DEFAULT_FAMILYNAM, cacheRows);
 	}
 	public static HBSet getHBSet(String tableName,String family,int cacheRows){
 		if(!ensureTableExists(tableName)) return null;
@@ -77,6 +78,7 @@ public class HBSet implements AggregateService,BasicService{
 		HBRow row =null;
 		row=(rowkey==null || rowkey.equals(""))?row = new HBRow(this):new HBRow(this,rowkey);
 		this.currRow=row;
+		rows.add(row);
 		return row;
 	}
 	public void save() throws IOException{
@@ -105,11 +107,11 @@ public class HBSet implements AggregateService,BasicService{
 		ACTIVEHBSETNUMS.decrementAndGet();
 		super.finalize();
 	}
-	public static HBRunner getRunner() {
+	public HBRunner getRunner() {
 		initRunner();
 		return runner;
 	}
-	public static void initRunner(){
+	public void initRunner(){
 		if(runner==null) runner = new HBRunner();
 	}
 	public String getTableName() {
@@ -123,64 +125,30 @@ public class HBSet implements AggregateService,BasicService{
 		if(this.currRow!=null)
 		this.currRow.setAutoSave(isAutoSave);
 	}
-	@Override
-	public List<HBRow> getRows(String startRowKey, String endRowKey) {
-		// TODO Auto-generated method stub
-		return null;
+	public HBQueryer getHbqueryer() {
+		initHbqueryer();
+		return hbqueryer;
 	}
-	@Override
-	public List<HBRow> getRows(String startRowKey, String endRowKey, int period) {
-		// TODO Auto-generated method stub
-		return null;
+	private void initHbqueryer() {
+		if(this.hbqueryer==null){
+			this.hbqueryer=new HBQueryer(this);
+		}
 	}
-	@Override
-	public HBRow getRow(String rowkey) {
-		// TODO Auto-generated method stub
-		return null;
+	public HBRow getRow(){
+		return rows.get(0);
 	}
-	@Override
-	public List<HBRow> getRows(List<String> rowkeys) {
-		// TODO Auto-generated method stub
-		return null;
+	public HBRow getRow(int index){
+		return rows.get(index);
 	}
-	@Override
-	public long[] getAvgs(String startRowKey, String endRowKey, int period) {
-		// TODO Auto-generated method stub
-		return null;
+	public int count(){
+		return rows.size();
 	}
-	@Override
-	public long getAvg(String startRowKey, String endRowKey) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public List<HBRow> getMaxRows(String startRowKey, String endRowKey, int period) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public HBRow getMaxRow(String startRowKey, String endRowKey) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public List<HBRow> getMinRows(String startRowKey, String endRowKey, int period) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public HBRow getMinRow(String startRowKey, String endRowKey) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	@Override
-	public long[] countAndSum() {
-		// TODO Auto-generated method stub
-		return null;
+	public void close(){
+		this.rows.clear();
+		this.puts.clear();
+		this.currRow=null;
+	} 
+	public List<HBRow> getRows(){
+		return this.rows;
 	}
 }
