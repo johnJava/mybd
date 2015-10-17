@@ -3,6 +3,8 @@ package appsoft.db.hb;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.hadoop.hbase.protobuf.generated.AggregateProtos;
+
 import appsoft.db.hb.core.Nullable;
 import appsoft.db.hb.handler.HBRowRsHandler;
 import appsoft.db.hb.service.QueryExtInfo;
@@ -33,12 +35,12 @@ public class HBQueryer implements QueryService{
 	}
 
 	@Override
-	public long count() {
+	public long count(String startRowKey, String endRowKey) {
 		return 0;
 	}
 
 	@Override
-	public long[] countAndSum() {
+	public long[] countAndSum(String startRowKey, String endRowKey) {
 		// TODO Auto-generated method stub
 		return null;
 	}

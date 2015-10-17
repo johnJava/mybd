@@ -5,7 +5,6 @@ import java.util.List;
 
 import appsoft.db.hb.service.QueryExtInfo;
 import appsoft.db.hb.core.Nullable;
-
 import appsoft.db.hb.HBRow;
 
 
@@ -39,17 +38,17 @@ public interface QueryService {
 	 * @param rowkeys 指定行键
 	 * @return 行记录集合
 	 */
-	public List<HBRow> getRows(List<String> rowkeys)throws IOException;
+	public List<HBRow> getRows(List<String> rowkeys) throws IOException;
 	 /** 
      * 计数器
      * @return 计数值
      */
-    public long count();
+    public long count(String startRowKey, String endRowKey) throws IOException;
     /**
      * 计数与求和器
      * @return
      */
-    public long[] countAndSum();
+    public long[] countAndSum(String startRowKey, String endRowKey) throws IOException;
 	/**
 	 * 获取给定测点一段时间内的历史数据，按照间隔的平均值
 	 * @param startRowKey 开始行键

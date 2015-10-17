@@ -8,11 +8,17 @@ import java.util.NavigableMap;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
+import org.apache.hadoop.hbase.client.coprocessor.LongColumnInterpreter;
+import org.apache.hadoop.hbase.coprocessor.AggregateImplementation;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import appsoft.db.hb.HBBuilder;
@@ -28,9 +34,10 @@ public class HbaseQueryUtil  {
 	public HbaseQueryUtil() throws IOException{
 		System.setProperty("HADOOP_USER_NAME","hdfs");
 		System.setProperty("hadoop.home.dir",getClassesPath());
+		cfg.set("fs.defaultFS", "hdfs://CH5:8020");
 		HbaseQueryUtil.tablename="monitors";
 		HbaseQueryUtil.family = "t";
-		HbaseQueryUtil.column="vaule";
+		HbaseQueryUtil.column="value";
 		this.table=new HTable(cfg, tablename);
 	}
 
@@ -38,14 +45,17 @@ public class HbaseQueryUtil  {
 		String p = this.getClass().getResource("/").getPath();
 		return p;
 	}
-	public static void main(String[] args) throws Exception {
-		String startRowKey="row_201000002";
-		String endRowKey="row_101020018";
+	public static void main(String[] args) throws Throwable {
+		int max=10000*10000;
+		String startRowKey="row_"+(max-10);
+		String endRowKey="row_"+(max-1);
 		HbaseQueryUtil hq = new HbaseQueryUtil();
-		//hq.scan(startRowKey, endRowKey);
 		long begin = System.currentTimeMillis();
+		hq.scan(startRowKey, endRowKey);
+		//hq.addCoprocessor();
+		hq.getMax(startRowKey, endRowKey);
 		//hq.scan(startRowKey, endRowKey,2);
-		hq.selectByRowKeyColumn(tablename, startRowKey, family, null);
+		//hq.selectByRowKeyColumn(tablename, startRowKey, family, null);
 //		List<String> rowKeys = new ArrayList<String>(){
 //			{
 //				add("row_101000002");
@@ -58,6 +68,28 @@ public class HbaseQueryUtil  {
 		long cost = System.currentTimeMillis()-begin;
 		System.out.println("cost "+cost+"ms");
 	}
+	
+	public void addCoprocessor() throws IOException{
+		Configuration hbaseconfig = HBaseConfiguration.create();  
+		HBaseAdmin hbaseAdmin = new HBaseAdmin(hbaseconfig);  
+		hbaseAdmin.disableTable(tablename);  
+		HTableDescriptor htd = hbaseAdmin.getTableDescriptor(TableName.valueOf(tablename));  
+		htd.addCoprocessor(AggregateImplementation.class.getName());  
+		hbaseAdmin.modifyTable(tablename, htd);  
+		hbaseAdmin.enableTable(tablename);  
+		hbaseAdmin.close(); 
+	}
+	public void getMax(String startRowKey, String endRowKey) throws Throwable{
+		Scan s = new Scan();
+		s.addColumn(Bytes.toBytes(family), Bytes.toBytes(column));
+		s.setStartRow(Bytes.toBytes(startRowKey));
+		s.setStopRow(Bytes.toBytes(endRowKey));
+		LongColumnInterpreter columnInterpreter = new LongColumnInterpreter();
+		AggregationClient client = new AggregationClient(cfg);
+		Long rs = client.max(table, columnInterpreter, s);
+		System.out.println("rs = "+rs);
+	}
+	
 	// 显示所有数据
 	public  void scan(String startRowKey, String endRowKey) throws Exception {
 		Scan s = new Scan();
@@ -70,7 +102,7 @@ public class HbaseQueryUtil  {
 		for (Result r : rs) {
 			NavigableMap<byte[], byte[]> kvs = r.getFamilyMap(Bytes.toBytes(family));
 			for(Entry<byte[], byte[]> kv:kvs.entrySet()){
-				System.out.println( Bytes.toString(r.getRow())+":"+ Bytes.toString(kv.getKey())+":"+ Bytes.toString(kv.getValue()));
+				System.out.println( Bytes.toString(r.getRow())+":"+ Bytes.toString(kv.getKey())+":"+ Bytes.toInt(kv.getValue()));
 			}
 		}
 	}

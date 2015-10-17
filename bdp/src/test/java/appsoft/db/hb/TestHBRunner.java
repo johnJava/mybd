@@ -33,11 +33,11 @@ public class TestHBRunner {
 		HBRunner runner = new HBRunner();
 		boolean result = runner.createTable(tableName);
 		System.out.print("result1=="+result);
-		Map<String, String> columnAndValues = new  HashMap<String,String>();
+		Map<String, Object> columnAndValues = new  HashMap<String,Object>();
 		columnAndValues.put("name", "point1");
 		columnAndValues.put("vaule", "123");
 		System.out.print("mkPut=="+1);
-		Put put = HBBuilder.mkPut("row001",columnAndValues );
+		Put put = HBBuilder.mkPut("row001","t",columnAndValues );
 		System.out.print("mkPut=="+2);
 		result=runner.insert(tableName, put);
 		System.out.print("result2=="+result);
@@ -50,10 +50,10 @@ public class TestHBRunner {
 		Random random=new Random();
 		for(int i=0;i<10;i++){
 			String rowkey ="row"+i;
-			Map<String, String> columnAndValues = new  HashMap<String,String>();
+			Map<String, Object> columnAndValues = new  HashMap<String,Object>();
 			columnAndValues.put("name", "point"+i);
 			columnAndValues.put("vaule", random.nextInt(1000000)+"");
-			Put put = HBBuilder.mkPut(rowkey,columnAndValues );
+			Put put = HBBuilder.mkPut(rowkey,"t",columnAndValues );
 			puts.add(put);
 		}
 		boolean result = runner.batchInsert(tableName, puts);

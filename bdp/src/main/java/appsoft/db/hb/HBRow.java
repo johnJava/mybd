@@ -12,7 +12,7 @@ public class HBRow {
 	private String rowkey=null;
 	private Put put=null;
 	private boolean isAutoSave;
-	private Map<String,String> colAndVals;
+	private Map<String,Object> colAndVals;
 	public HBRow(HBSet hbset){
 		this(hbset,"ATUO-"+(Long.MAX_VALUE-System.currentTimeMillis()+"-"+UUID.randomUUID()));
 	}
@@ -20,14 +20,14 @@ public class HBRow {
 		this.hbset=hbset;
 		this.rowkey=rowkey;
 		this.isAutoSave=hbset.isAutoSave();
-		colAndVals = new HashMap<String, String>();
+		colAndVals = new HashMap<String, Object>();
 	}
-	public void setValue(String column,String value) throws IOException{
+	public void setValue(String column,Object value) throws IOException{
 		if(this.isAutoSave){//自动保存直接保存
 			hbset.getRunner().insert(hbset.getTableName(), HBBuilder.mkPut(this.rowkey, hbset.getFamily(), column,value));
 		}else{//将通过hbset的save方法进行保存
 			if(put==null){
-				put=HBBuilder.mkPut(this.rowkey, hbset.getFamily(), column,value);
+				put=HBBuilder.mkPut(this.rowkey, hbset.getFamily(),column, value);
 				hbset.addPut(put);
 			}else{
 				HBBuilder.addDataForPut(put,hbset.getFamily(), column,value);
@@ -51,11 +51,10 @@ public class HBRow {
 		this.isAutoSave = isAutoSave;
 	}
 	
-	public String getValue(String col){
+	public Object getValue(String col){
 		return this.colAndVals.get(col);
 	}
-	public Map<String, String> getColAndVals() {
+	public Map<String, Object> getColAndVals() {
 		return colAndVals;
 	}
-	
 }
