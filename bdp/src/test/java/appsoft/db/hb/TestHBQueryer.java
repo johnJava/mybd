@@ -10,7 +10,6 @@ import org.junit.Test;
 public class TestHBQueryer {
 
 	public static void main(String[] args) {
-
 	}
 	public TestHBQueryer() {
 		this.query = HBSet.getHBSet("monitors").getHbqueryer();
