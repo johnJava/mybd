@@ -173,6 +173,7 @@ public class HbaseQueryUtil {
 			}
 		}
 	}
+	
 	public void getAvg(String startRowKey, String endRowKey, int period) throws Throwable {
 		String[] keys = startRowKey.split("_");
 		String pointId = keys[0];
