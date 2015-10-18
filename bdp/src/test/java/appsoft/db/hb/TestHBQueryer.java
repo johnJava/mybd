@@ -43,8 +43,8 @@ public class TestHBQueryer {
 	}
 	@Test
 	public void testGetRowsByInterval() throws IOException{
-		String startRowKey="row_"+(Long.MAX_VALUE-2);
-		String endRowKey="row_"+(Long.MAX_VALUE-8);
+		String startRowKey="row_"+(Long.MAX_VALUE-8);
+		String endRowKey="row_"+(Long.MAX_VALUE-2);
 		List<HBRow> rows = this.query.getRows(startRowKey,endRowKey,null);
 		for (HBRow row:rows) {
 			System.out.println("testGetRowsByInterval "+row.getColAndVals().toString());
@@ -52,24 +52,24 @@ public class TestHBQueryer {
 	}
 	@Test
 	public void testGetAvg() throws IOException{
-		String startRowKey="row_"+(Long.MAX_VALUE-2);
-		String endRowKey="row_"+(Long.MAX_VALUE-8);
+		String startRowKey="row_"+(Long.MAX_VALUE-8);
+		String endRowKey="row_"+(Long.MAX_VALUE-2);
 		String column="value";
 		double rs = this.query.getAvg(startRowKey, endRowKey, column);
 		System.out.println("avg="+rs);
 	}
 	@Test
 	public void testGetMin() throws IOException{
-		String startRowKey="row_"+(Long.MAX_VALUE-2);
-		String endRowKey="row_"+(Long.MAX_VALUE-8);
+		String startRowKey="row_"+(Long.MAX_VALUE-8);
+		String endRowKey="row_"+(Long.MAX_VALUE-2);
 		String column="value";
 		double rs = this.query.getMin(startRowKey, endRowKey, column);
 		System.out.println("min="+rs);
 	}
 	@Test
 	public void testGetMax() throws IOException{
-		String startRowKey="row_"+(Long.MAX_VALUE-2);
-		String endRowKey="row_"+(Long.MAX_VALUE-8);
+		String startRowKey="row_"+(Long.MAX_VALUE-8);
+		String endRowKey="row_"+(Long.MAX_VALUE-2);
 		String column="value";
 		double rs = this.query.getMax(startRowKey, endRowKey, column);
 		System.out.println("max="+rs);

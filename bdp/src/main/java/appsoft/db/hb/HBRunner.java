@@ -18,7 +18,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
-import org.apache.hadoop.hbase.client.coprocessor.LongColumnInterpreter;
+import org.apache.hadoop.hbase.client.coprocessor.DoubleColumnInterpreter;
 import org.apache.hadoop.hbase.coprocessor.AggregateImplementation;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.util.PoolMap;
@@ -141,7 +141,7 @@ public class HBRunner {
 		s.addColumn(Bytes.toBytes(family), Bytes.toBytes(column));
 		s.setStartRow(Bytes.toBytes(startRowKey));
 		s.setStopRow(Bytes.toBytes(endRowKey));
-		LongColumnInterpreter columnInterpreter = new LongColumnInterpreter();
+		DoubleColumnInterpreter columnInterpreter = new DoubleColumnInterpreter();
 		AggregationClient client = new AggregationClient(cfg);
 		double rs = 0;
 		try {
@@ -156,7 +156,7 @@ public class HBRunner {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		System.out.println("max[" + startRowKey + "," + endRowKey + "] = " + rs);
+		System.out.println("aggregate[" + startRowKey + "," + endRowKey + "] = " + rs);
 		return rs;
 	}
 	public <T> T query(String tableName,List<String> rowKeys,RsHandler<T> rsh) throws IOException{

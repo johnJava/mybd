@@ -54,12 +54,12 @@ public class HbaseQueryUtil {
 		long begin = System.currentTimeMillis();
 		hq.scan(startRowKey, endRowKey);
 		// hq.addCoprocessor();
-		// hq.getMax(startRowKey, endRowKey);
-		// hq.getMin(startRowKey, endRowKey);
-		// hq.getAvg(startRowKey, endRowKey);
-		hq.getMax(startRowKey, endRowKey, 2);
-		hq.getMin(startRowKey, endRowKey, 2);
-		hq.getAvg(startRowKey, endRowKey, 2);
+		 hq.getMax(startRowKey, endRowKey);
+		 hq.getMin(startRowKey, endRowKey);
+		 hq.getAvg(startRowKey, endRowKey);
+//		hq.getMax(startRowKey, endRowKey, 2);
+//		hq.getMin(startRowKey, endRowKey, 2);
+//		hq.getAvg(startRowKey, endRowKey, 2);
 		// hq.scan(startRowKey, endRowKey,2);
 		// hq.selectByRowKeyColumn(tablename, startRowKey, family, null);
 		// List<String> rowKeys = new ArrayList<String>(){
@@ -86,16 +86,16 @@ public class HbaseQueryUtil {
 		hbaseAdmin.close();
 	}
 
-	public long getMax(String startRowKey, String endRowKey) {
+	public double getMax(String startRowKey, String endRowKey) {
 		Scan s = new Scan();
 		s.addColumn(Bytes.toBytes(family), Bytes.toBytes(column));
 		s.setStartRow(Bytes.toBytes(startRowKey));
 		s.setStopRow(Bytes.toBytes(endRowKey));
-		LongColumnInterpreter columnInterpreter = new LongColumnInterpreter();
+		DoubleColumnInterpreter columnInterpreter = new DoubleColumnInterpreter();
 		AggregationClient client = new AggregationClient(cfg);
-		long rs = 0;
+		double rs = 0;
 		try {
-			rs = client.max(table, columnInterpreter, s);
+			 rs = client.max(table, columnInterpreter, s);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -262,7 +262,7 @@ public class HbaseQueryUtil {
 		s.addColumn(Bytes.toBytes(family), Bytes.toBytes(column));
 		s.setStartRow(Bytes.toBytes(startRowKey));
 		s.setStopRow(Bytes.toBytes(endRowKey));
-		LongColumnInterpreter columnInterpreter = new LongColumnInterpreter();
+		DoubleColumnInterpreter columnInterpreter = new DoubleColumnInterpreter();
 		AggregationClient client = new AggregationClient(cfg);
 		double rs = client.avg(table, columnInterpreter, s);
 		System.out.println("avg[" + startRowKey + "," + endRowKey + "] = " + rs);
@@ -293,7 +293,7 @@ public class HbaseQueryUtil {
 			NavigableMap<byte[], byte[]> kvs = r.getFamilyMap(Bytes.toBytes(family));
 			for (Entry<byte[], byte[]> kv : kvs.entrySet()) {
 				byte[] val = kv.getValue();
-				System.out.println(Bytes.toString(r.getRow()) + ":" + Bytes.toString(kv.getKey()) + ":" + Bytes.toLong(val));
+				System.out.println(Bytes.toString(r.getRow()) + ":" + Bytes.toString(kv.getKey()) + ":" + Bytes.toDouble(val));
 				sum += Bytes.toLong(val);
 			}
 		}
