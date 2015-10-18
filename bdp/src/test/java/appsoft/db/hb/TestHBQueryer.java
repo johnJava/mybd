@@ -23,7 +23,7 @@ public class TestHBQueryer {
 	
 	@Test
 	public void testGetRowsByRowkey() throws IOException{
-		HBRow row = this.query.getRow("row_101000002");
+		HBRow row = this.query.getRow("row_"+(Long.MAX_VALUE-2));
 		System.out.println("testGetRowsByRowkey "+row.getColAndVals().toString());
 	}
 	@Test
@@ -31,10 +31,10 @@ public class TestHBQueryer {
 		List<String> rowKeys = new ArrayList<String>(){
 			private static final long serialVersionUID = 1L;
 			{
-				add("row_101000002");
-				add("row_101000004");
-				add("row_101000006");
-				add("row_101000008");
+				add("row_"+(Long.MAX_VALUE-2));
+				add("row_"+(Long.MAX_VALUE-4));
+				add("row_"+(Long.MAX_VALUE-6));
+				add("row_"+(Long.MAX_VALUE-8));
 			}
 		};
 		List<HBRow> rows = this.query.getRows(rowKeys);
@@ -44,11 +44,35 @@ public class TestHBQueryer {
 	}
 	@Test
 	public void testGetRowsByInterval() throws IOException{
-		String startRowKey="row_101000002";
-		String endRowKey="row_101000008";
+		String startRowKey="row_"+(Long.MAX_VALUE-2);
+		String endRowKey="row_"+(Long.MAX_VALUE-8);
 		List<HBRow> rows = this.query.getRows(startRowKey,endRowKey,null);
 		for (HBRow row:rows) {
 			System.out.println("testGetRowsByInterval "+row.getColAndVals().toString());
 		}
+	}
+	@Test
+	public void testGetAvg() throws IOException{
+		String startRowKey="row_"+(Long.MAX_VALUE-2);
+		String endRowKey="row_"+(Long.MAX_VALUE-8);
+		String column="value";
+		double rs = this.query.getAvg(startRowKey, endRowKey, column);
+		System.out.println("avg="+rs);
+	}
+	@Test
+	public void testGetMin() throws IOException{
+		String startRowKey="row_"+(Long.MAX_VALUE-2);
+		String endRowKey="row_"+(Long.MAX_VALUE-8);
+		String column="value";
+		double rs = this.query.getMin(startRowKey, endRowKey, column);
+		System.out.println("min="+rs);
+	}
+	@Test
+	public void testGetMax() throws IOException{
+		String startRowKey="row_"+(Long.MAX_VALUE-2);
+		String endRowKey="row_"+(Long.MAX_VALUE-8);
+		String column="value";
+		double rs = this.query.getMax(startRowKey, endRowKey, column);
+		System.out.println("max="+rs);
 	}
 }

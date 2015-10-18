@@ -54,7 +54,12 @@ public class HBRowRsHandler implements RsHandler<HBSet> {
 			flag = true;
 			HBRow row = hbset.addRow(Bytes.toString(result.getRow()));
 			for(Entry<byte[], byte[]> kv:kvs.entrySet()){
-				row.setValue(Bytes.toString(kv.getKey()), Bytes.toString(kv.getValue()));
+				String col=Bytes.toString(kv.getKey());
+				if(col.equalsIgnoreCase("value")){
+					row.setValue(col, Bytes.toDouble(kv.getValue()));
+				}else{
+					row.setValue(col, Bytes.toString(kv.getValue()));
+				}
 			}
 		}
 

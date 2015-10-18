@@ -17,6 +17,9 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
+import org.apache.hadoop.hbase.client.coprocessor.LongColumnInterpreter;
+import org.apache.hadoop.hbase.coprocessor.AggregateImplementation;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.util.PoolMap;
 import org.slf4j.Logger;
@@ -24,6 +27,7 @@ import org.slf4j.Logger;
 import appsoft.db.hb.core.Nullable;
 import appsoft.db.hb.handler.RsHandler;
 import appsoft.db.hb.service.QueryExtInfo;
+import appsoft.util.AggregateType;
 import appsoft.util.Log;
 
 @SuppressWarnings("deprecation")
@@ -69,6 +73,7 @@ public class HBRunner {
 			for(int i=0;i<familyNames.size();i++){
 				tableDesc.addFamily(new HColumnDescriptor(familyNames.get(i)));
 			}
+			tableDesc.addCoprocessor(AggregateImplementation.class.getName());  
 			admin.createTable(tableDesc);
 			Log.info("{}","create table success!");
 			flag = true;
@@ -110,6 +115,50 @@ public class HBRunner {
 		Result r = getTable(tableName).get(HBBuilder.mkGet(rowkey, DEFAULT_FAMILYNAM));
 		return rsh.handle(tableName,r);
 	}
+	public double getMax(String tableName,String startRowKey, String endRowKey,String column) throws IOException{
+		return getMax(tableName, startRowKey, endRowKey,HBRunner.DEFAULT_FAMILYNAM ,column);
+	}
+	public double getMax(String tableName,String startRowKey, String endRowKey,String column, int period) throws IOException{
+		return getMax(tableName, startRowKey, endRowKey,HBRunner.DEFAULT_FAMILYNAM ,column);
+	}
+	public double getMax(String tableName,String startRowKey, String endRowKey,String family,String column) throws IOException{
+		return aggregateCompute(tableName, startRowKey, AggregateType.MAX, endRowKey, family, column);
+	}
+	public double getMin(String tableName,String startRowKey, String endRowKey,String column) throws IOException{
+		return getMin(tableName, startRowKey, endRowKey,HBRunner.DEFAULT_FAMILYNAM ,column);
+	}
+	public double getMin(String tableName,String startRowKey, String endRowKey,String family,String column) throws IOException{
+		return aggregateCompute(tableName, startRowKey, AggregateType.MIN, endRowKey, family, column);
+	}
+	public double getAvg(String tableName,String startRowKey, String endRowKey,String column) throws IOException{
+		return getAvg(tableName, startRowKey, endRowKey,HBRunner.DEFAULT_FAMILYNAM ,column);
+	}
+	public double getAvg(String tableName,String startRowKey, String endRowKey,String family,String column) throws IOException{
+		return aggregateCompute(tableName, startRowKey, AggregateType.AVG, endRowKey, family, column);
+	}
+	public double aggregateCompute(String tableName,String startRowKey, AggregateType type,String endRowKey,String family,String column) throws IOException{
+		Scan s = new Scan();
+		s.addColumn(Bytes.toBytes(family), Bytes.toBytes(column));
+		s.setStartRow(Bytes.toBytes(startRowKey));
+		s.setStopRow(Bytes.toBytes(endRowKey));
+		LongColumnInterpreter columnInterpreter = new LongColumnInterpreter();
+		AggregationClient client = new AggregationClient(cfg);
+		double rs = 0;
+		try {
+			if (type==AggregateType.MAX) {
+				rs = client.max(TableName.valueOf(tableName), columnInterpreter, s);
+			} else if (type==AggregateType.MIN) {
+				rs = client.min(TableName.valueOf(tableName), columnInterpreter, s);
+			}else if (type==AggregateType.AVG) {
+				rs = client.avg(TableName.valueOf(tableName), columnInterpreter, s);
+			}
+			
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		System.out.println("max[" + startRowKey + "," + endRowKey + "] = " + rs);
+		return rs;
+	}
 	public <T> T query(String tableName,List<String> rowKeys,RsHandler<T> rsh) throws IOException{
 		List<Get> gets= new ArrayList<Get>();
 		for (int i = 0; i < rowKeys.size(); i++) {
@@ -133,4 +182,37 @@ public class HBRunner {
 	public void shutDownPool() throws IOException{
 		pool.close();
 	}
+//	private class ScanRunable implements Runnable {
+//		private String startRowKey;
+//		private String endRowKey;
+//		private double[] rs;
+//		private int index;
+//		private AggregateType type;
+//		private String tableName;
+//		private String family;
+//		private String column;
+//
+//		public ScanRunable(String tableName,String startRowKey, String endRowKey,String family,String column, AggregateType type ,double[] rs, int index) {
+//			this.startRowKey = startRowKey;
+//			this.endRowKey = endRowKey;
+//			this.type = type;
+//			this.rs = rs;
+//			this.index = index;
+//			this.tableName=tableName;
+//			this.family=family;
+//			this.column=column;
+//			this.tableName=tableName;
+//		}
+//
+//		@Override
+//		public void run() {
+//			double val = -1;
+//			try {
+//				val=aggregateCompute(tableName, startRowKey, type, endRowKey, family, column);
+//			} catch (Throwable e) {
+//				e.printStackTrace();
+//			}
+//			rs[index] = val;
+//		}
+//	}
 }
