@@ -25,10 +25,16 @@ public class HBBuilder {
 		}
 		return put;
 	}
+	public static Put mkPut( String row,String column,Object value){
+		return mkPut(row, HBRunner.DEFAULT_FAMILYNAM, column, value);
+	}
 	public static Put mkPut( String row, String columnFamily,String column,Object value){
 		Put put = new Put(Bytes.toBytes(row));
 	    put.add(Bytes.toBytes(columnFamily), Bytes.toBytes(column),internal_toBytes(value));
 		return put;
+	}
+	public static Put addDataForPut( Put put,String column,Object value){
+		return addDataForPut(put, HBRunner.DEFAULT_FAMILYNAM, column, value);
 	}
 	public static Put addDataForPut( Put put, String columnFamily,String column,Object value){
 	    put.add(Bytes.toBytes(columnFamily), Bytes.toBytes(column),internal_toBytes(value));

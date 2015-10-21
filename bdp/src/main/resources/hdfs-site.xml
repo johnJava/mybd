@@ -38,7 +38,6 @@
     <name>dfs.domain.socket.path</name>
     <value>/var/run/hdfs-sockets/dn</value>
   </property>
-  
   <property>
     <name>dfs.client.read.shortcircuit.skip.checksum</name>
     <value>false</value>

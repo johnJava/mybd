@@ -1,7 +1,6 @@
 package com.first;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +13,7 @@ import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hdfs.client.HdfsUtils;
 import org.junit.Test;
 
 public class HDFSUtil {
@@ -22,6 +22,7 @@ public class HDFSUtil {
 	static String dir = "/user/eam/upload/";
 	static {
 		System.setProperty("HADOOP_USER_NAME","hdfs");
+		System.setProperty("hadoop.home.dir", getClassesPath());
 		conf.set("fs.defaultFS", "hdfs://CH5:8020");
 		try {
 			hdfs = FileSystem.get(conf);
@@ -31,7 +32,10 @@ public class HDFSUtil {
 			hdfs = null;
 		}
 	}
-
+	public static String getClassesPath() {
+		String p = new HDFSUtil().getClass().getResource("/").getPath();
+		return p;
+	}
 	public boolean uploadSmallFile(String fileName, byte[] bytes)
 			throws IOException {
 		checkHDFS();
@@ -79,22 +83,23 @@ public class HDFSUtil {
 	}
 
 	public static void main(String[] args) throws IOException {
-		FileInputStream fin = new FileInputStream("/home/wangliang/Downloads");
-		HDFSUtil hfs = new HDFSUtil();
-		hfs.uploadBigFile("Downloads", fin.getChannel());
-		fin.close();
+//		FileInputStream fin = new FileInputStream("/home/wangliang/Downloads");
+//		HDFSUtil hfs = new HDFSUtil();
+//		hfs.uploadBigFile("Downloads", fin.getChannel());
+//		fin.close();
+		new HDFSUtil().testUploadSmallFile();
 	}
 	
 	@Test
 	public void testUploadSmallFile() throws IOException {
-		FileInputStream fin = new FileInputStream("/home/wangliang/source/staticsf.jar");
+		FileInputStream fin = new FileInputStream("F:/wangliang/风电项目/项目软件/aggregate.jar");
 		byte[] buffer = new byte[1024];
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		while (fin.read(buffer) != -1) {
 			out.write(buffer);
 		}
 		fin.close();
-		uploadSmallFile("staticsf.jar", out.toByteArray());
+		uploadSmallFile("aggregate.jar", out.toByteArray());
 		out.flush();
 		out.close();
 	}

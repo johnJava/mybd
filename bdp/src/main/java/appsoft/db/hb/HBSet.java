@@ -111,7 +111,7 @@ public class HBSet implements WriterService{
 		initRunner();
 		return runner;
 	}
-	public void initRunner(){
+	private void initRunner(){
 		if(runner==null) runner = new HBRunner();
 	}
 	public String getTableName() {

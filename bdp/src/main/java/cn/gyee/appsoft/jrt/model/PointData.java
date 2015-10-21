@@ -7,6 +7,9 @@
  */
 package cn.gyee.appsoft.jrt.model;
 
+import java.io.Serializable;
+
+
 /**
  * <p>
  * 		PointData
@@ -39,8 +42,13 @@ package cn.gyee.appsoft.jrt.model;
  *   </tr>
  * </table>
  */
-public class PointData implements Comparable<PointData>{
+public class PointData implements Comparable<PointData>,Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4193407654322764318L;
+
 	/**
 	 * 测点ID
 	 */
@@ -141,4 +149,10 @@ public class PointData implements Comparable<PointData>{
 			return 1;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "PointData [pointId=" + pointId + ", value=" + value + ", utcTime=" + utcTime + ", msTime=" + msTime + ", status=" + status + "]";
+	}
+	
 }

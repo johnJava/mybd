@@ -16,25 +16,25 @@ public class TestHBSet {
 		Logger log = Log.get(TestHBSet.class);
 		long begin = System.currentTimeMillis();
 		//String tableName="testhbset2";
-		HBSet hbset = HBSet.creatHBSet("monitors");
+		HBSet hbset = HBSet.creatHBSet("pointdata1");
 	    //hbset.setAutoSave(true);
-		Random random=new Random();
-		for(int i=1;i<=(10);i++){
-			System.out.println("add row "+i);
-			HBRow hrow = hbset.addRow("row_"+(Long.MAX_VALUE-i));
-			hrow.setValue("name", "point_"+i);
-			hrow.setValue("value", random.nextDouble());
-//			if(i%(1000*200)==0){
-//				//System.out.println("add row "+i);
-//				log.info("add {}","row "+i);
+//		Random random=new Random();
+//		for(int i=1;i<=(10);i++){
+//			System.out.println("add row "+i);
+//			HBRow hrow = hbset.addRow("row_"+(Long.MAX_VALUE-i));
+//			hrow.setValue("name", "point_"+i);
+//			hrow.setValue("value", random.nextDouble());
+////			if(i%(1000*200)==0){
+////				//System.out.println("add row "+i);
+////				log.info("add {}","row "+i);
+////			}
+//			if(i%(1000*1000)==0){
+//				//hbset.save();
 //			}
-			if(i%(1000*1000)==0){
-				//hbset.save();
-			}
-		}
-		hbset.save();
-		long cost = System.currentTimeMillis()-begin;
-		log.info("cost {}", +cost+"ms");
+//		}
+//		hbset.save();
+//		long cost = System.currentTimeMillis()-begin;
+//		log.info("cost {}", +cost+"ms");
 	}
 
 }

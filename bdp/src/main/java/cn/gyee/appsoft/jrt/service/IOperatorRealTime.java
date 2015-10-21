@@ -7,6 +7,8 @@
  */
 package cn.gyee.appsoft.jrt.service;
 
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.List;
 
 import cn.gyee.appsoft.jrt.model.PointData;
@@ -83,26 +85,22 @@ public interface IOperatorRealTime {
 	 * @param fullPointName 测点全名，站点名.服务名.点号
 	 * @param beginTime 开始时间 时间格式：yyyy-MM-dd HH:mm:ss
 	 * @param endTime 结束时间 时间格式：yyyy-MM-dd HH:mm:ss
-	 * @param period 获取数据时间间隔
+	 * @param period 获取数据时间间隔,单位为秒
 	 * @return
 	 */
 	public List<PointData> getHistorySnapData(String fullPointName, String beginTime, String endTime,int period);
-	
 	/**
 	 * 单点某时刻值
 	 * @param fullPointName
-	 * @param beginTime
-	 * @param endTime
-	 * @param period
+	 * @param hisTime
 	 * @return
-	 * @
 	 */
 	public PointData getHistorySnapData(String fullPointName, String hisTime);
 	
 	/**
 	 * 断面获取给定时刻多点的历史数据快照值
-	 * @param fullPointName
-	 * @param hisTime
+	 * @param fullPointName 测点全名，站点名.服务名.点号
+	 * @param hisTime 时间
 	 * @return
 	 * @
 	 */
@@ -114,7 +112,7 @@ public interface IOperatorRealTime {
 	 * @param fullPointName 测点全名，站点名.服务名.点号
 	 * @param beginTime 开始时间 时间格式：yyyy-MM-dd HH:mm:ss
 	 * @param endTime 结束时间 时间格式：yyyy-MM-dd HH:mm:ss
-	 * @param period 获取数据时间间隔
+	 * @param period 获取数据时间间隔,单位为秒
 	 * @return
 	 */
 	public List<PointData> getAvgHistoryData(String fullPointName, String beginTime, String endTime,int period);
@@ -134,7 +132,7 @@ public interface IOperatorRealTime {
 	 * @param fullPointName 测点全名，站点名.服务名.点号
 	 * @param beginTime 开始时间 时间格式：yyyy-MM-dd HH:mm:ss
 	 * @param endTime 结束时间 时间格式：yyyy-MM-dd HH:mm:ss
-	 * @param period 获取数据时间间隔
+	 * @param period 获取数据时间间隔,单位为秒
 	 * @return
 	 */
 	public List<PointData> getMaxHistoryData(String fullPointName, String beginTime, String endTime,int period);
@@ -154,7 +152,7 @@ public interface IOperatorRealTime {
 	 * @param fullPointName 测点全名，站点名.服务名.点号
 	 * @param beginTime 开始时间 时间格式：yyyy-MM-dd HH:mm:ss
 	 * @param endTime 结束时间 时间格式：yyyy-MM-dd HH:mm:ss
-	 * @param period 获取数据时间间隔
+	 * @param period 获取数据时间间隔,单位为秒
 	 * @return
 	 */
 	public List<PointData> getMinHistoryData(String fullPointName, String beginTime, String endTime,int period);
@@ -229,10 +227,43 @@ public interface IOperatorRealTime {
 	
 	/**
 	 * 更新指定点的历史数据，历史数据不存在时插入修改历史数据，存在时直接修改历史
-	 * @param fullPointName
-	 * @param pds
+	 * @param fullPointName 测点全名，站点名.服务名.点号
+	 * @param pds 点集 
 	 * @
 	 */
 	public Integer putHistoryData(String fullPointName, PointData point) ;
+//	/**
+//	 * 更新指定点的实时数据，实时数据不存在时插入修改实时数据，存在时直接修改实时数据
+//	 * @param fullPointName 测点全名，站点名.服务名.点号
+//	 * @param pds 点集
+//	 * @
+//	 */
+//	public Integer putRealTimeData(String fullPointName, List<PointData> pds) ;
+	
+	/**
+	 * 更新指定点的实时数据，实时数据不存在时插入修改实时数据，存在时直接修改实时数据
+	 * @param fullPointName 测点全名，站点名.服务名.点号
+	 * @param pds 点集
+	 * @
+	 */
+	public Integer putRealTimeData(String fullPointName, PointData point) ;
 
+	
+	/**
+	 * 上传小文件，一次完成上传
+	 * @param fileName 文件名
+	 * @param bytes 文件内容字节数组
+	 * @return 是否成功
+	 * @throws IOException
+	 */
+	public boolean uploadSmallFile(String fileName, byte[] bytes) throws IOException;
+	
+	/**
+	 * 上传较大文件，采用NIO方式上传
+	 * @param fileName 文件名
+	 * @param fc 文件通道
+	 * @return 是否成功
+	 * @throws IOException
+	 */
+	public boolean uploadBigFile(String fileName, FileChannel fc) throws IOException;
 }

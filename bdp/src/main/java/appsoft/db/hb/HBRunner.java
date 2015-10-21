@@ -36,7 +36,7 @@ public class HBRunner {
 	private static HTablePool pool = null;
 	public final static String DEFAULT_FAMILYNAM="t";
 	private final static int DEFAULT_POOL_SIZE=5;
-	private final int DEFAULT_BUFFERSIZE=5*1024*1024;//5MB
+	private final int DEFAULT_BUFFERSIZE=1*1024*1024;//5MB
 	private Logger log=null;
 	public HBRunner(){
 		this(DEFAULT_POOL_SIZE);
@@ -73,7 +73,7 @@ public class HBRunner {
 			for(int i=0;i<familyNames.size();i++){
 				tableDesc.addFamily(new HColumnDescriptor(familyNames.get(i)));
 			}
-			tableDesc.addCoprocessor(AggregateImplementation.class.getName());  
+			tableDesc.addCoprocessor(AggregateImplementation.class.getName());  //自带聚合函数实现
 			admin.createTable(tableDesc);
 			Log.info("{}","create table success!");
 			flag = true;
@@ -122,21 +122,24 @@ public class HBRunner {
 		return getMax(tableName, startRowKey, endRowKey,HBRunner.DEFAULT_FAMILYNAM ,column);
 	}
 	public double getMax(String tableName,String startRowKey, String endRowKey,String family,String column) throws IOException{
-		return aggregateCompute(tableName, startRowKey, AggregateType.MAX, endRowKey, family, column);
+		return aggregateCompute(tableName, AggregateType.MAX, startRowKey, endRowKey, family, column);
 	}
 	public double getMin(String tableName,String startRowKey, String endRowKey,String column) throws IOException{
 		return getMin(tableName, startRowKey, endRowKey,HBRunner.DEFAULT_FAMILYNAM ,column);
 	}
 	public double getMin(String tableName,String startRowKey, String endRowKey,String family,String column) throws IOException{
-		return aggregateCompute(tableName, startRowKey, AggregateType.MIN, endRowKey, family, column);
+		return aggregateCompute(tableName, AggregateType.MIN, startRowKey, endRowKey, family, column);
 	}
 	public double getAvg(String tableName,String startRowKey, String endRowKey,String column) throws IOException{
 		return getAvg(tableName, startRowKey, endRowKey,HBRunner.DEFAULT_FAMILYNAM ,column);
 	}
 	public double getAvg(String tableName,String startRowKey, String endRowKey,String family,String column) throws IOException{
-		return aggregateCompute(tableName, startRowKey, AggregateType.AVG, endRowKey, family, column);
+		return aggregateCompute(tableName,AggregateType.AVG, startRowKey,  endRowKey, family, column);
 	}
-	public double aggregateCompute(String tableName,String startRowKey, AggregateType type,String endRowKey,String family,String column) throws IOException{
+	public double aggregateCompute(String tableName, AggregateType type,String startRowKey,String endRowKey,String column) throws IOException{
+		return aggregateCompute(tableName, type,startRowKey, endRowKey, HBRunner.DEFAULT_FAMILYNAM, column);
+	}
+	public double aggregateCompute(String tableName, AggregateType type,String startRowKey,String endRowKey,String family,String column) throws IOException{
 		Scan s = new Scan();
 		s.addColumn(Bytes.toBytes(family), Bytes.toBytes(column));
 		s.setStartRow(Bytes.toBytes(startRowKey));
@@ -182,37 +185,4 @@ public class HBRunner {
 	public void shutDownPool() throws IOException{
 		pool.close();
 	}
-//	private class ScanRunable implements Runnable {
-//		private String startRowKey;
-//		private String endRowKey;
-//		private double[] rs;
-//		private int index;
-//		private AggregateType type;
-//		private String tableName;
-//		private String family;
-//		private String column;
-//
-//		public ScanRunable(String tableName,String startRowKey, String endRowKey,String family,String column, AggregateType type ,double[] rs, int index) {
-//			this.startRowKey = startRowKey;
-//			this.endRowKey = endRowKey;
-//			this.type = type;
-//			this.rs = rs;
-//			this.index = index;
-//			this.tableName=tableName;
-//			this.family=family;
-//			this.column=column;
-//			this.tableName=tableName;
-//		}
-//
-//		@Override
-//		public void run() {
-//			double val = -1;
-//			try {
-//				val=aggregateCompute(tableName, startRowKey, type, endRowKey, family, column);
-//			} catch (Throwable e) {
-//				e.printStackTrace();
-//			}
-//			rs[index] = val;
-//		}
-//	}
 }

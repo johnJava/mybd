@@ -1,7 +1,8 @@
 package com.first;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -29,10 +30,26 @@ public class Test {
 		
 		//testDataH();
 		//getPath();
-		long current = Long.MAX_VALUE;//System.currentTimeMillis();
-		Date date = new Date(current);
-		System.out.println(date.getClass().getName());
-		
+//		long current = Long.MAX_VALUE;//System.currentTimeMillis();
+//		Date date = new Date(current);
+//		System.out.println(date.getClass().getName());
+		//String test1="9";
+		//String test2="2";
+		//System.out.println(test1.compareTo(test2));
+		Date date = new Date();
+		Long l = date.getTime();
+		Integer iv = l.intValue();
+		System.out.println(l+":"+iv);
+		System.out.println(iv+":"+iv.longValue());
+		long utcLong =l/1000L;
+		int utcInt =(int) (l/1000L);
+		System.out.println("utcLong="+utcLong);
+		System.out.println("utcInt="+utcInt);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(sdf.format(new Date(l)));
+		long m = l/1000;
+		System.out.println(sdf.format(new Date((m-8)*1000)));
+		System.out.println(sdf.format(new Date((m-10)*1000)));
 	}
 	public static void  testDataH() throws IOException{
 		DataHandler dh = new DataHandler(HBaseConfiguration.create(),Bytes.toBytes("measurepoint5"));

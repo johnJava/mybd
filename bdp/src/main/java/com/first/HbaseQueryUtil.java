@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import java.util.NavigableMap;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
@@ -19,7 +21,6 @@ import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
 import org.apache.hadoop.hbase.client.coprocessor.DoubleColumnInterpreter;
 import org.apache.hadoop.hbase.client.coprocessor.LongColumnInterpreter;
-import org.apache.hadoop.hbase.coprocessor.AggregateImplementation;
 import org.apache.hadoop.hbase.util.Bytes;
 
 import appsoft.db.hb.HBBuilder;
@@ -36,7 +37,7 @@ public class HbaseQueryUtil {
 		System.setProperty("HADOOP_USER_NAME", "hdfs");
 		System.setProperty("hadoop.home.dir", getClassesPath());
 		cfg.set("fs.defaultFS", "hdfs://CH5:8020");
-		HbaseQueryUtil.tablename = "monitors";
+		HbaseQueryUtil.tablename = "pointdata1";
 		HbaseQueryUtil.family = "t";
 		HbaseQueryUtil.column = "value";
 		this.table = new HTable(cfg, tablename);
@@ -48,18 +49,18 @@ public class HbaseQueryUtil {
 	}
 
 	public static void main(String[] args) throws Throwable {
-		String startRowKey = "row_" + (Long.MAX_VALUE - 9);
-		String endRowKey = "row_" + (Long.MAX_VALUE - 1);
+		String startRowKey = "SIS.JGUNIV.JG000001_9223372035409379640";
+		String endRowKey = "SIS.JGUNIV.JG000001_9223372035409379650";
 		HbaseQueryUtil hq = new HbaseQueryUtil();
 		long begin = System.currentTimeMillis();
-		hq.scan(startRowKey, endRowKey);
+		//hq.scan(startRowKey, endRowKey);
 		// hq.addCoprocessor();
-		 hq.getMax(startRowKey, endRowKey);
-		 hq.getMin(startRowKey, endRowKey);
-		 hq.getAvg(startRowKey, endRowKey);
+		//hq.getAvg(startRowKey, endRowKey);
+//		 hq.getMax(startRowKey, endRowKey);
+//		 hq.getMin(startRowKey, endRowKey);
 //		hq.getMax(startRowKey, endRowKey, 2);
 //		hq.getMin(startRowKey, endRowKey, 2);
-//		hq.getAvg(startRowKey, endRowKey, 2);
+		hq.getAvg(startRowKey, endRowKey, 2);
 		// hq.scan(startRowKey, endRowKey,2);
 		// hq.selectByRowKeyColumn(tablename, startRowKey, family, null);
 		// List<String> rowKeys = new ArrayList<String>(){
@@ -80,7 +81,9 @@ public class HbaseQueryUtil {
 		HBaseAdmin hbaseAdmin = new HBaseAdmin(hbaseconfig);
 		hbaseAdmin.disableTable(tablename);
 		HTableDescriptor htd = hbaseAdmin.getTableDescriptor(TableName.valueOf(tablename));
-		htd.addCoprocessor(AggregateImplementation.class.getName());
+		//htd.addCoprocessor(AggregateImplementation.class.getName());
+		htd.addCoprocessor("appsoft.db.hb.coprocessor.MonitorAggregateImpl", new Path(  
+                "hdfs:////user/eam/upload/aggregate.jar"), 1001,null);  
 		hbaseAdmin.modifyTable(tablename, htd);
 		hbaseAdmin.enableTable(tablename);
 		hbaseAdmin.close();
@@ -94,12 +97,12 @@ public class HbaseQueryUtil {
 		DoubleColumnInterpreter columnInterpreter = new DoubleColumnInterpreter();
 		AggregationClient client = new AggregationClient(cfg);
 		double rs = 0;
-		try {
+		try {   
 			 rs = client.max(table, columnInterpreter, s);
+			 System.out.println("max[" + startRowKey + "," + endRowKey + "] = " + rs);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		System.out.println("max[" + startRowKey + "," + endRowKey + "] = " + rs);
 		return rs;
 	}
 
@@ -281,7 +284,7 @@ public class HbaseQueryUtil {
 	public void scan(String startRowKey, String endRowKey) throws Exception {
 		Scan s = new Scan();
 		// 根据测点名和时间查询
-		s.setRowOffsetPerColumnFamily(1);
+		//s.setRowOffsetPerColumnFamily(1);
 		// s.setReversed(false);
 		s.setStartRow(Bytes.toBytes(startRowKey));
 		s.setStopRow(Bytes.toBytes(endRowKey));
@@ -290,12 +293,19 @@ public class HbaseQueryUtil {
 		double count = 0;
 		for (Result r : rs) {
 			count++;
-			NavigableMap<byte[], byte[]> kvs = r.getFamilyMap(Bytes.toBytes(family));
-			for (Entry<byte[], byte[]> kv : kvs.entrySet()) {
-				byte[] val = kv.getValue();
-				System.out.println(Bytes.toString(r.getRow()) + ":" + Bytes.toString(kv.getKey()) + ":" + Bytes.toDouble(val));
-				sum += Bytes.toLong(val);
+			//r.getColumn(Bytes.toBytes(family), Bytes.toBytes(column));
+			List<Cell> cells = r.getColumnCells(Bytes.toBytes(family), Bytes.toBytes(column));
+			for (int i = 0; i < cells.size(); i++) {
+				Cell cell = cells.get(i);
+				double val = Bytes.toDouble(cell.getValueArray());
+				sum+=val;
 			}
+//			NavigableMap<byte[], byte[]> kvs = r.getFamilyMap(Bytes.toBytes(family));
+//			for (Entry<byte[], byte[]> kv : kvs.entrySet()) {
+//				byte[] val = kv.getValue();
+//				System.out.println(Bytes.toString(r.getRow()) + ":" + Bytes.toString(kv.getKey()) + ":" + Bytes.toDouble(val));
+//				sum += Bytes.toDouble(val);
+//			}
 		}
 		System.out.println("local avg :" + (sum / count));
 	}
