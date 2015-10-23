@@ -1,22 +1,18 @@
 package appsoft.db.hb;
 
 import java.io.IOException;
-import java.util.Random;
 
-import org.junit.Test;
-import org.slf4j.Logger;
-
-import appsoft.util.Log;
+import org.junit.Ignore;
 public class TestHBSet {
 	public static void main(String[] args) throws IOException {
 		new TestHBSet().testHBSet();
 	}
-	@Test
+	@Ignore
 	public void testHBSet() throws IOException{
-		Logger log = Log.get(TestHBSet.class);
-		long begin = System.currentTimeMillis();
+//		Logger log = Log.get(TestHBSet.class);
+//		long begin = System.currentTimeMillis();
 		//String tableName="testhbset2";
-		HBSet hbset = HBSet.creatHBSet("pointdata1");
+		HBSet.creatHBSet("pointdata1");//HBSet hbset = 
 	    //hbset.setAutoSave(true);
 //		Random random=new Random();
 //		for(int i=1;i<=(10);i++){

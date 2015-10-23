@@ -266,4 +266,23 @@ public interface IOperatorRealTime {
 	 * @throws IOException
 	 */
 	public boolean uploadBigFile(String fileName, FileChannel fc) throws IOException;
+
+	/**
+	 *	向给定实时服务对应的多个点写入数据
+	 * @param serviceIp 实时服务Ip
+	 * @param servicePort 实时服务端口
+	 * @param pis 测点信息集合
+	 */
+	public void writePoint(String serviceIp, String servicePort,List<PointData> pds);
+	
+	/**
+	 * 
+	 * 向给定实时服务对应的单点写入数据
+	 * @param serviceIp 实时服务Ip
+	 * @param servicePort 实时服务端口
+	 * @param pd 测点
+	 */
+	public void writePoint(String serviceIp, String servicePort,PointData pd);
+	
+	
 }

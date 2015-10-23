@@ -11,6 +11,7 @@ import java.util.Vector;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import appsoft.wpcache.data.DbTool;
 import cn.gyee.appsoft.jrt.model.PointData;
@@ -30,6 +31,11 @@ public class TestEdnaSocketApiService {
 	String hisTime;
 	Random random;
 	List<String> costs;
+	public static void main(String[] args) {
+		TestEdnaSocketApiService test = new TestEdnaSocketApiService();
+		test.initIOperatorRealTime();
+		test.putHistoryDatas();
+	}
 
 	@Before
 	public void initIOperatorRealTime() {
@@ -41,24 +47,24 @@ public class TestEdnaSocketApiService {
 		System.out.println("l=" + l);
 		long m = l / 1000;
 		begin = m * 1000;
-		end = (m + 5000) * 1000;
+		end = (m + 20) * 1000;
 		step=1000;
-		beginTime = sdf.format(date);
-		endTime = sdf.format(new Date(end));
-		hisTime = beginTime;
-//		beginTime="2015-10-21 10:55:57";
-//		endTime="2015-10-21 10:56:07";
-//		hisTime="2015-10-21 10:55:57";
-		period = 2;
-		fullPointNames = LoadPointInfo(3);
-		fullPointName=fullPointNames.get(0);
+//		beginTime = sdf.format(date);
+//		endTime = sdf.format(new Date(end));
+//		hisTime = beginTime;
+		beginTime="2015-10-22 00:00:00";
+		endTime="2015-10-23 00:00:00";
+		hisTime="2015-10-21 10:55:57";
+		period = 30;
+		//fullPointNames = LoadPointInfo(5000);
+		fullPointName="SIS.JGUNIV.JG033783";//fullPointNames.get(0);
 		System.out.println("beginTime=" + beginTime);
 		System.out.println("endTime=" + endTime);
 		random = new Random();
 		costs = new Vector<String>();
 	}
 
-	@After
+	
 	public void printf() {
 		System.out.println("fullPointNames=" + fullPointNames.toString());
 		System.out.println("beginTime=" + beginTime);
@@ -77,22 +83,49 @@ public class TestEdnaSocketApiService {
 	 */
 	public static List<String> LoadPointInfo(int limit) {
 		ArrayList<String> fs = new ArrayList<String>();
-		String sql = "select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0 and powerstationid='01' limit " + limit;
+		//and powerstationid='01' limit " + limit
+		String sql = "select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0  and isCache=1";
 		DbTool dt = DbTool.getDbTool();
 		try {
 			long start = System.currentTimeMillis();
 			ArrayList<HashMap<String, String>> al = dt.listAll(sql);
+			System.out.println("加载数据库的中测点...");
 			for (int i = 0; i < al.size(); i++) {
 				HashMap<String, String> map = al.get(i);
 				String realTimeId = map.get("realtimeid");
+				realTimeId = realTimeId.trim();
 				fs.add(realTimeId);
 			}
 			long end = System.currentTimeMillis();
-			System.out.println("缓存数据库中01风场[" + limit + "]测点用时:" + (end - start) + "毫秒");
+			System.out.println("缓存数据库中"+fs.size()+"个测点用时:" + (end - start) + "毫秒");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return fs;
+	}
+	@Ignore
+	public void putData(){
+		long realStart = System.currentTimeMillis();
+		PointData point = null;
+		int count=0;
+		for (long i = begin; i <= end && i > 0; i += step) {
+			for (int j = 0; j < this.fullPointNames.size(); j++) {
+				point = new PointData();
+				String pointid = fullPointNames.get(j);
+				point.setPointId(pointid);
+				int utcTime = (int) (i / 1000L);
+				point.setUtcTime(utcTime);
+				point.setValue(random.nextInt(100) + random.nextDouble());
+				count++;
+				System.out.print(count+":");
+				printf(point);
+				//operater.putRealTimeData(pointid, point);// 插入实时数据
+				operater.putHistoryData(pointid, point);// 插入历史数据
+			}
+		}
+		long realEnd = System.currentTimeMillis();
+		String cost = "插入实时和历史数据用时:"+(realEnd-realStart)+"毫秒";
+		System.out.println(cost);
 	}
 	@Ignore
 	public void putRealTimeData() {
@@ -185,11 +218,12 @@ public class TestEdnaSocketApiService {
 		System.out.println("SnapData(单点某时刻值) end ");
 	}
 
-	@Ignore
+	@Test
 	public void testGetHistorySnapDatas() {
 		List<PointData> ps = operater.getHistorySnapData(fullPointName, beginTime, endTime, period);
 		System.out.println("SnapDatas(获取给定测点一段时间内的历史数据，按照间隔的快照值) begin");
 		for (PointData pd : ps) {
+			if(pd!=null)
 			System.out.println("SnapDatas:"+pd.toString());
 		}
 		System.out.println("SnapDatas(获取给定测点一段时间内的历史数据，按照间隔的快照值) end");

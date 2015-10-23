@@ -20,10 +20,12 @@ public class MemcacheTest {
            CacheService cs=new CacheService();
            cs.setMemClient(client);
            long start = System.currentTimeMillis();
-           cs.cache("set");
-           System.out.println("=================================================================");
-           cs.cache("get");
-          
+           for (int i = 0; i < (1000); i++) {
+        	   System.out.println("第["+i+"]次生成缓存数据");
+        	   cs.cache("set");
+           }
+        	   
+        cs.cache("get");
        	long end = System.currentTimeMillis();
 		System.out.println("执行一次缓存:"+(end-start)+"毫秒");
 		 client.shutdown();

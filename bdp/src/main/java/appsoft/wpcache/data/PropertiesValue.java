@@ -11,9 +11,9 @@ public class PropertiesValue {
 
 	private static PropertiesValue pv;
 
-	public static HashMap<String,String>  propMap;
+	private static HashMap<String,String>  propMap;
 	
-	public static HashMap<String, String> getPropMap() {
+	public  HashMap<String, String> getPropMap() {
 		return propMap;
 	}
 

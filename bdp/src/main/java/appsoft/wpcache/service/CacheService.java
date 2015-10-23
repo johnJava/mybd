@@ -63,7 +63,8 @@ public class CacheService {
 	 */
 	 public static Vector<String> LoadPointInfo(){
 	    	Vector<String> pointVec=new  Vector<String>();
-	    	String sql ="select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0 and powerstationid='01' limit 5000";
+	    	// and powerstationid='01' limit 20000
+	    	String sql ="select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0 and isCache=1  and powerstationid<>'01'";
 	    	DbTool dt=DbTool.getDbTool();
 	    	try {
 	    		long start = System.currentTimeMillis();
@@ -74,6 +75,7 @@ public class CacheService {
 					HashMap<String,String> map =  al.get(i);
 					String realTimeId =map.get("realtimeid");
 					String longid =map.get("longid");
+					realTimeId=realTimeId.trim();
 					pointVec.add(realTimeId);
 				}
 				long end = System.currentTimeMillis();

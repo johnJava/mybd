@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
 import net.rubyeye.xmemcached.MemcachedClient;
@@ -16,6 +18,8 @@ import net.rubyeye.xmemcached.utils.AddrUtil;
 
 import org.apache.hadoop.hbase.client.Put;
 import org.slf4j.Logger;
+
+import com.google.code.yanf4j.core.Session;
 
 import appsoft.db.hb.HBBuilder;
 import appsoft.db.hb.HBRunner;
@@ -37,6 +41,7 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 	private static MemClient memClient;
 	private static Logger log = Log.get(EdnaSocketApiService.class);
 	private final static String DEFAULT_VALUE_COLOMN="value";
+	public static Map<String, String> ednaPointMap = new HashMap();
 	public EdnaSocketApiService() {
 		rshandler = new PointDataRsHandler();
 	}
@@ -49,14 +54,21 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 
 	private MemClient getMemClient() {
 		if (memClient == null) {
-	    	HashMap<String, String> map = PropertiesValue.getPropMap();
+	    	HashMap<String, String> map = PropertiesValue.getPropValueInstance().getPropMap();
 			String memAddressUrl = map.get("wp.cache.host")+":"+map.get("wp.cache.port");
 			MemcachedClientBuilder builder = new XMemcachedClientBuilder(AddrUtil.getAddresses(memAddressUrl));
 			MemcachedClient memcachedClient;
 			try {
 				memcachedClient = builder.build();
+				memcachedClient.getConnector().setSessionTimeout(60000l);
 				memClient = new MemClient();
 				memClient.setMemcachedClient(memcachedClient);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else if(!memClient.getMemcachedClient().getConnector().isStarted()){
+			try {
+				memClient.getMemcachedClient().getConnector().start();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -75,6 +87,7 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 		PointData pd=null;
 		try {
 			 pd = getMemClient().get(fullPointName);
+			 printf(fullPointName, pd);
 		} catch (TimeoutException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
@@ -411,27 +424,30 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 	public Integer putRealTimeData(String fullPointName, PointData point) {
 		int result;
 		try {
-			result=1;
-			getMemClient().set(new MemCache<PointData>(Expire.FOREVER,fullPointName, point));
+			boolean s = getMemClient().set(new MemCache<PointData>(Expire.FOREVER,fullPointName, point));
+			result=(s)?1:0;
 		} catch (TimeoutException e) {
-			printErrorF(fullPointName, point);
+			printf("putRealTimeData error{}",fullPointName, point);
 			e.printStackTrace();
 			result=0;
 		} catch (InterruptedException e) {
-			printErrorF(fullPointName, point);
+			printf("putRealTimeData error{}",fullPointName, point);
 			e.printStackTrace();
 			result=0;
 		} catch (MemcachedException e) {
-			printErrorF(fullPointName, point);
+			printf("putRealTimeData error{}",fullPointName, point);
 			e.printStackTrace();
 			result=0;
 		}
 		return result;
 	}
-	private void printErrorF(String fullPointName, PointData point){
-		log.error("{}","fullPointName="+fullPointName+",point="+point.toString());
+	private void printf(String fullPointName, PointData point){
+		//printf("{}", fullPointName, point);
 	}
 
+	private void printf(String format,String fullPointName, PointData point){
+		log.info(format,"fullPointName="+fullPointName+",point="+((point==null)?"null":point.toString()));
+	}
 	@Override
 	public boolean uploadSmallFile(String fileName, byte[] bytes) throws IOException {
 		return HDFSUtil.uploadSmallFile(fileName, bytes);
@@ -441,4 +457,18 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 	public boolean uploadBigFile(String fileName, FileChannel fc) throws IOException {
 		return HDFSUtil.uploadBigFile(fileName, fc);
 	}
+
+	@Override
+	public void writePoint(String serviceIp, String servicePort, List<PointData> pds) {
+		for(PointData pd:pds){
+			writePoint(serviceIp, servicePort, pd);
+		}
+	}
+
+	@Override
+	public void writePoint(String serviceIp, String servicePort, PointData pd) {
+		printf("writePoint {}", serviceIp+"&"+servicePort, pd);
+		this.putRealTimeData(pd.getPointId(), pd);
+	}
+
 }

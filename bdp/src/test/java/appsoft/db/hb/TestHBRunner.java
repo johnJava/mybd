@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.hadoop.hbase.client.Put;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import appsoft.db.hb.HBBuilder;
@@ -27,7 +28,7 @@ public class TestHBRunner {
 		boolean result = runner.createTable("test",ls);
 		System.out.print("result=="+result);
 	}
-	@Test
+	@Ignore
 	public void testInsert() throws IOException{
 		String tableName="test";
 		HBRunner runner = new HBRunner();

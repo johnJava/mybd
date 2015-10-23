@@ -34,5 +34,10 @@ public class EdnaApiHelper {
 		}
 		return (int) (format.parse(date).getTime() / 1000L);
 	}
+	public static String parseUTCLongToDate(long date) {
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    Date dt = new Date(date * 1000L);
+	    return format.format(dt);
+	  }
 
 }

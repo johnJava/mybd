@@ -1,6 +1,7 @@
 package com.first;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Queue;
@@ -14,10 +15,12 @@ import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.util.Shell;
 
+import cn.gyee.appsoft.jrt.common.EdnaApiHelper;
+
 //import com.first.example.StatisObserver;
 
 public class Test {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 		
 		/*long current = Long.MAX_VALUE;//System.currentTimeMillis();
 		Date date = new Date(current);
@@ -50,6 +53,11 @@ public class Test {
 		long m = l/1000;
 		System.out.println(sdf.format(new Date((m-8)*1000)));
 		System.out.println(sdf.format(new Date((m-10)*1000)));
+		long cur1=1445513846584l;
+		long cur2 = 1445566869406l;//System.currentTimeMillis();
+		System.out.println("tye1: "+EdnaApiHelper.parseUTCLongToDate(cur1/1000l));
+		System.out.println("tye2: "+EdnaApiHelper.parseUTCLongToDate(cur2/1000l));
+	
 	}
 	public static void  testDataH() throws IOException{
 		DataHandler dh = new DataHandler(HBaseConfiguration.create(),Bytes.toBytes("measurepoint5"));
