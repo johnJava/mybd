@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
+import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import cn.gyee.appsoft.jrt.model.PointData;
 public class TestEdnaSocketApiService {
 
 	private SimpleDateFormat sdf = null;
-	IOperatorRealTime operater;
+	EdnaSocketApiService operater;
 	String beginTime;
 	String endTime;
 	long begin;
@@ -33,7 +34,7 @@ public class TestEdnaSocketApiService {
 	public static void main(String[] args) {
 		TestEdnaSocketApiService test = new TestEdnaSocketApiService();
 		test.initIOperatorRealTime();
-		test.putHistoryDatas();
+		test.asyncPutData();
 	}
 
 	@Before
@@ -45,7 +46,7 @@ public class TestEdnaSocketApiService {
 		long l = date.getTime();
 		long m = l / 1000;
 		begin = m * 1000;
-		end = (m + 1800) * 1000;
+		end = (m + 20) * 1000;
 		step=1000;
 		beginTime = sdf.format(date);
 		endTime = sdf.format(new Date(end));
@@ -102,6 +103,30 @@ public class TestEdnaSocketApiService {
 		return fs;
 	}
 	@Test
+	public void asyncPutData(){
+		long realStart = System.currentTimeMillis();
+		PointData point = null;
+		int count=0;
+		for (long i = begin; i <= end && i > 0; i += step) {
+			for (int j = 0; j < this.fullPointNames.size(); j++) {
+				point = new PointData();
+				String pointid = fullPointNames.get(j);
+				point.setPointId(pointid);
+				int utcTime = (int) (i / 1000L);
+				point.setUtcTime(utcTime);
+				point.setValue(random.nextInt(100) + random.nextDouble());
+				count++;
+				if(count%100000==0)
+				System.out.println(count+":"+pointid+":"+operater.getCurrentQuequeSize());
+				//printf(point);
+				operater.asyncPutData(pointid, point);// 插入历史数据
+			}
+		}
+		long realEnd = System.currentTimeMillis();
+		String cost = "异步插入数据用时:"+(realEnd-realStart)+"毫秒";
+		System.out.println(cost);
+	}
+	@Ignore
 	public void putData(){
 		long realStart = System.currentTimeMillis();
 		PointData point = null;
@@ -115,8 +140,8 @@ public class TestEdnaSocketApiService {
 				point.setUtcTime(utcTime);
 				point.setValue(random.nextInt(100) + random.nextDouble());
 				count++;
-				System.out.print(count+":");
-				printf(point);
+				System.out.println(count+":"+pointid);
+				//printf(point);
 				operater.putRealTimeData(pointid, point);// 插入实时数据
 				operater.putHistoryData(pointid, point);// 插入历史数据
 			}

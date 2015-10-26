@@ -108,6 +108,15 @@ public class HBRunner {
 		log.info("{}","commit successfully");
 		return true;
 	}
+	public boolean batchInsert(HTable table,List<Put> puts) throws IOException{
+		log.info("{}","table put...");
+		table.put(puts);
+		log.info("{}","begin commit...");
+		table.flushCommits();
+		//table.close();
+		log.info("{}","commit successfully");
+		return true;
+	}
 	public <T> T query(String tableName,String startRowKey, String endRowKey,@Nullable QueryExtInfo queryextinfo,RsHandler<T> rsh) throws IOException{
 		Scan s = new Scan();
 		if(queryextinfo!=null){
@@ -187,6 +196,10 @@ public class HBRunner {
 			table.setAutoFlush(false,false);
 			tables.put(tableName, table);
 		}
+		return table;
+	}
+	public HTable getMyHTable(String tableName) throws IOException{
+		HTable table  = new HTable(TableName.valueOf(tableName), getCreatConn());
 		return table;
 	}
 	public boolean delByRowkey(String tableName,String rowKey){

@@ -248,6 +248,14 @@ public interface IOperatorRealTime {
 	 */
 	public Integer putRealTimeData(String fullPointName, PointData point) ;
 
+	/**
+	 * 更新指定点的实时数据，实时数据不存在时插入修改实时数据，存在时直接修改实时数据
+	 * @param fullPointName 测点全名，站点名.服务名.点号
+	 * @param pds 点集
+	 * @
+	 */
+	public Integer asyncPutData(String fullPointName, PointData point) ;
+
 	
 	/**
 	 * 上传小文件，一次完成上传

@@ -19,6 +19,7 @@ import net.rubyeye.xmemcached.XMemcachedClientBuilder;
 import net.rubyeye.xmemcached.exception.MemcachedException;
 import net.rubyeye.xmemcached.utils.AddrUtil;
 
+import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.slf4j.Logger;
 
@@ -44,11 +45,20 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 	private final static String DEFAULT_VALUE_COLOMN = "value";
 	public static Map<String, String> ednaPointMap = new HashMap<String, String>();
 	private int DEFAULT_WORKER_SIZE = 5;
-	private ExecutorService executorservice=null;
+	private ExecutorService executorservice = null;
 	private Queue<Put> putQueue = new ConcurrentLinkedQueue<Put>();
-	private int maxCacheRowSize =10*1000;//10万条
+	private int maxCacheRowSize =  50* 10000;// 50万条
 	private List<WriteHbaseWorker> workers;
+	private volatile int order=1;
 
+	private void updateOrder(){
+		if(order==DEFAULT_WORKER_SIZE){
+			order=1;
+		}else{
+			order++;
+		}
+	}
+	
 	public EdnaSocketApiService() {
 		rshandler = new PointDataRsHandler();
 		initExecutorservice();
@@ -83,7 +93,7 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 		}
 		return memClient;
 	}
-	
+
 	@Override
 	public void addPointMemory(String fullPointName, int refInterval) {
 		// TODO Auto-generated method stub
@@ -268,7 +278,7 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 		return result;
 	}
 
-	public void putAsyncHistoryData(String fullPointName, PointData point) {
+	public void asyncPutHistoryData(String fullPointName, PointData point) {
 		addPutTask(toPut(fullPointName, point));
 	}
 
@@ -486,30 +496,35 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 		printf("writePoint {}", serviceIp + "&" + servicePort, pd);
 		this.putRealTimeData(pd.getPointId(), pd);
 	}
-	
-	
-	private void initExecutorservice(){
+
+	private void initExecutorservice() {
 		this.executorservice = Executors.newFixedThreadPool(DEFAULT_WORKER_SIZE);
 		this.workers = new ArrayList<WriteHbaseWorker>(DEFAULT_WORKER_SIZE);
 		for (int i = 0; i < DEFAULT_WORKER_SIZE; i++) {
-			WriteHbaseWorker worker = new WriteHbaseWorker(maxCacheRowSize);
+			WriteHbaseWorker worker = new WriteHbaseWorker(maxCacheRowSize,i+1);
 			workers.add(worker);
 			this.executorservice.execute(worker);
 		}
 	}
-	
-	private void addPutTask(Put put){
-		this.putQueue.add(put);
-		this.putQueue.notifyAll();
+
+	private void addPutTask(Put put) {
+		synchronized (this.putQueue) {
+			this.putQueue.add(put);
+			try {
+				this.putQueue.notifyAll();
+			} catch (IllegalMonitorStateException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-	public int getCurrentQuequeSize(){
+	public int getCurrentQuequeSize() {
 		return this.putQueue.size();
 	}
-	
+
 	@Override
 	protected void finalize() throws Throwable {
-		for(WriteHbaseWorker worker : workers){
+		for (WriteHbaseWorker worker : workers) {
 			worker.commit();
 		}
 		this.executorservice.shutdown();
@@ -519,30 +534,33 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 	class WriteHbaseWorker implements Runnable {
 		private List<Put> puts = null;
 		private int maxRowSize;
+		private HTable workerTable;
+		private int currentOrder;
+		
 
-		public WriteHbaseWorker(int maxRowSize) {
+		public WriteHbaseWorker(int maxRowSize,int currentOrder) {
 			this.maxRowSize = maxRowSize;
 			puts = new ArrayList<Put>(maxRowSize + 1);
+			this.currentOrder=currentOrder;
+			try {
+				workerTable=getRunner().getMyHTable(TABLENAME);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		@Override
 		public void run() {
+			log.info("WriteHbaseWorker[" + Thread.currentThread().getName() + "]begin");
 			Put put = null;
 			while (true) {
-				synchronized(putQueue){
+				if(currentOrder!=order) continue;
+				synchronized (putQueue) {
 					if (!putQueue.isEmpty()) {
 						put = putQueue.poll();
 						if (put != null)
 							this.puts.add(put);
-						if (this.puts.size() == this.maxRowSize) {
-							try {
-								commit();
-								this.puts.clear();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					}else{
+					} else {
 						try {
 							putQueue.wait();
 						} catch (InterruptedException e) {
@@ -550,12 +568,31 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 						}
 					}
 				}
+				if (this.puts.size() == this.maxRowSize) {
+					try {
+						updateOrder();
+						commit();
+						this.puts.clear();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 
 		private void commit() throws IOException {
-			if(puts!=null&&this.puts.size()>0)
-			getRunner().batchInsert(TABLENAME, puts);
+			
+			if (puts != null && this.puts.size() > 0){
+				log.info(Thread.currentThread().getName()+" commit...");
+				getRunner().batchInsert(workerTable, puts);
+			}
 		}
+	}
+
+	@Override
+	public Integer asyncPutData(String fullPointName, PointData point) {
+		asyncPutHistoryData(fullPointName, point);
+		// putRealTimeData(fullPointName, point);
+		return 1;
 	}
 }
