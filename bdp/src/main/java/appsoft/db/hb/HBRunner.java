@@ -3,6 +3,10 @@ package appsoft.db.hb;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -11,8 +15,10 @@ import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
+import org.apache.hadoop.hbase.client.HConnection;
+import org.apache.hadoop.hbase.client.HConnectionManager;
+import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.HTableInterface;
-import org.apache.hadoop.hbase.client.HTablePool;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
@@ -21,7 +27,6 @@ import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
 import org.apache.hadoop.hbase.client.coprocessor.DoubleColumnInterpreter;
 import org.apache.hadoop.hbase.coprocessor.AggregateImplementation;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.hbase.util.PoolMap;
 import org.slf4j.Logger;
 
 import appsoft.db.hb.core.Nullable;
@@ -30,25 +35,31 @@ import appsoft.db.hb.service.QueryExtInfo;
 import appsoft.util.AggregateType;
 import appsoft.util.Log;
 
-@SuppressWarnings("deprecation")
 public class HBRunner {
 	private static Configuration cfg = HBaseConfiguration.create();
-	private static HTablePool pool = null;
+//	private static HTablePool pool = null;
 	public final static String DEFAULT_FAMILYNAM="t";
+	private Map<String,HTable> tables =null; 
 	private final static int DEFAULT_POOL_SIZE=5;
-	private final int DEFAULT_BUFFERSIZE=1*1024*1024;//5MB
+	private final int DEFAULT_BUFFERSIZE=5*1024*1024;//5MB
 	private Logger log=null;
+	private HConnection conn=null;
 	public HBRunner(){
 		this(DEFAULT_POOL_SIZE);
 	}
 	public HBRunner(int poolsize){
-		if(pool==null){
-			pool = new HTablePool(cfg, poolsize,PoolMap.PoolType.ThreadLocal);  
-		}
+//		if(pool==null){
+//			initPool(poolsize);
+//		}
 		System.setProperty("HADOOP_USER_NAME","hdfs");
 		System.setProperty("hadoop.home.dir",getClassesPath());
 		log=Log.get(HBRunner.class);
+		tables = new ConcurrentHashMap<String, HTable>();
 	}
+	
+//	private void initPool(int poolsize){
+//		pool = new HTablePool(cfg, poolsize,PoolMap.PoolType.ThreadLocal); 
+//	}
 	public String getClassesPath(){
 		String p = this.getClass().getResource("/").getPath();
 		return p;
@@ -81,13 +92,10 @@ public class HBRunner {
 		return flag;
 	}
 	public boolean insert(String tableName,Put put) throws IOException{
-		HTableInterface table = pool.getTable(tableName);
-		if(table.isAutoFlush()){
-			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
-			table.setAutoFlush(false);
-		}
+		HTableInterface table = getTable(tableName);
 		table.put(put);
-		table.close();
+		table.flushCommits();
+		//table.close();
 		return true;
 	}
 	public boolean batchInsert(String tableName,List<Put> puts) throws IOException{
@@ -96,7 +104,7 @@ public class HBRunner {
 		table.put(puts);
 		log.info("{}","begin commit...");
 		table.flushCommits();
-		table.close();
+		//table.close();
 		log.info("{}","commit successfully");
 		return true;
 	}
@@ -171,18 +179,46 @@ public class HBRunner {
 		return  rsh.handle(tableName,rs);
 	}
 	 
-	private HTableInterface getTable(String tableName) throws IOException{
-		HTableInterface table = pool.getTable(tableName);
-		if(table.isAutoFlush()){
+	private HTable getTable(String tableName) throws IOException{
+		HTable table = tables.get(tableName);
+		if(table==null){
+			table = new HTable(TableName.valueOf(tableName), getCreatConn());
 			table.setWriteBufferSize(DEFAULT_BUFFERSIZE);
-			table.setAutoFlushTo(false);
+			table.setAutoFlush(false,false);
+			tables.put(tableName, table);
 		}
 		return table;
 	}
 	public boolean delByRowkey(String tableName,String rowKey){
 		return true;
 	}
-	public void shutDownPool() throws IOException{
-		pool.close();
+	public void close(){
+		for(Entry<String, HTable> entry:this.tables.entrySet()){
+			HTable t = entry.getValue();
+			try {
+				t.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	  
+	@Override
+	protected void finalize() throws Throwable {
+		this.close();
+		super.finalize();
+	}
+	//	public void shutDownPool() throws IOException{
+//		pool.close();
+//	}
+	private HConnection getCreatConn(){
+		if(conn==null||conn.isClosed()){
+			try {
+				conn = HConnectionManager.createConnection(cfg,Executors.newFixedThreadPool(DEFAULT_POOL_SIZE));//(cfg, Executors.newFixedThreadPool(DEFAULT_POOL_SIZE));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return conn;
 	}
 }

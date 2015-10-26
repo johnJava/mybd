@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -44,19 +43,18 @@ public class TestEdnaSocketApiService {
 		//Date date = sdf.parse("");
 		Date date = new Date();
 		long l = date.getTime();
-		System.out.println("l=" + l);
 		long m = l / 1000;
 		begin = m * 1000;
-		end = (m + 20) * 1000;
+		end = (m + 1800) * 1000;
 		step=1000;
-//		beginTime = sdf.format(date);
-//		endTime = sdf.format(new Date(end));
-//		hisTime = beginTime;
-		beginTime="2015-10-22 00:00:00";
-		endTime="2015-10-23 00:00:00";
-		hisTime="2015-10-21 10:55:57";
+		beginTime = sdf.format(date);
+		endTime = sdf.format(new Date(end));
+		hisTime = beginTime;
+//		beginTime="2015-10-22 00:00:00";
+//		endTime="2015-10-23 00:00:00";
+//		hisTime="2015-10-21 10:55:57";
 		period = 30;
-		//fullPointNames = LoadPointInfo(5000);
+		fullPointNames = LoadPointInfo(5000);
 		fullPointName="SIS.JGUNIV.JG033783";//fullPointNames.get(0);
 		System.out.println("beginTime=" + beginTime);
 		System.out.println("endTime=" + endTime);
@@ -83,8 +81,8 @@ public class TestEdnaSocketApiService {
 	 */
 	public static List<String> LoadPointInfo(int limit) {
 		ArrayList<String> fs = new ArrayList<String>();
-		//and powerstationid='01' limit " + limit
-		String sql = "select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0  and isCache=1";
+		// and isCache=1 and powerstationid='01' limit " + limit
+		String sql = "select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0 ";
 		DbTool dt = DbTool.getDbTool();
 		try {
 			long start = System.currentTimeMillis();
@@ -103,7 +101,7 @@ public class TestEdnaSocketApiService {
 		}
 		return fs;
 	}
-	@Ignore
+	@Test
 	public void putData(){
 		long realStart = System.currentTimeMillis();
 		PointData point = null;
@@ -119,7 +117,7 @@ public class TestEdnaSocketApiService {
 				count++;
 				System.out.print(count+":");
 				printf(point);
-				//operater.putRealTimeData(pointid, point);// 插入实时数据
+				operater.putRealTimeData(pointid, point);// 插入实时数据
 				operater.putHistoryData(pointid, point);// 插入历史数据
 			}
 		}
@@ -127,19 +125,27 @@ public class TestEdnaSocketApiService {
 		String cost = "插入实时和历史数据用时:"+(realEnd-realStart)+"毫秒";
 		System.out.println(cost);
 	}
-	@Ignore
+	
 	public void putRealTimeData() {
+		long realStart = System.currentTimeMillis();
 		PointData point = null;
+		int count=0;
 		for (long i = begin; i <= end && i > 0; i += step) {
 			for (int j = 0; j < this.fullPointNames.size(); j++) {
 				point = new PointData();
-				point.setPointId(fullPointName);
+				point.setPointId(fullPointNames.get(j));
 				int utcTime = (int) (i / 1000L);
 				point.setUtcTime(utcTime);
 				point.setValue(random.nextInt(100) + random.nextDouble());
-				operater.putRealTimeData(fullPointName, point);// 插入实时数据
+				count++;
+				System.out.print(count+":");
+				printf(point);
+				operater.putRealTimeData(fullPointNames.get(j), point);// 插入实时数据
 			}
 		}
+		long realEnd = System.currentTimeMillis();
+		String cost = "插入实时数据"+count+"个点用时:"+(realEnd-realStart)+"毫秒";
+		System.out.println(cost);
 	}
 	
 	@Ignore
@@ -218,7 +224,7 @@ public class TestEdnaSocketApiService {
 		System.out.println("SnapData(单点某时刻值) end ");
 	}
 
-	@Test
+	@Ignore
 	public void testGetHistorySnapDatas() {
 		List<PointData> ps = operater.getHistorySnapData(fullPointName, beginTime, endTime, period);
 		System.out.println("SnapDatas(获取给定测点一段时间内的历史数据，按照间隔的快照值) begin");
