@@ -48,7 +48,7 @@ public class TestEdnaSocketApiService {
 //		beginTime="2015-10-26 00:00:00";
 //		endTime="2015-10-29 00:00:00";
 //		hisTime="2015-10-21 10:55:57";
-		beginTime="2015-10-30 18:30:00";
+		beginTime="2015-10-31 12:00:00";
 		endTime="2015-10-29 00:00:00";
 		hisTime="2015-10-21 10:55:57";
 //		beginTime = sdf.format(new Date());
@@ -162,7 +162,7 @@ public class TestEdnaSocketApiService {
 		//String sql = "select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0 ";
 		//String sql ="select * from gyee_equipmentmeasuringpoint  where pointDefinition in ('jsssgl','jsssfs','dqwpp')" ;//'totwh','jsswrfdl','jsswyfdl','jsswnfdl','wdspd','actpwr','jssta','plcsta'
 		//String sql="select * from gyee_EquipmentMeasuringPoint where 1=1 and pointDefinition='dqwpp'  and isCalc=false";//'jsssgl','jsssfs','dqwpp','wdspd','actpwr','jsssfs','jsswrfdl','jsswyfdl','jsswnfdl'
-		String sql="select realtimeid,pointDefinition from gyee_EquipmentMeasuringPoint where 1=1 and pointDefinition in ('errcode','warcode')  ";//'jsswrfdl','jsswyfdl','jsswnfdl'
+		String sql="select realtimeid,pointDefinition from gyee_equipmentmeasuringpoint where 1=1 and pointDefinition in ('errcode','warcode')  ";//'jsswrfdl','jsswyfdl','jsswnfdl'
 		DbTool dt = DbTool.getDbTool();
 		try {
 			long start = System.currentTimeMillis();
