@@ -91,7 +91,7 @@ public class HBRunner {
 		}
 		return flag;
 	}
-	public boolean insert(String tableName,Put put) throws IOException{
+	public synchronized boolean insert(String tableName,Put put) throws IOException{
 		HTableInterface table = getTable(tableName);
 		table.put(put);
 		table.flushCommits();
@@ -176,7 +176,7 @@ public class HBRunner {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		System.out.println("aggregate[" + startRowKey + "," + endRowKey + "] = " + rs);
+		log.info("aggregate[" + startRowKey + "," + endRowKey + "] = " + rs);
 		return rs;
 	}
 	public <T> T query(String tableName,List<String> rowKeys,RsHandler<T> rsh) throws IOException{

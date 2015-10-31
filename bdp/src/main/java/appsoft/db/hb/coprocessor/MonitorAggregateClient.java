@@ -99,7 +99,6 @@ public class MonitorAggregateClient {
 
 	      @Override
 	      public synchronized void update(byte[] region, byte[] row, R result) {
-	    	  System.out.println("max : result= "+max+" : "+result);
 	        max = (max == null || (result != null && ci.compare(max, result) < 0)) ? result : max;
 	      }
 	    }

@@ -47,7 +47,7 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 	private int DEFAULT_WORKER_SIZE = 5;
 	private ExecutorService executorservice = null;
 	private Queue<Put> putQueue = new ConcurrentLinkedQueue<Put>();
-	private int maxCacheRowSize =  50* 10000;// 50万条
+	private int maxCacheRowSize =  1* 10000;// 50万条
 	private List<WriteHbaseWorker> workers;
 	private volatile int order=1;
 
@@ -61,7 +61,7 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 	
 	public EdnaSocketApiService() {
 		rshandler = new PointDataRsHandler();
-		initExecutorservice();
+		//initExecutorservice();
 	}
 
 	private HBRunner getRunner() {
@@ -382,7 +382,7 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 	 * @return 生成rowkey
 	 */
 	private String generateRowkey(String fullPointName, int hisTime) {
-		String rowkey = fullPointName + "_" + (Long.MAX_VALUE - hisTime);
+		String rowkey = fullPointName.trim() + "_" + (Long.MAX_VALUE - hisTime);
 		return rowkey;
 	}
 
@@ -493,8 +493,15 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 
 	@Override
 	public void writePoint(String serviceIp, String servicePort, PointData pd) {
-		printf("writePoint {}", serviceIp + "&" + servicePort, pd);
+		//printf("writePoint {}", serviceIp + "&" + servicePort, pd);
+		if(!pd.getPointId().contains("."))
+			try {
+				throw new Exception("1111111111111111");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		this.putRealTimeData(pd.getPointId(), pd);
+		this.putHistoryData(pd.getPointId(), pd);
 	}
 
 	private void initExecutorservice() {
@@ -594,5 +601,5 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 		asyncPutHistoryData(fullPointName, point);
 		// putRealTimeData(fullPointName, point);
 		return 1;
-	}
+	} 
 }

@@ -78,6 +78,8 @@ public class HBBuilder {
 			bytes=Bytes.toBytes((BigDecimal)obj);
 		}else if(obj instanceof Boolean){
 			bytes=Bytes.toBytes((Boolean)obj);
+		}else if(obj instanceof Short){
+			bytes=Bytes.toBytes((Short)obj);
 		}else if(obj instanceof ByteBuffer){
 			bytes=Bytes.toBytes((ByteBuffer)obj);
 		}else{

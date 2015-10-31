@@ -57,6 +57,9 @@ public class Test {
 		long cur2 = 1445566869406l;//System.currentTimeMillis();
 		System.out.println("tye1: "+EdnaApiHelper.parseUTCLongToDate(cur1/1000l));
 		System.out.println("tye2: "+EdnaApiHelper.parseUTCLongToDate(cur2/1000l));
+		long hk = 1323308943*1000l;
+		System.out.println("hk="+sdf.format(new Date(hk)));
+
 	
 	}
 	public static void  testDataH() throws IOException{

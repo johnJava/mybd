@@ -61,7 +61,6 @@ public class PointDataRsHandler implements RsHandler<List<PointData>> {
 				setValueForPointdata(pointdata, kv.getKey(), kv.getValue());
 			}
 		}
-
 		return flag;
 	}
 	public void setValueForPointdata(PointData pointdata,byte[] key, byte[] value){

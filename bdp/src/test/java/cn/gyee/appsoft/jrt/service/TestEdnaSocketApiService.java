@@ -1,10 +1,12 @@
 package cn.gyee.appsoft.jrt.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Vector;
 
@@ -14,6 +16,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import appsoft.wpcache.data.DbTool;
+import cn.gyee.appsoft.jrt.common.EdnaApiHelper;
 import cn.gyee.appsoft.jrt.model.PointData;
 
 public class TestEdnaSocketApiService {
@@ -42,21 +45,31 @@ public class TestEdnaSocketApiService {
 		this.operater = new EdnaSocketApiService();
 		sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = sdf.parse("");
-		Date date = new Date();
+//		beginTime="2015-10-26 00:00:00";
+//		endTime="2015-10-29 00:00:00";
+//		hisTime="2015-10-21 10:55:57";
+		beginTime="2015-10-30 18:30:00";
+		endTime="2015-10-29 00:00:00";
+		hisTime="2015-10-21 10:55:57";
+//		beginTime = sdf.format(new Date());
+//		endTime = sdf.format(new Date(end));
+//		hisTime = beginTime;
+		//Date date = new Date();
+		Date date=null;
+		try {
+			date = sdf.parse(beginTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		long l = date.getTime();
 		long m = l / 1000;
 		begin = m * 1000;
-		end = (m + 20) * 1000;
-		step=1000;
-		beginTime = sdf.format(date);
-		endTime = sdf.format(new Date(end));
-		hisTime = beginTime;
-//		beginTime="2015-10-22 00:00:00";
-//		endTime="2015-10-23 00:00:00";
-//		hisTime="2015-10-21 10:55:57";
-		period = 30;
+		end = (m + 1000*1000) * 1000;
+		step=900*1000;
+		period = 1800;
 		fullPointNames = LoadPointInfo(5000);
-		fullPointName="SIS.JGUNIV.JG033783";//fullPointNames.get(0);
+		LoadJsstas();
+		fullPointName="SIS.CALCUNIV.HNJ00009";//fullPointNames.get(0);
 		System.out.println("beginTime=" + beginTime);
 		System.out.println("endTime=" + endTime);
 		random = new Random();
@@ -80,10 +93,76 @@ public class TestEdnaSocketApiService {
 	 * 
 	 * @return List<String>
 	 */
+	enum pointtype{
+		jsssgl,jsssfs,dqwpp,jsswrfdl,jsswyfdl,jsswnfdl
+	}
+	public double getVauleByType(String ptype){
+		double value=0;
+		if("jsssgl".equalsIgnoreCase(ptype)){//实时功率
+			value = 1000+random.nextInt(500) + random.nextDouble();
+		}else if("jsrpjfs".equalsIgnoreCase(ptype)||"wdspd".equalsIgnoreCase(ptype)||"jsssfs".equalsIgnoreCase(ptype)){//风速
+			value =random.nextInt(12) + random.nextDouble();
+		}else if("actpwr".equalsIgnoreCase(ptype)||"dqwpp".equalsIgnoreCase(ptype)){//预测功率
+			value = 1000+random.nextInt(500) + random.nextDouble();
+		}else if("jsswrfdl".equalsIgnoreCase(ptype)){//日发电量
+			value = 1000+random.nextInt(1000) + random.nextDouble();
+		}else if("jsswyfdl".equalsIgnoreCase(ptype)){
+			value = 30*1000+random.nextInt(1000) + random.nextDouble();
+		}else if("jsswnfdl".equalsIgnoreCase(ptype)){
+			value = 365*1000+random.nextInt(1000) + random.nextDouble();
+		}else if("jssta".equalsIgnoreCase(ptype)){//风机状态
+			value = random.nextInt(5);
+		}else if("plcsta".equalsIgnoreCase(ptype)){//风机状态
+			int valueIndex = random.nextInt(jsstas.size()-1);
+			// System.out.println("风机状态valueIndex:"+valueIndex);
+			 value=Integer.valueOf(jsstas.get(valueIndex));
+			 //value=13;
+			 //System.out.println("风机状态:"+value);
+		}else if("warcode".equalsIgnoreCase(ptype)||"errcode".equalsIgnoreCase(ptype)){
+			value = 204+random.nextInt(5);
+		}else if("totwh".equalsIgnoreCase(ptype)){
+			value = 100+random.nextInt(100)+ random.nextDouble();
+		}else{
+			value =random.nextInt(1500) + random.nextDouble();
+		}//'wdspd','actpwr','dayenepro','limitpwr'
+		//风机状态 jssta
+		return value;
+	}
+	public static List<String> jsstas = new ArrayList<String>();
+	
+	public static Map<String, String> points = new HashMap<String, String>();
+	
+	public static void LoadJsstas() {
+		String sql="select facturyCode from gyee_equipmentstatus where typeid='NC'";
+		DbTool dt = DbTool.getDbTool();
+		try {
+			long start = System.currentTimeMillis();
+			ArrayList<HashMap<String, String>> al = dt.listAll(sql);
+			System.out.println("加载数据库的中测点...");
+			for (int i = 0; i < al.size(); i++) {
+				HashMap<String, String> map = al.get(i);
+				String statusId = map.get("facturycode");
+				System.out.println("statusId="+statusId);
+				jsstas.add(statusId);
+			}
+//			jsstas.add(String.valueOf(4));
+//			jsstas.add(String.valueOf(5));
+//			jsstas.add(String.valueOf(7));
+//			jsstas.add(String.valueOf(100));
+			long end = System.currentTimeMillis();
+			System.out.println("缓存数据库中"+jsstas.size()+"个状态用时:" + (end - start) + "毫秒");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static List<String> LoadPointInfo(int limit) {
 		ArrayList<String> fs = new ArrayList<String>();
 		// and isCache=1 and powerstationid='01' limit " + limit
-		String sql = "select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0 ";
+		//String sql = "select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0 ";
+		//String sql ="select * from gyee_equipmentmeasuringpoint  where pointDefinition in ('jsssgl','jsssfs','dqwpp')" ;//'totwh','jsswrfdl','jsswyfdl','jsswnfdl','wdspd','actpwr','jssta','plcsta'
+		//String sql="select * from gyee_EquipmentMeasuringPoint where 1=1 and pointDefinition='dqwpp'  and isCalc=false";//'jsssgl','jsssfs','dqwpp','wdspd','actpwr','jsssfs','jsswrfdl','jsswyfdl','jsswnfdl'
+		String sql="select realtimeid,pointDefinition from gyee_EquipmentMeasuringPoint where 1=1 and pointDefinition in ('errcode','warcode')  ";//'jsswrfdl','jsswyfdl','jsswnfdl'
 		DbTool dt = DbTool.getDbTool();
 		try {
 			long start = System.currentTimeMillis();
@@ -94,6 +173,7 @@ public class TestEdnaSocketApiService {
 				String realTimeId = map.get("realtimeid");
 				realTimeId = realTimeId.trim();
 				fs.add(realTimeId);
+				points.put(realTimeId, map.get("pointdefinition"));
 			}
 			long end = System.currentTimeMillis();
 			System.out.println("缓存数据库中"+fs.size()+"个测点用时:" + (end - start) + "毫秒");
@@ -102,7 +182,7 @@ public class TestEdnaSocketApiService {
 		}
 		return fs;
 	}
-	@Test
+	@Ignore
 	public void asyncPutData(){
 		long realStart = System.currentTimeMillis();
 		PointData point = null;
@@ -114,7 +194,8 @@ public class TestEdnaSocketApiService {
 				point.setPointId(pointid);
 				int utcTime = (int) (i / 1000L);
 				point.setUtcTime(utcTime);
-				point.setValue(random.nextInt(100) + random.nextDouble());
+//				point.setValue(random.nextInt(100) + random.nextDouble());
+				point.setValue(getVauleByType(points.get(pointid)));
 				count++;
 				if(count%100000==0)
 				System.out.println(count+":"+pointid+":"+operater.getCurrentQuequeSize());
@@ -126,21 +207,24 @@ public class TestEdnaSocketApiService {
 		String cost = "异步插入数据用时:"+(realEnd-realStart)+"毫秒";
 		System.out.println(cost);
 	}
-	@Ignore
+	
+	@Test
 	public void putData(){
 		long realStart = System.currentTimeMillis();
 		PointData point = null;
 		int count=0;
-		for (long i = begin; i <= end && i > 0; i += step) {
+		for (long i = begin;  i > 0; i += step) {//i <= end &&
 			for (int j = 0; j < this.fullPointNames.size(); j++) {
 				point = new PointData();
 				String pointid = fullPointNames.get(j);
 				point.setPointId(pointid);
 				int utcTime = (int) (i / 1000L);
 				point.setUtcTime(utcTime);
-				point.setValue(random.nextInt(100) + random.nextDouble());
+				//point.setValue(random.nextInt(2000) + random.nextDouble());
+				double v = getVauleByType(points.get(pointid));
+				point.setValue(v);
 				count++;
-				System.out.println(count+":"+pointid);
+				System.out.println(count+":"+pointid+":"+v+":"+EdnaApiHelper.parseUTCLongToDate(utcTime));
 				//printf(point);
 				operater.putRealTimeData(pointid, point);// 插入实时数据
 				operater.putHistoryData(pointid, point);// 插入历史数据
@@ -249,7 +333,7 @@ public class TestEdnaSocketApiService {
 		System.out.println("SnapData(单点某时刻值) end ");
 	}
 
-	@Ignore
+	//@Test
 	public void testGetHistorySnapDatas() {
 		List<PointData> ps = operater.getHistorySnapData(fullPointName, beginTime, endTime, period);
 		System.out.println("SnapDatas(获取给定测点一段时间内的历史数据，按照间隔的快照值) begin");
