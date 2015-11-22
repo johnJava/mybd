@@ -76,6 +76,5 @@ public class PointDataRsHandler implements RsHandler<List<PointData>> {
 		}else if("status".equalsIgnoreCase(col)){
 			pointdata.setStatus(Bytes.toShort(value));
 		}
-		
 	}
 }

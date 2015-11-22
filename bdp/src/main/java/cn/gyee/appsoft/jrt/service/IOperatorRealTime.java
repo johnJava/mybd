@@ -96,7 +96,7 @@ public interface IOperatorRealTime {
 	 * @return
 	 */
 	public PointData getHistorySnapData(String fullPointName, String hisTime);
-	
+
 	/**
 	 * 断面获取给定时刻多点的历史数据快照值
 	 * @param fullPointName 测点全名，站点名.服务名.点号
@@ -231,7 +231,19 @@ public interface IOperatorRealTime {
 	 * @param pds 点集 
 	 * @
 	 */
-	public Integer putHistoryData(String fullPointName, PointData point) ;
+	public Integer putHistoryData(String fullPointName, PointData point) ;	
+	
+	/**
+	 * @param point 测点对象
+	 * @return
+	 */
+	public Integer putHistoryRawData(PointData point);
+	
+	/**
+	 * @param point 测点对象集合
+	 * @return
+	 */
+	public Integer putHistoryRawData(List<PointData> point);
 //	/**
 //	 * 更新指定点的实时数据，实时数据不存在时插入修改实时数据，存在时直接修改实时数据
 //	 * @param fullPointName 测点全名，站点名.服务名.点号
@@ -248,15 +260,6 @@ public interface IOperatorRealTime {
 	 */
 	public Integer putRealTimeData(String fullPointName, PointData point) ;
 
-	/**
-	 * 更新指定点的实时数据，实时数据不存在时插入修改实时数据，存在时直接修改实时数据
-	 * @param fullPointName 测点全名，站点名.服务名.点号
-	 * @param pds 点集
-	 * @
-	 */
-	public Integer asyncPutData(String fullPointName, PointData point) ;
-
-	
 	/**
 	 * 上传小文件，一次完成上传
 	 * @param fileName 文件名

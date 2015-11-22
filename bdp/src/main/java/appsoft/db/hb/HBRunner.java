@@ -1,6 +1,7 @@
 package appsoft.db.hb;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import org.slf4j.Logger;
 
 import appsoft.db.hb.core.Nullable;
 import appsoft.db.hb.handler.RsHandler;
+import appsoft.db.hb.rowkey.IntRowKey;
 import appsoft.db.hb.service.QueryExtInfo;
 import appsoft.util.AggregateType;
 import appsoft.util.Log;
@@ -52,7 +54,7 @@ public class HBRunner {
 //			initPool(poolsize);
 //		}
 		System.setProperty("HADOOP_USER_NAME","hdfs");
-		System.setProperty("hadoop.home.dir",getClassesPath());
+		System.setProperty("hadoop.home.dir",getClassesPath());//"D:/workspace/work3/dragon/bdp/target/classes"
 		log=Log.get(HBRunner.class);
 		tables = new ConcurrentHashMap<String, HTable>();
 	}
@@ -61,7 +63,15 @@ public class HBRunner {
 //		pool = new HTablePool(cfg, poolsize,PoolMap.PoolType.ThreadLocal); 
 //	}
 	public String getClassesPath(){
-		String p = this.getClass().getResource("/").getPath();
+		IntRowKey r = new IntRowKey(1);
+		Class<? extends IntRowKey> cla = r.getClass();
+		URL res = cla.getResource("/");
+		String p ;
+		if(null!=res)
+			p = res.getPath();
+		else
+			p="D:/hadoopbin";
+		System.out.println("getClassesPath():"+p);
 		return p;
 	}
 	public boolean createTable(String tableName) throws IOException{
@@ -98,7 +108,7 @@ public class HBRunner {
 		//table.close();
 		return true;
 	}
-	public boolean batchInsert(String tableName,List<Put> puts) throws IOException{
+	public synchronized boolean batchInsert(String tableName,List<Put> puts) throws IOException{
 		HTableInterface table = getTable(tableName);
 		log.info("{}","table put...");
 		table.put(puts);

@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Vector;
 
-import org.codehaus.jettison.json.JSONObject;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -34,28 +33,22 @@ public class TestEdnaSocketApiService {
 	String hisTime;
 	Random random;
 	List<String> costs;
-	public static void main(String[] args) {
-		TestEdnaSocketApiService test = new TestEdnaSocketApiService();
-		test.initIOperatorRealTime();
-		test.asyncPutData();
-	}
+	private double jsswrfdl=0;
 
 	@Before
 	public void initIOperatorRealTime() {
 		this.operater = new EdnaSocketApiService();
 		sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = sdf.parse("");
-//		beginTime="2015-10-26 00:00:00";
+//		beginTime="2015-11-18 00:00:00";
 //		endTime="2015-10-29 00:00:00";
 //		hisTime="2015-10-21 10:55:57";
-		beginTime="2015-10-31 12:00:00";
-		endTime="2015-10-29 00:00:00";
-		hisTime="2015-10-21 10:55:57";
-//		beginTime = sdf.format(new Date());
-//		endTime = sdf.format(new Date(end));
-//		hisTime = beginTime;
-		//Date date = new Date();
-		Date date=null;
+//		beginTime="2015-11-04 00:00:00";
+		//endTime="2015-11-22 00:00:00";
+//		hisTime="2015-10-21 10:55:57";
+		beginTime = sdf.format(new Date());
+		Date date = new Date();
+//		Date date=null;
 		try {
 			date = sdf.parse(beginTime);
 		} catch (ParseException e) {
@@ -65,11 +58,13 @@ public class TestEdnaSocketApiService {
 		long m = l / 1000;
 		begin = m * 1000;
 		end = (m + 1000*1000) * 1000;
-		step=900*1000;
+		//endTime = sdf.format(new Date(end));
+		hisTime = beginTime;
+		step=10*1000;
 		period = 1800;
 		fullPointNames = LoadPointInfo(5000);
 		LoadJsstas();
-		fullPointName="SIS.CALCUNIV.HNJ00009";//fullPointNames.get(0);
+		fullPointName="P0000.E0000.P0000005";//fullPointNames.get(0);
 		System.out.println("beginTime=" + beginTime);
 		System.out.println("endTime=" + endTime);
 		random = new Random();
@@ -101,10 +96,8 @@ public class TestEdnaSocketApiService {
 		if("jsssgl".equalsIgnoreCase(ptype)){//实时功率
 			value = 1000+random.nextInt(500) + random.nextDouble();
 		}else if("jsrpjfs".equalsIgnoreCase(ptype)||"wdspd".equalsIgnoreCase(ptype)||"jsssfs".equalsIgnoreCase(ptype)){//风速
-			value =random.nextInt(12) + random.nextDouble();
+			value =6+random.nextInt(19) + random.nextDouble();
 		}else if("actpwr".equalsIgnoreCase(ptype)||"dqwpp".equalsIgnoreCase(ptype)){//预测功率
-			value = 1000+random.nextInt(500) + random.nextDouble();
-		}else if("jsswrfdl".equalsIgnoreCase(ptype)){//日发电量
 			value = 1000+random.nextInt(1000) + random.nextDouble();
 		}else if("jsswyfdl".equalsIgnoreCase(ptype)){
 			value = 30*1000+random.nextInt(1000) + random.nextDouble();
@@ -118,10 +111,29 @@ public class TestEdnaSocketApiService {
 			 value=Integer.valueOf(jsstas.get(valueIndex));
 			 //value=13;
 			 //System.out.println("风机状态:"+value);
-		}else if("warcode".equalsIgnoreCase(ptype)||"errcode".equalsIgnoreCase(ptype)){
-			value = 204+random.nextInt(5);
-		}else if("totwh".equalsIgnoreCase(ptype)){
+		}else if("errcode".equalsIgnoreCase(ptype)){//"errcode".equalsIgnoreCase(ptype)
+			value = 1+random.nextInt(227);
+		}else if("warcode".equalsIgnoreCase(ptype)){//"errcode".equalsIgnoreCase(ptype)
+			int randomIndex = random.nextInt(3);
+			switch (randomIndex) {
+			case 0:
+				value = 228+random.nextInt(122);
+				break;
+			case 1:
+				value =1000+random.nextInt(2191);
+				break;
+			case 2:
+				value =4000+random.nextInt(2127);
+				break;
+			default:
+				value = 228+random.nextInt(122);
+				break;
+			}
+		}else if("totwh".equalsIgnoreCase(ptype)){//总发电量
 			value = 100+random.nextInt(100)+ random.nextDouble();
+		}else if("jsswrfdl".equalsIgnoreCase(ptype)){//风场上网电量原始值 //日发电量
+			jsswrfdl+=50;
+			value =jsswrfdl+random.nextDouble();
 		}else{
 			value =random.nextInt(1500) + random.nextDouble();
 		}//'wdspd','actpwr','dayenepro','limitpwr'
@@ -133,7 +145,7 @@ public class TestEdnaSocketApiService {
 	public static Map<String, String> points = new HashMap<String, String>();
 	
 	public static void LoadJsstas() {
-		String sql="select facturyCode from gyee_equipmentstatus where typeid='NC'";
+		String sql="select facturyCode from gyee_equipmentstatus where statecode<>'5'";
 		DbTool dt = DbTool.getDbTool();
 		try {
 			long start = System.currentTimeMillis();
@@ -160,9 +172,9 @@ public class TestEdnaSocketApiService {
 		ArrayList<String> fs = new ArrayList<String>();
 		// and isCache=1 and powerstationid='01' limit " + limit
 		//String sql = "select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0 ";
-		//String sql ="select * from gyee_equipmentmeasuringpoint  where pointDefinition in ('jsssgl','jsssfs','dqwpp')" ;//'totwh','jsswrfdl','jsswyfdl','jsswnfdl','wdspd','actpwr','jssta','plcsta'
+		//String sql ="select * from gyee_equipmentmeasuringpoint  where pointDefinition in ('jsssgl','jsssfs','dqwpp')" ;//'totwh','jsswrfdl','jsswyfdl','jsswnfdl','wdspd','actpwr','jssta','plcsta','errcode','warcode'
 		//String sql="select * from gyee_EquipmentMeasuringPoint where 1=1 and pointDefinition='dqwpp'  and isCalc=false";//'jsssgl','jsssfs','dqwpp','wdspd','actpwr','jsssfs','jsswrfdl','jsswyfdl','jsswnfdl'
-		String sql="select realtimeid,pointDefinition from gyee_equipmentmeasuringpoint where 1=1 and pointDefinition in ('errcode','warcode')  ";//'jsswrfdl','jsswyfdl','jsswnfdl'
+		String sql="select realtimeid,pointDefinition from gyee_equipmentmeasuringpoint where 1=1 and isCalc=false and pointDefinition in('wdspd')";//'jsswrfdl','wdspd','actpwr','wdspd','jsswrfdl','actpwr','plcsta' and ISNULL(pointDefinition)=false and isCache=true
 		DbTool dt = DbTool.getDbTool();
 		try {
 			long start = System.currentTimeMillis();
@@ -175,6 +187,8 @@ public class TestEdnaSocketApiService {
 				fs.add(realTimeId);
 				points.put(realTimeId, map.get("pointdefinition"));
 			}
+//			fs.add("P0001.E0000.P0000036");
+//			fs.add("P0001.E0000.P0000043");
 			long end = System.currentTimeMillis();
 			System.out.println("缓存数据库中"+fs.size()+"个测点用时:" + (end - start) + "毫秒");
 		} catch (Exception e) {
@@ -182,33 +196,8 @@ public class TestEdnaSocketApiService {
 		}
 		return fs;
 	}
-	@Ignore
-	public void asyncPutData(){
-		long realStart = System.currentTimeMillis();
-		PointData point = null;
-		int count=0;
-		for (long i = begin; i <= end && i > 0; i += step) {
-			for (int j = 0; j < this.fullPointNames.size(); j++) {
-				point = new PointData();
-				String pointid = fullPointNames.get(j);
-				point.setPointId(pointid);
-				int utcTime = (int) (i / 1000L);
-				point.setUtcTime(utcTime);
-//				point.setValue(random.nextInt(100) + random.nextDouble());
-				point.setValue(getVauleByType(points.get(pointid)));
-				count++;
-				if(count%100000==0)
-				System.out.println(count+":"+pointid+":"+operater.getCurrentQuequeSize());
-				//printf(point);
-				operater.asyncPutData(pointid, point);// 插入历史数据
-			}
-		}
-		long realEnd = System.currentTimeMillis();
-		String cost = "异步插入数据用时:"+(realEnd-realStart)+"毫秒";
-		System.out.println(cost);
-	}
 	
-	@Test
+	//@Test
 	public void putData(){
 		long realStart = System.currentTimeMillis();
 		PointData point = null;
@@ -315,12 +304,15 @@ public class TestEdnaSocketApiService {
 		System.out.println("MatrixSnapData(断面获取给定时刻多点的历史数据快照值) end ");
 	}
 
-	@Ignore
+	//@Test
 	public void testGetHistoryRawData() {
 		List<PointData> ps = operater.getHistoryRawData(fullPointName, beginTime, endTime);
 		System.out.println("RawData(获取给定测点一段时间内的历史原始值) begin ");
 		for (PointData pd : ps) {
-			System.out.println("RawData:"+pd.toString());
+			if(pd.getPointId()!=null&&pd.getUtcTime()!=null&&pd.getValue()!=null)
+				System.out.println("RawData:"+pd.getPointId()+":"+EdnaApiHelper.parseUTCLongToDate(pd.getUtcTime())+":"+pd.getValue());
+			else
+				System.out.println("RawData:"+pd.toString());
 		}
 		System.out.println("RawData(获取给定测点一段时间内的历史原始值) end ");
 	}
@@ -338,21 +330,23 @@ public class TestEdnaSocketApiService {
 		List<PointData> ps = operater.getHistorySnapData(fullPointName, beginTime, endTime, period);
 		System.out.println("SnapDatas(获取给定测点一段时间内的历史数据，按照间隔的快照值) begin");
 		for (PointData pd : ps) {
-			if(pd!=null)
-			System.out.println("SnapDatas:"+pd.toString());
+			if(pd.getPointId()!=null&&pd.getUtcTime()!=null&&pd.getValue()!=null)
+				System.out.println("SnapDatas:"+pd.getPointId()+":"+EdnaApiHelper.parseUTCLongToDate(pd.getUtcTime())+":"+pd.getValue());
+			else
+				System.out.println("SnapDatas:"+pd.toString());
 		}
 		System.out.println("SnapDatas(获取给定测点一段时间内的历史数据，按照间隔的快照值) end");
 	}
 
-	@Ignore
+	
 	public void testGetAvgHistoryData() {
 		long b = System.currentTimeMillis();
 		PointData pd = operater.getAvgHistoryData(fullPointName, beginTime, endTime);
 		this.costs.add("cost["+(System.currentTimeMillis()-b)+"],avg(获取给定测点一段时间内的平均值) value = " + pd.getValue());
-		System.out.println("avg(获取给定测点一段时间内的平均值) value = " + pd.getValue());
+		System.out.println("cost["+(System.currentTimeMillis()-b)+"ms]avg(获取给定测点一段时间内的平均值) value = " + pd.getValue());
 	}
 
-	@Ignore
+	//@Test
 	public void testGetAvgHistoryDatas() {
 		long b = System.currentTimeMillis();
 		List<PointData> ps = operater.getAvgHistoryData(fullPointName, beginTime, endTime, period);
@@ -362,6 +356,7 @@ public class TestEdnaSocketApiService {
 		}
 		String msg = "avg(获取给定测点一段时间内的历史数据，按照间隔的平均值) values = "+values;
 		System.out.println(msg);
+		System.out.println("cost["+(System.currentTimeMillis()-b)+"],"+msg);
 		this.costs.add("cost["+(System.currentTimeMillis()-b)+"],"+msg);
 	}
 

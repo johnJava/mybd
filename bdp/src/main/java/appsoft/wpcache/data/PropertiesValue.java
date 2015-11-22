@@ -17,11 +17,12 @@ public class PropertiesValue {
 		return propMap;
 	}
 
-	private PropertiesValue(){
+	public PropertiesValue(){
 		propMap = new HashMap<String,String>();
+		InstancePropValue();
 	}
 	
-	public static PropertiesValue  getPropValueInstance(){
+	public synchronized static PropertiesValue  getPropValueInstance(){
 		if(pv==null){
 			pv=new PropertiesValue();
 			pv.InstancePropValue();
@@ -32,8 +33,10 @@ public class PropertiesValue {
 	public  void InstancePropValue(){
 		Properties prop = new Properties();
 		try {
+			//String basepath = this.getClass().getResource("/").getPath();
+			//System.out.println("basepath=="+basepath);
+			//InputStream inputstream =new FileInputStream(new File(basepath+"/cacheconfig.properties"));
 			InputStream inputstream = getClass().getResourceAsStream("/cacheconfig.properties");
-			prop.load(inputstream);
 			prop.load(inputstream);
 			//加载属性列表
 			Iterator<String> it=prop.stringPropertyNames().iterator();
