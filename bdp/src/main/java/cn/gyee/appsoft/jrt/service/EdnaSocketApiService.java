@@ -34,7 +34,7 @@ import cn.gyee.appsoft.jrt.model.PointData;
 
 public class EdnaSocketApiService implements IOperatorRealTime {
 	private static HBRunner runner = null;
-	private final static String TABLENAME = "pointdata13";// pointdata1
+	private static String TABLENAME=null;//"pointdata26";// pointdata1
 	private static PointDataRsHandler rshandler = null;
 	private static MemClient memClient;
 	private static Logger log = Log.get(EdnaSocketApiService.class);
@@ -44,6 +44,8 @@ public class EdnaSocketApiService implements IOperatorRealTime {
 
 	public EdnaSocketApiService() {
 		rshandler = new PointDataRsHandler();
+		HashMap<String, String> map = PropertiesValue.getPropValueInstance().getPropMap();
+		TABLENAME= map.get("hbase.pointdata");
 	}
 
 	private HBRunner getRunner() {

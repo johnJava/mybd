@@ -12,7 +12,7 @@ public class TestHBSet {
 //		Logger log = Log.get(TestHBSet.class);
 //		long begin = System.currentTimeMillis();
 		//String tableName="testhbset2";
-		HBSet.creatHBSet("pointdata13");//HBSet hbset = 
+		HBSet.creatHBSet("pointdata26");//HBSet hbset = 
 	    //hbset.setAutoSave(true);
 //		Random random=new Random();
 //		for(int i=1;i<=(10);i++){

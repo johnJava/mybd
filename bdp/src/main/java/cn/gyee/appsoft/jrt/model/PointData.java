@@ -149,7 +149,27 @@ public class PointData implements Comparable<PointData>,Serializable{
 			return 1;
 		}
 	}
-
+	public String toJson(){
+		StringBuffer json = new StringBuffer(512);
+			json.append("{");
+			if(pointId!=null){
+				json.append("pointid:\""+pointId+"\"");
+			}
+			if(value!=null){
+				json.append(",value:\""+value+"\"");
+			}
+			if(utcTime!=null){
+				json.append(",utctime:\""+utcTime+"\"");
+			}
+			if(msTime!=null){
+				json.append(",mstime:\""+msTime+"\"");
+			}
+			if(status!=null){
+				json.append(",status:\""+status+"\"");
+			}
+			json.append("}");
+		return json.toString();
+	}
 	@Override
 	public String toString() {
 		return "PointData [pointId=" + pointId + ", value=" + value + ", utcTime=" + utcTime + ", msTime=" + msTime + ", status=" + status + "]";

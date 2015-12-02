@@ -71,7 +71,6 @@ public class HBRunner {
 			p = res.getPath();
 		else
 			p="D:/hadoopbin";
-		System.out.println("getClassesPath():"+p);
 		return p;
 	}
 	public boolean createTable(String tableName) throws IOException{

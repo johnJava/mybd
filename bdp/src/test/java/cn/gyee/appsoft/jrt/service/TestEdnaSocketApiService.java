@@ -34,13 +34,14 @@ public class TestEdnaSocketApiService {
 	Random random;
 	List<String> costs;
 	private double jsswrfdl=0;
+	private double totwh=0;
 
 	@Before
 	public void initIOperatorRealTime() {
 		this.operater = new EdnaSocketApiService();
 		sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		//Date date = sdf.parse("");
-//		beginTime="2015-11-18 00:00:00";
+//		beginTime="2015-11-23 00:00:01";
 //		endTime="2015-10-29 00:00:00";
 //		hisTime="2015-10-21 10:55:57";
 //		beginTime="2015-11-04 00:00:00";
@@ -57,14 +58,14 @@ public class TestEdnaSocketApiService {
 		long l = date.getTime();
 		long m = l / 1000;
 		begin = m * 1000;
-		end = (m + 1000*1000) * 1000;
-		//endTime = sdf.format(new Date(end));
+		end = (m + 24*3600*1000) * 1000;
+		endTime = sdf.format(new Date(end));
 		hisTime = beginTime;
-		step=10*1000;
+		step=1*1000;
 		period = 1800;
 		fullPointNames = LoadPointInfo(5000);
 		LoadJsstas();
-		fullPointName="P0000.E0000.P0000005";//fullPointNames.get(0);
+		fullPointName="P0001.E0000.P0000014";//fullPointNames.get(0);
 		System.out.println("beginTime=" + beginTime);
 		System.out.println("endTime=" + endTime);
 		random = new Random();
@@ -93,6 +94,9 @@ public class TestEdnaSocketApiService {
 	}
 	public double getVauleByType(String ptype){
 		double value=0;
+//		if("totwh".equalsIgnoreCase(ptype)||"jsyfdl".equalsIgnoreCase(ptype)||"jsrfdl".equalsIgnoreCase(ptype)){
+//			return 0;
+//		}
 		if("jsssgl".equalsIgnoreCase(ptype)){//实时功率
 			value = 1000+random.nextInt(500) + random.nextDouble();
 		}else if("jsrpjfs".equalsIgnoreCase(ptype)||"wdspd".equalsIgnoreCase(ptype)||"jsssfs".equalsIgnoreCase(ptype)){//风速
@@ -130,7 +134,9 @@ public class TestEdnaSocketApiService {
 				break;
 			}
 		}else if("totwh".equalsIgnoreCase(ptype)){//总发电量
-			value = 100+random.nextInt(100)+ random.nextDouble();
+			totwh+=50;
+			value =totwh+random.nextDouble();
+			//value = 100+random.nextInt(100)+ random.nextDouble();
 		}else if("jsswrfdl".equalsIgnoreCase(ptype)){//风场上网电量原始值 //日发电量
 			jsswrfdl+=50;
 			value =jsswrfdl+random.nextDouble();
@@ -145,7 +151,7 @@ public class TestEdnaSocketApiService {
 	public static Map<String, String> points = new HashMap<String, String>();
 	
 	public static void LoadJsstas() {
-		String sql="select facturyCode from gyee_equipmentstatus where statecode<>'5'";
+		String sql="select facturyCode from gyee_equipmentstatus ";
 		DbTool dt = DbTool.getDbTool();
 		try {
 			long start = System.currentTimeMillis();
@@ -174,7 +180,7 @@ public class TestEdnaSocketApiService {
 		//String sql = "select id,longid,realtimeid from gyee_equipmentmeasuringpoint where isCalc=0 ";
 		//String sql ="select * from gyee_equipmentmeasuringpoint  where pointDefinition in ('jsssgl','jsssfs','dqwpp')" ;//'totwh','jsswrfdl','jsswyfdl','jsswnfdl','wdspd','actpwr','jssta','plcsta','errcode','warcode'
 		//String sql="select * from gyee_EquipmentMeasuringPoint where 1=1 and pointDefinition='dqwpp'  and isCalc=false";//'jsssgl','jsssfs','dqwpp','wdspd','actpwr','jsssfs','jsswrfdl','jsswyfdl','jsswnfdl'
-		String sql="select realtimeid,pointDefinition from gyee_equipmentmeasuringpoint where 1=1 and isCalc=false and pointDefinition in('wdspd')";//'jsswrfdl','wdspd','actpwr','wdspd','jsswrfdl','actpwr','plcsta' and ISNULL(pointDefinition)=false and isCache=true
+		String sql="select realtimeid,pointDefinition from gyee_equipmentmeasuringpoint where 1=1 and pointDefinition='plcsta'";//'jsswrfdl','wdspd','actpwr','wdspd','jsswrfdl','actpwr','plcsta' and ISNULL(pointDefinition)=false and isCache=true
 		DbTool dt = DbTool.getDbTool();
 		try {
 			long start = System.currentTimeMillis();
@@ -197,7 +203,7 @@ public class TestEdnaSocketApiService {
 		return fs;
 	}
 	
-	//@Test
+	@Test
 	public void putData(){
 		long realStart = System.currentTimeMillis();
 		PointData point = null;
